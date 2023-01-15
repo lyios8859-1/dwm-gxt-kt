@@ -54,7 +54,7 @@ static const char *statusbarscript = "$DWM/statusbar/statusbar.sh";
 
 /* 自定义 scratchpad instance */
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "alacritty", "-t", "scratchpad", "--config-file","/home/gxt_kt/.config/alacritty/alacritty.yml",NULL};
+static const char *scratchpadcmd[] = { "alacritty", "-t","scratchpad",NULL};
 
 /* 自定义tag名称 */
 /* 自定义特定实例的显示状态 */
@@ -89,8 +89,12 @@ static const Layout overviewlayout = { "舘",  overview };
 
 /* 自定义布局 */
 static const Layout layouts[] = {
-    { "﬿",  tile },         /* 主次栈 */
+  /* symbol     arrange function */
+    { "[]",  tile },         /* 主次栈 */
     { "﩯",  magicgrid },    /* 网格 */
+    { "><>",      NULL },    /* no layout function means floating behavior */
+    //{ "[M]",      monocle },
+    //{ "|+|",      gaplessgrid },
 };
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -139,7 +143,8 @@ static Key keys[] = {
     { MODKEY|ShiftMask,    XK_q,             quit,            {0} },                     /* super  shift  q    |  退出dwm */
     { MODKEY|ControlMask|ShiftMask, XK_q,    quit,            {1} },      		 /* super shift ctrl q | restart dwm*/
 
-	{ MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+	{ MODKEY|ShiftMask,    XK_space,    selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+	{ MODKEY|ShiftMask,    XK_i,        selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
 	{ MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = -6} },               /* super ctrl +       |  窗口增大 */
@@ -157,18 +162,18 @@ static Key keys[] = {
     { MODKEY|Mod1Mask,     XK_Right,        resizewin,        {.ui = H_EXPAND} },        /* super alt right    |  调整窗口 */
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
-    { MODKEY,              XK_grave,      togglescratch,SHCMD("st -t scratchpad -c float")  },                      /* super s          | 打开scratch终端        */
-    //{ MODKEY,              XK_grave,      togglescratch,  {.v = scratchpadcmd } },                      /* super s          | 打开scratch终端        */
+    //{ MODKEY,              XK_grave,      togglescratch,SHCMD("st -t scratchpad -c float")  },                      /* super s          | 打开scratch终端        */
+    { MODKEY,              XK_grave,      togglescratch,  {.v = scratchpadcmd } },                      /* super s          | 打开scratch终端        */
     { MODKEY,              XK_Return, spawn, SHCMD("alacritty") },                                                     /* super enter      | 打开st终端             */
     //{ MODKEY,              XK_minus,  spawn, SHCMD("st -c global") },                                           /* super +          | 打开全局st终端         */
-    { MODKEY,              XK_minus,  spawn, SHCMD("alacritty -t scratchpad") },                                           /* super +          | 打开全局st终端         */
+    { MODKEY,              XK_minus,  spawn, SHCMD("alacritty -tscratchpad") },                                           /* super +          | 打开全局st终端         */
     { MODKEY,              XK_space,  spawn, SHCMD("st -c float") },                                            /* super space      | 打开浮动st终端         */
     //{ MODKEY,              XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh run") },                             /* super d          | rofi: 执行run          */
     //{ MODKEY|ShiftMask,    XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh drun") },                            /* super shift d    | rofi: 执行drun         */
     //{ MODKEY,              XK_p,      spawn, SHCMD("~/scripts/call_rofi.sh custom") },                          /* super p          | rofi: 执行自定义脚本   */
     //{ MODKEY|ShiftMask,    XK_p,      spawn, SHCMD("~/scripts/call_rofi.sh window") },                          /* super shift p    | rofi: 执行window       */
-    //{ MODKEY,  		   XK_p,      spawn, SHCMD( "dmenu_run -md 0 -fn monospace:size=14  -nb #222222 -nf #bbbbbb -sb #005577 -sf #eeeeee" ) },                          /* super shift p    | rofi: 执行window       */
-    { MODKEY,  		   XK_p,      spawn,  {.v="dmenu_run -md 0 -fn monospace:size=14  -nb #222222 -nf #bbbbbb -sb #005577 -sf #eeeeee NULL" } },                          /* super shift p    | rofi: 执行window       */
+    //{ MODKEY,  		   XK_p,      spawn, SHCMD( "dmenu_run -md 0 -fn monospace:size=14  -nb #222222 -nf #bbbbbb -sb #005577 -sf #eeeeee" ) },      /* super shift p    | rofi: 执行window       */
+    { MODKEY,  		   XK_p,      spawn,  {.v="dmenu_run -md 0 -fn monospace:size=14  -nb #222222 -nf #bbbbbb -sb #005577 -sf #eeeeee NULL" } },          /* super shift p    | rofi: 执行window       */
     { MODKEY,              XK_F1,     spawn, SHCMD("pcmanfm") },                                                /* super F1         | 文件管理器             */
     { MODKEY,              XK_k,      spawn, SHCMD("~/scripts/blurlock.sh") },                                  /* super k          | 锁定屏幕               */
     { MODKEY|ShiftMask,    XK_Up,     spawn, SHCMD("~/scripts/set_vol.sh up") },                                /* super shift up   | 音量加                 */
