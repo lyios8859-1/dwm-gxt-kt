@@ -395,6 +395,8 @@ static Client *hiddenWinStack[100];
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
+//gxt_kt tag0
+static unsigned int scratchtag =TAGMASK+1;
 
 struct Pertag {
 	unsigned int curtag, prevtag; /* current and previous tag */
@@ -453,6 +455,13 @@ applyrules(Client *c)
     if (!strcmp(c->name, scratchpadname)) {
         c->isscratchpad = 1;
         c->isglobal = 1; // scratchpad is default global
+	// gxt_kt tag1
+	{
+		c->mon->tagset[c->mon->seltags] |= c->tags = scratchtag;
+		c->isfloating = True;
+		c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
+		c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
+	}	
     } 
     if (ch.res_class)
         XFree(ch.res_class);
@@ -2666,6 +2675,9 @@ sigterm(int unused)
 void
 spawn(const Arg *arg)
 {
+
+	// gxt_kt tag2
+    selmon->tagset[selmon->seltags] &= ~scratchtag;
     if (fork() == 0) {
         if (dpy)
             close(ConnectionNumber(dpy));
@@ -2790,6 +2802,8 @@ toggleallfloating(const Arg *arg)
     pointerfocuswin(selmon->sel);
 }
 
+// gxt_kt tag3
+#if 1
 void
 togglescratch(const Arg *arg)
 {
@@ -2814,6 +2828,30 @@ togglescratch(const Arg *arg)
     } else
         spawn(arg);
 }
+#else
+//gxt_kt tag4
+void 
+togglescratch(const Arg *arg)
+{
+	Client *c;
+	unsigned int found = 0;
+
+	for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next);
+	if (found) {
+		unsigned int newtagset = selmon->tagset[selmon->seltags] ^ scratchtag;
+		if (newtagset) {
+			selmon->tagset[selmon->seltags] = newtagset;
+			focus(NULL);
+			arrange(selmon);
+		}
+		if (ISVISIBLE(c)) {
+			focus(c);
+			restack(selmon);
+		}
+	} else
+		spawn(arg);
+}
+#endif
 
 void
 restorewin(const Arg *arg) {

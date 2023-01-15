@@ -88,13 +88,14 @@ static const char *overviewtag = "OVERVIEW";
 static const Layout overviewlayout = { "舘",  overview };
 
 /* 自定义布局 */
+#include "gaplessgrid.c"
 static const Layout layouts[] = {
   /* symbol     arrange function */
     { "[]",  tile },         /* 主次栈 */
     { "﩯",  magicgrid },    /* 网格 */
     { "><>",      NULL },    /* no layout function means floating behavior */
+    { "|+|",      gaplessgrid },
     //{ "[M]",      monocle },
-    //{ "|+|",      gaplessgrid },
 };
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -145,6 +146,7 @@ static Key keys[] = {
 
 	{ MODKEY|ShiftMask,    XK_space,    selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
 	{ MODKEY|ShiftMask,    XK_i,        selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
+	{ MODKEY|ShiftMask,    XK_m,        selectlayout,     {.v = &layouts[3]} },      /* super shift space  |  切换到网格布局 */
 	{ MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = -6} },               /* super ctrl +       |  窗口增大 */
@@ -162,8 +164,9 @@ static Key keys[] = {
     { MODKEY|Mod1Mask,     XK_Right,        resizewin,        {.ui = H_EXPAND} },        /* super alt right    |  调整窗口 */
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
+    { MODKEY,              XK_grave,      togglescratch,SHCMD("alacritty -t scratchpad --class floatingTerminal")  },                      /* super s          | 打开scratch终端        */
     //{ MODKEY,              XK_grave,      togglescratch,SHCMD("st -t scratchpad -c float")  },                      /* super s          | 打开scratch终端        */
-    { MODKEY,              XK_grave,      togglescratch,  {.v = scratchpadcmd } },                      /* super s          | 打开scratch终端        */
+    //{ MODKEY,              XK_grave,      togglescratch,  {.v = scratchpadcmd } },                      /* super s          | 打开scratch终端        */
     { MODKEY,              XK_Return, spawn, SHCMD("alacritty") },                                                     /* super enter      | 打开st终端             */
     //{ MODKEY,              XK_minus,  spawn, SHCMD("st -c global") },                                           /* super +          | 打开全局st终端         */
     { MODKEY,              XK_minus,  spawn, SHCMD("alacritty -tscratchpad") },                                           /* super +          | 打开全局st终端         */
