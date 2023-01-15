@@ -1,7 +1,7 @@
 #include <X11/XF86keysym.h>
 
 static int showsystray                   = 1;         /* 是否显示托盘栏 */
-static const int newclientathead         = 0;         /* 定义新窗口在栈顶还是栈底 */
+static const int newclientathead         = 1;         /* 定义新窗口在栈顶还是栈底 */
 static const unsigned int borderpx       = 2;         /* 窗口边框大小 */
 static const unsigned int systraypinning = 1;         /* 托盘跟随的显示器 0代表不指定显示器 */
 static const unsigned int systrayspacing = 1;         /* 托盘间距 */
@@ -16,7 +16,7 @@ static const int overviewgappi           = 24;        /* overview时 窗口与�
 static const int overviewgappo           = 60;        /* overview时 窗口与窗口 缝隙大小 */
 static const int showbar                 = 1;         /* 是否显示状态栏 */
 static const int topbar                  = 1;         /* 指定状态栏位置 0底部 1顶部 */
-static const float mfact                 = 0.6;       /* 主工作区 大小比例 */
+static const float mfact                 = 0.55;       /* 主工作区 大小比例 */
 static const int   nmaster               = 1;         /* 主工作区 窗口数量 */
 static const unsigned int snap           = 10;        /* 边缘依附宽度 */
 static const unsigned int baralpha       = 0xc0;      /* 状态栏透明度 */
@@ -63,9 +63,9 @@ static const char *scratchpadcmd[] = { "alacritty", "-t", "scratchpad", "--confi
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor */
-    {"obs",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
-    {"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
-    {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
+    //{"obs",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
+    //{"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
+    //{"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
     { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
     { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
@@ -181,12 +181,12 @@ static Key keys[] = {
     TAGKEYS(XK_3, 2,  0)
     TAGKEYS(XK_4, 3,  0)
     TAGKEYS(XK_5, 4,  0)
-    TAGKEYS(XK_9, 5,  "obs")
-    TAGKEYS(XK_c, 6,  "google-chrome-stable")
-    TAGKEYS(XK_m, 7,  "~/scripts/music_player.sh")
-    TAGKEYS(XK_0, 8,  "linuxqq")
-    TAGKEYS(XK_w, 9,  "/opt/apps/com.qq.weixin.deepin/files/run.sh")
-    TAGKEYS(XK_l, 10, "/opt/apps/com.qq.weixin.work.deepin/files/run.sh")
+    //TAGKEYS(XK_9, 5,  "obs")
+    //TAGKEYS(XK_c, 6,  "google-chrome-stable")
+    //TAGKEYS(XK_m, 7,  "~/scripts/music_player.sh")
+    //TAGKEYS(XK_0, 8,  "linuxqq")
+    //TAGKEYS(XK_w, 9,  "/opt/apps/com.qq.weixin.deepin/files/run.sh")
+    //TAGKEYS(XK_l, 10, "/opt/apps/com.qq.weixin.work.deepin/files/run.sh")
 };
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */
