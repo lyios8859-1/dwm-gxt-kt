@@ -178,11 +178,9 @@ static Key keys[] = {
     //{ MODKEY,              XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh run") },                             /* super d          | rofi: 执行run          */
     //{ MODKEY|ShiftMask,    XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh drun") },                            /* super shift d    | rofi: 执行drun         */
     //{ MODKEY,              XK_p,      spawn, SHCMD("~/scripts/call_rofi.sh custom") },                          /* super p          | rofi: 执行自定义脚本   */
-    //{ MODKEY|ShiftMask,    XK_p,      spawn, SHCMD("~/scripts/call_rofi.sh window") },                          /* super shift p    | rofi: 执行window       */
     
-    { MODKEY,  		   XK_p,      spawn, SHCMD( "dmenu_run -md 0 -fn monospace:size=14  -nb #222222 -nf #bbbbbb -sb #005577 -sf #eeeeee" ) },      /* super shift p    | rofi: 执行window       */
-
-    { MODKEY,  		   XK_p,      spawn,  {.v="dmenu_run -md 0 -fn monospace:size=14  -nb #222222 -nf #bbbbbb -sb #005577 -sf #eeeeee NULL" } },          /* super shift p    | rofi: 执行window       */
+    { MODKEY,              XK_p,        spawn, SHCMD("rofi -show drun" ) },                                   /* super  p    | rofi: 执行window       */
+    
     { MODKEY,              XK_F1,     spawn, SHCMD("pcmanfm") },                                                /* super F1         | 文件管理器             */
     { MODKEY,              XK_k,      spawn, SHCMD("~/scripts/blurlock.sh") },                                  /* super k          | 锁定屏幕               */
     { MODKEY|Mod1Mask,    XK_Up,     spawn, SHCMD("~/scripts/set_vol.sh up") },                                /* super shift up   | 音量加                 */
