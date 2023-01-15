@@ -54,7 +54,6 @@ static const char *statusbarscript = "$DWM/statusbar/statusbar.sh";
 
 /* 自定义 scratchpad instance */
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "alacritty", "-t","scratchpad",NULL};
 
 /* 自定义tag名称 */
 /* 自定义特定实例的显示状态 */
@@ -107,15 +106,15 @@ static const Layout layouts[] = {
 
 static Key keys[] = {
     /* modifier            key              function          argument */
-    { MODKEY,              XK_equal,        togglesystray,    {0} },                     /* super +            |  切换 托盘栏显示状态 */
+    //{ MODKEY,              XK_equal,        togglesystray,    {0} },                     /* super +          |  切换 托盘栏显示状态 */
 
-    { MODKEY,              XK_Tab,          focusstack,       {.i = +1} },               /* super tab          |  本tag内切换聚焦窗口 */
-    { MODKEY|ShiftMask,    XK_Tab,          focusstack,       {.i = -1} },               /* super shift tab    |  本tag内切换聚焦窗口 */
-    { MODKEY,              XK_Up,           focusstack,       {.i = -1} },               /* super up           |  本tag内切换聚焦窗口 */
-    { MODKEY,              XK_Down,         focusstack,       {.i = +1} },               /* super down         |  本tag内切换聚焦窗口 */
+    { Mod1Mask,            XK_Tab,          focusstack,       {.i = +1} },               /* alt tab            |  本tag内切换聚焦窗口 */
+    { Mod1Mask|ShiftMask,  XK_Tab,          focusstack,       {.i = -1} },               /* alt shift tab      |  本tag内切换聚焦窗口 */
+    //{ MODKEY,              XK_Up,           focusstack,       {.i = -1} },               /* super up         |  本tag内切换聚焦窗口 */
+    //{ MODKEY,              XK_Down,         focusstack,       {.i = +1} },               /* super down       |  本tag内切换聚焦窗口 */
 
-    { MODKEY,              XK_Left,         viewtoleft,       {0} },                     /* super left         |  聚焦到左边的tag */
-    { MODKEY,              XK_Right,        viewtoright,      {0} },                     /* super right        |  聚焦到右边的tag */
+    //{ MODKEY,              XK_Left,         viewtoleft,       {0} },                     /* super left         |  聚焦到左边的tag */
+    //{ MODKEY,              XK_Right,        viewtoright,      {0} },                     /* super right        |  聚焦到右边的tag */
     { MODKEY|ShiftMask,    XK_Left,         tagtoleft,        {0} },                     /* super shift left   |  将本窗口移动到左边tag */
     { MODKEY|ShiftMask,    XK_Right,        tagtoright,       {0} },                     /* super shift right  |  将本窗口移动到右边tag */
 
@@ -165,12 +164,9 @@ static Key keys[] = {
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
     { MODKEY,              XK_grave,      togglescratch,SHCMD("alacritty -t scratchpad --class floatingTerminal")  },                      /* super s          | 打开scratch终端        */
-    //{ MODKEY,              XK_grave,      togglescratch,SHCMD("st -t scratchpad -c float")  },                      /* super s          | 打开scratch终端        */
-    //{ MODKEY,              XK_grave,      togglescratch,  {.v = scratchpadcmd } },                      /* super s          | 打开scratch终端        */
-    { MODKEY,              XK_Return, spawn, SHCMD("alacritty") },                                                     /* super enter      | 打开st终端             */
-    //{ MODKEY,              XK_minus,  spawn, SHCMD("st -c global") },                                           /* super +          | 打开全局st终端         */
-    { MODKEY,              XK_minus,  spawn, SHCMD("alacritty -tscratchpad") },                                           /* super +          | 打开全局st终端         */
-    { MODKEY,              XK_space,  spawn, SHCMD("st -c float") },                                            /* super space      | 打开浮动st终端         */
+    { MODKEY,              XK_Return, spawn, SHCMD("alacritty") },                                             /* super enter      | 打开st终端             */
+    { MODKEY|ShiftMask,    XK_n,  spawn, SHCMD("alacritty -t term-float --class globalingTerminal") },         /* super space      | 打开浮动st终端         */
+    { MODKEY,              XK_n,  spawn, SHCMD("alacritty -t term-float --class floatingTerminal") },          /* super space      | 打开浮动st终端         */
     //{ MODKEY,              XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh run") },                             /* super d          | rofi: 执行run          */
     //{ MODKEY|ShiftMask,    XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh drun") },                            /* super shift d    | rofi: 执行drun         */
     //{ MODKEY,              XK_p,      spawn, SHCMD("~/scripts/call_rofi.sh custom") },                          /* super p          | rofi: 执行自定义脚本   */
