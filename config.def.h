@@ -174,6 +174,7 @@ static Key keys[] = {
     { MODKEY,              XK_Return, spawn, SHCMD("alacritty") },                                             /* super enter      | 打开st终端             */
     { MODKEY|ShiftMask,    XK_n,  spawn, SHCMD("alacritty -t term-float --class globalingTerminal") },         /* super space      | 打开全局st终端         */
     { MODKEY,              XK_n,  spawn, SHCMD("alacritty -t term-float --class floatingTerminal") },          /* super space      | 打开浮动st终端         */
+    { MODKEY,              XK_e,  spawn, SHCMD("alacritty -e ranger") },          /* super space      | 打开浮动st终端         */
 
     //{ MODKEY,              XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh run") },                             /* super d          | rofi: 执行run          */
     //{ MODKEY|ShiftMask,    XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh drun") },                            /* super shift d    | rofi: 执行drun         */
