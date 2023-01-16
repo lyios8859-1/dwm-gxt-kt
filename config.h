@@ -66,7 +66,7 @@ static char lockfile[] = "/tmp/dwm.lock"; // doublepressquitPatch
 
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor */
-    {"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
+    //{"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
     //{"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     //{"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
@@ -79,9 +79,9 @@ static const Rule rules[] = {
   //  { NULL,                  NULL,                "crx_",            0,            1,          0,          0,        -1 },
   //  {"flameshot",            NULL,                 NULL,             0,            1,          0,          0,        -1 },
   //  {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
-  //  {"float",                NULL,                 NULL,             0,            1,          0,          0,        -1 }, // 特殊class client默认浮动
-  //  {"noborder",             NULL,                 NULL,             0,            1,          0,          1,        -1 }, // 特殊class client默认无边框
-  //  {"global",               NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
+    {"float",                NULL,                 NULL,             0,            1,          0,          0,        -1 }, // 特殊class client默认浮动
+    {"noborder",             NULL,                 NULL,             0,            1,          0,          1,        -1 }, // 特殊class client默认无边框
+    {"global",               NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
 };
 static const char *overviewtag = "OVERVIEW";
 static const Layout overviewlayout = { "舘",  overview };
