@@ -2,7 +2,6 @@
 # 电池电量
 
 source ~/.profile
-
 this=_bat
 icon_color="^c#3B001B^^b#4865660x88^"
 text_color="^c#3B001B^^b#4865660x99^"

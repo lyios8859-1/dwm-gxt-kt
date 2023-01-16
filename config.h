@@ -49,8 +49,9 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
 };
 
 /* 自定义脚本位置 */
-static const char *autostartscript = "~/scripts/autostart.sh";
-static const char *statusbarscript = "$DWM/statusbar/statusbar.sh";
+static const char *autostartscript = "/home/gxt_kt/yaoccc/my_dwm/autostart/autostart.sh";
+//static const char *statusbarscript = "$DWM/statusbar/statusbar.sh";
+static const char *statusbarscript = "/home/gxt_kt/yaoccc/my_dwm/statusbar/statusbar.sh";//gxt_kt
 
 /* 自定义 scratchpad instance */
 static const char scratchpadname[] = "scratchpad";

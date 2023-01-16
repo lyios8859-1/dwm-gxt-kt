@@ -1,5 +1,4 @@
 #! /bin/bash
-
 source ~/.profile
 
 this=_wifi

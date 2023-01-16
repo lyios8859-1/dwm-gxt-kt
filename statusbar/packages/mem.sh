@@ -2,7 +2,6 @@
 # MEM
 
 source ~/.profile
-
 this=_mem
 icon_color="^c#3B001B^^b#6873790x88^"
 text_color="^c#3B001B^^b#6873790x99^"
@@ -18,7 +17,7 @@ update() {
     mem_text=$(echo $men_usage_rate | awk '{printf "%02d%", $1}')
 
     icon=" $mem_icon "
-    text=" $mem_text "
+    text="$mem_text "
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
