@@ -90,9 +90,8 @@ static const Layout overviewlayout = { "舘",  overview };
 #include "gaplessgrid.c"
 static const Layout layouts[] = {
   /* symbol     arrange function */
-    { "[]",  tile },         /* 主次栈 */
-    { "﩯",  magicgrid },    /* 网格 */
-    { "><>",      NULL },    /* no layout function means floating behavior */
+    { "",  tile },         /* 主次栈 */
+    { "﩯", magicgrid },    /* 网格 */
     { "|+|",      gaplessgrid }, /* actually not use*/
     //{ "[M]",      monocle },
 };
@@ -110,7 +109,7 @@ static Key keys[] = {
 
     { Mod1Mask,            XK_Tab,          focusstack,       {.i = +1} },               /* alt tab            |  本tag内切换聚焦窗口 */
     { Mod1Mask|ShiftMask,  XK_Tab,          focusstack,       {.i = -1} },               /* alt shift tab      |  本tag内切换聚焦窗口 */
-    { MODKEY,              XK_Tab,            toggleoverview,   {0} },                     /* super a            |  显示所有tag 或 跳转到聚焦窗口的tag */
+    { MODKEY,              XK_Tab,          toggleoverview,   {0} },                     /* super a            |  显示所有tag 或 跳转到聚焦窗口的tag */
 
     //{ MODKEY,              XK_Up,           focusstack,       {.i = -1} },               /* super up         |  本tag内切换聚焦窗口 */
     //{ MODKEY,              XK_Down,         focusstack,       {.i = +1} },               /* super down       |  本tag内切换聚焦窗口 */
@@ -134,8 +133,9 @@ static Key keys[] = {
 
     { MODKEY|ShiftMask,    XK_Return,       zoom,             {0} },                     /* super shift enter  |  将当前聚焦窗口置为主窗口 */
 
-    { MODKEY,              XK_f,            togglefloating,   {0} },                     /* super f            |  开启/关闭 聚焦目标的浮动模式 */
-    { MODKEY|ShiftMask,    XK_f,            toggleallfloating,{0} },                     /* super shift f      |  开启/关闭 全部目标的浮动模式 */
+
+    { MODKEY,              XK_f,            togglefloating,   {0} },                     /* super f            |  开启/关闭 聚焦目标的float模式 */
+    { MODKEY|ShiftMask,    XK_f,            toggleallfloating,{0} },                     /* super shift f      |  开启/关闭 全部目标的float模式 */
 
     { MODKEY,              XK_F11,          fullscreen,       {0} },                     /* super F11          |  开启/关闭 全屏 */
     { MODKEY,              XK_b,            togglebar,        {0} },                     /* super b            |  开启/关闭 状态栏 */
@@ -151,14 +151,14 @@ static Key keys[] = {
     { MODKEY|ShiftMask,    XK_q,             quit,            {0} },                     /* super  shift  q    |  退出dwm */
     { MODKEY|ControlMask|ShiftMask, XK_q,    quit,            {1} },      		 /* super shift ctrl q | restart dwm*/
 
-    { MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY|ShiftMask,    XK_i,            selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY|ShiftMask,    XK_m,            selectlayout,     {.v = &layouts[3]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
+    { MODKEY|ControlMask,  XK_t,            selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
+    { MODKEY|ControlMask,  XK_m,            selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+    { MODKEY|ControlMask,  XK_g,            selectlayout,     {.v = &layouts[2]} },      /* super shift space  |  切换到网格布局 */
+    { MODKEY|ControlMask,  XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = +6} },               /* super ctrl +       |  gap增大 */
     { MODKEY|ControlMask,  XK_minus,        setgap,           {.i = -6} },               /* super ctrl -       |  gap减小 */
-    { MODKEY|ControlMask,  XK_space,        setgap,           {.i = 0} },                /* super ctrl space   |  gap重置 */
+    { MODKEY|ControlMask,  XK_BackSpace,    setgap,           {.i = 0} },                /* super ctrl space   |  gap重置 */
 
     { MODKEY,  XK_Up,           movewin,          {.ui = UP} },              /* super ctrl up      |  移动窗口 */
     { MODKEY,  XK_Down,         movewin,          {.ui = DOWN} },            /* super ctrl down    |  移动窗口 */
@@ -174,7 +174,7 @@ static Key keys[] = {
 
     { MODKEY,              XK_grave,      togglescratch,SHCMD("alacritty -t scratchpad --class floatingTerminal")  },  /* super s | 打开scratch终端   */
     { MODKEY,              XK_Return, spawn, SHCMD("alacritty") },                                             /* super enter      | 打开st终端             */
-    { MODKEY|ShiftMask,    XK_n,  spawn, SHCMD("alacritty -t term-float --class globalingTerminal") },         /* super space      | 打开全局st终端         */
+    { MODKEY|ShiftMask,    XK_n,  spawn, SHCMD("alacritty -t term-global --class globalingTerminal") },         /* super space      | 打开全局st终端         */
     { MODKEY,              XK_n,  spawn, SHCMD("alacritty -t term-float --class floatingTerminal") },          /* super space      | 打开浮动st终端         */
     { MODKEY,              XK_e,  spawn, SHCMD("alacritty -e ranger") },          /* super space      | 打开浮动st终端         */
 
@@ -201,6 +201,10 @@ static Key keys[] = {
     TAGKEYS(XK_3, 2,  0)
     TAGKEYS(XK_4, 3,  0)
     TAGKEYS(XK_5, 4,  0)
+    TAGKEYS(XK_6, 5,  0)
+    TAGKEYS(XK_7, 6,  0)
+    TAGKEYS(XK_8, 7,  0)
+    TAGKEYS(XK_9, 8,  0)
     //TAGKEYS(XK_9, 5,  "obs")
     //TAGKEYS(XK_c, 6,  "google-chrome-stable")
     //TAGKEYS(XK_m, 7,  "~/scripts/music_player.sh")
