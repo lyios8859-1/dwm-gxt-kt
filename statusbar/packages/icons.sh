@@ -7,14 +7,14 @@ source ~/.profile
 this=_icons
 color="^c#2D1B46^^b#5555660x66^"
 signal=$(echo "^s$this^" | sed 's/_//')
-
+#
 update() {
-    icons=("")
+    icons=("")
     #[ "$(sudo docker ps | grep 'v2raya')" ] && icons=(${icons[@]} "")
     #[ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
     [ "$AUTOSCREEN" = "OFF" ] && icons=(${icons[@]} "ﴸ")
 
-    text=" ${icons[@]} "
+    text="${icons[@]}"
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s'\n" $this "$signal" "$color" "$text" >> $DWM/statusbar/temp

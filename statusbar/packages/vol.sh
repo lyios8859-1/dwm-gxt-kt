@@ -31,8 +31,8 @@ update() {
     elif [ "$vol_text" -le 50 ]; then vol_icon="奔";
     else vol_icon="墳"; fi
 
-    icon=" $vol_icon "
-    text=" $vol_text% "
+    icon="$vol_icon"
+    text="$vol_text%"
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
