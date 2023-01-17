@@ -19,9 +19,21 @@ click() {
 
 # 更新状态栏
 refresh() {
-    _icons=''; _wifi=''; _cpu=''; _mem=''; _date=''; _vol=''; _bat='';   # 重置所有模块的状态为空
+   # 重置所有模块的状态为空
+	# gxt_kt add first place
+    _package='';
+    _icons='';
+    _wifi='';
+    _cpu='';
+    _mem='';
+    _my_date='';
+    _vol='';
+    _bat='';
+    _net='';
     source $DWM/statusbar/temp                                           # 从 temp 文件中读取模块的状态
-    xsetroot -name "$_icons$_wifi$_cpu$_mem$_date$_vol$_bat"             # 更新状态栏
+
+    # gxt_kt add second place
+    xsetroot -name "$_icons$_package$_net$_cpu$_mem$_wifi$_vol$_bat$_my_date"             # 更新状态栏
 }
 
 # 启动定时更新状态栏 不同的模块有不同的刷新周期 注意不要重复启动该func
@@ -29,10 +41,17 @@ cron() {
     let i=0
     while true; do
         to=()                                                            # 存放本次需要更新的模块
-        [ $((i % 10)) -eq 0 ]  && to=(${to[@]} wifi)                     # 每 10秒  更新 wifi
-        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} cpu mem vol icons)        # 每 20秒  更新 cpu mem vol icons
-        [ $((i % 300)) -eq 0 ] && to=(${to[@]} bat)                      # 每 300秒 更新 bat
-        [ $((i % 1)) -eq 0 ]   && to=(${to[@]} date)                     # 每 5秒   更新 date
+
+	# gxt_kt add third place
+        [ $((i % 300)) -eq 0 ]  && to=(${to[@]} package)    
+        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} net)  
+        [ $((i % 5)) -eq 0 ]  && to=(${to[@]} wifi) 
+        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} cpu ) 
+        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} mem ) 
+        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} vol ) 
+        [ $((i % 20)) -eq 0 ]  && to=(${to[@]} icons) 
+        [ $((i % 10)) -eq 0 ] && to=(${to[@]} bat)   
+        [ $((i % 1)) -eq 0 ]   && to=(${to[@]} my_date)                     # 每1秒   更新 date
         update ${to[@]}                                                  # 将需要更新的模块传递给 update
         sleep 1; let i+=1
     done &
@@ -45,6 +64,7 @@ cron() {
 case $1 in
     cron) cron ;;
     update) shift 1; update $* ;;
-    updateall|check) update icons wifi cpu mem date vol bat ;;
+    updateall|check) update icons wifi cpu mem my_date vol bat net package ;; # gxt_kt
+    #updateall|check) update  net icons wifi my_date ;; # gxt_kt
     *) click $1 $2 ;; # 接收clickstatusbar传递过来的信号 $1: 模块名  $2: 按键(L|M|R|U|D)
 esac

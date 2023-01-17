@@ -22,10 +22,10 @@ static const unsigned int snap           = 10;        /* 边缘依附宽度 */
 static const unsigned int baralpha       = 0xc0;      /* 状态栏透明度 */
 static const unsigned int borderalpha    = 0xdd;      /* 边框透明度 */
 static const char *fonts[]               = {
- 			"JetBrainsMono Nerd Font Mono:size=15",
-              	   	"Symbols Nerd Font:pixelsize=15:type=2048-em:antialias=true:autohint:true",
-		        "Microsoft YaHei:size=15:style=Regular:antialias=true:autohint:true",
-  			"JoyPixels:size=15:antialias=true:autohint=true"
+			"Monaco:style=Regular:size=13",
+			"Symbols Nerd Font:style=2048-em:size=17",
+		        "Microsoft YaHei:size=13:style=Regular:antialias=true:autohint:true",
+			//"JoyPixels:size=15:antialias=true:autohint=true"
 };
 static const char *colors[][3]           = {          /* 颜色设置 ColFg, ColBg, ColBorder */ 
     [SchemeNorm] = { "#bbbbbb", "#333333", "#444444" },
@@ -59,8 +59,12 @@ static const char scratchpadname[] = "scratchpad";
 /* 自定义tag名称 */
 /* 自定义特定实例的显示状态 */
 //            ﮸  ﭮ 切
+//            
 // 对应的tag序号以及快捷键:   0:1  1:2  2:3  3:4  4:5  5:9  6:c  7:m  8:0  9:w 10:l
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+//static const char *tags[] = { "", "", "", "", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "", "","", "﬐","","" };
+//static const char *tags[] = { "", "","","", "","","", "﬐","","" };
+//static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 /* Lockfile */
 static char lockfile[] = "/tmp/dwm.lock"; // doublepressquitPatch
@@ -68,8 +72,8 @@ static char lockfile[] = "/tmp/dwm.lock"; // doublepressquitPatch
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor */
     //{"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
-    //{"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
-    //{"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
+    {"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
+    {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
   //  { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
@@ -86,12 +90,12 @@ static const Rule rules[] = {
 };
 static const char *overviewtag = "OVERVIEW";
 static const Layout overviewlayout = { "舘",  overview };
-
+//﬿
 /* 自定义布局 */
 #include "gaplessgrid.c"
 static const Layout layouts[] = {
   /* symbol     arrange function */
-    { "",  tile },         /* 主次栈 */
+    { "﬿",  tile },         /* 主次栈 */
     { "﩯", magicgrid },    /* 网格 */
     { "|+|",      gaplessgrid }, /* actually not use*/
     //{ "[M]",      monocle },
@@ -142,20 +146,21 @@ static Key keys[] = {
     { MODKEY,              XK_b,            togglebar,        {0} },                     /* super b            |  开启/关闭 状态栏 */
 
     { MODKEY,              XK_g,            toggleglobal,     {0} },                     /* super g            |  开启/关闭 全局 */
-    { MODKEY,              XK_c,            incnmaster,       {.i = +1} },               /* super a            |  改变主工作区窗口数量 (1 2中切换) */
+    { MODKEY,              XK_a,            incnmaster,       {.i = +1} },               /* super a            |  改变主工作区窗口数量 (1 2中切换) */
 
     //{ MODKEY,              XK_b,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */
     //{ MODKEY|ShiftMask,    XK_b,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
 
-    { MODKEY,              XK_q,            killclient,       {0} },                     /* super q            |  关闭窗口 */
-    { MODKEY|ControlMask,  XK_q,            forcekillclient,  {0} },                     /* super ctrl q       |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
-    { MODKEY|ShiftMask,    XK_q,             quit,            {0} },                     /* super  shift  q    |  退出dwm */
-    { MODKEY|ControlMask|ShiftMask, XK_q,    quit,            {1} },      		 /* super shift ctrl q | restart dwm*/
+    //{ MODKEY,    XK_q,  killclient,   {0} },   /* super q     |  关闭窗口 */
+    // win+q 关闭窗口容易误触，改成win+ctrl+q
+    { MODKEY|ControlMask,  XK_q,  killclient, {0} },   /* super q |  关闭窗口 */
+    //{ MODKEY|ControlMask, XK_q,  forcekillclient,  {0} },    /* super ctrl q |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
+    { MODKEY|ShiftMask, XK_Escape, quit, {0} },  /* super  shift  q    |  退出dwm */
+    { MODKEY|ControlMask|ShiftMask, XK_Escape,    quit,            {1} },      		 /* super shift ctrl q | restart dwm*/
 
-    { MODKEY|ControlMask,  XK_t,            selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY|ControlMask,  XK_m,            selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY|ControlMask,  XK_g,            selectlayout,     {.v = &layouts[2]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY|ControlMask,  XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
+    { MODKEY|ShiftMask,  XK_o,            selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
+    { MODKEY|ControlMask,  XK_o,            selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+    { MODKEY,  XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = +6} },               /* super ctrl +       |  gap增大 */
     { MODKEY|ControlMask,  XK_minus,        setgap,           {.i = -6} },               /* super ctrl -       |  gap减小 */
@@ -185,14 +190,14 @@ static Key keys[] = {
     
     { MODKEY,              XK_p,        spawn, SHCMD("rofi -show drun" ) },                                   /* super  p    | rofi: 执行window       */
     
-    { MODKEY,              XK_F1,     spawn, SHCMD("pcmanfm") },                                                /* super F1         | 文件管理器             */
+    //{ MODKEY,              XK_F1,     spawn, SHCMD("pcmanfm") },                                                /* super F1         | 文件管理器             */
     //{ MODKEY,              XK_k,      spawn, SHCMD("~/scripts/blurlock.sh") },                                  /* super k          | 锁定屏幕               */
-    { MODKEY|Mod1Mask,    XK_Up,     spawn, SHCMD("~/scripts/set_vol.sh up") },                                /* super shift up   | 音量加                 */
-    { MODKEY|Mod1Mask,    XK_Down,   spawn, SHCMD("~/scripts/set_vol.sh down") },                              /* super shift down | 音量减                 */
-    { MODKEY|ShiftMask,    XK_a,      spawn, SHCMD("flameshot gui -c -p ~/Pictures/screenshots") },             /* super shift a    | 截图                   */
+    //{ MODKEY|Mod1Mask,    XK_Up,     spawn, SHCMD("~/scripts/set_vol.sh up") },                                /* super shift up   | 音量加                 */
+    //{ MODKEY|Mod1Mask,    XK_Down,   spawn, SHCMD("~/scripts/set_vol.sh down") },                              /* super shift down | 音量减                 */
+    //{ MODKEY|ShiftMask,    XK_a,      spawn, SHCMD("flameshot gui -c -p ~/Pictures/screenshots") },             /* super shift a    | 截图                   */
     //{ MODKEY|ShiftMask,    XK_k,      spawn, SHCMD("~/scripts/screenkey.sh") },                                 /* super shift k    | 打开键盘输入显示       */
     //{ MODKEY|ShiftMask,    XK_q,      spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") }, /* super shift q    | 选中某个窗口并强制kill */
-    { ShiftMask|ControlMask, XK_c,    spawn, SHCMD("xclip -o | xclip -selection c") },                          /* super shift c    | 进阶复制               */
+    //{ ShiftMask|ControlMask, XK_c,    spawn, SHCMD("xclip -o | xclip -selection c") },                          /* super shift c    | 进阶复制               */
 
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
@@ -207,7 +212,7 @@ static Key keys[] = {
     TAGKEYS(XK_8, 7,  0)
     TAGKEYS(XK_9, 8,  0)
     //TAGKEYS(XK_9, 5,  "obs")
-    //TAGKEYS(XK_c, 6,  "google-chrome-stable")
+    TAGKEYS(XK_c, 6,  "google-chrome-stable")
     //TAGKEYS(XK_m, 7,  "~/scripts/music_player.sh")
     //TAGKEYS(XK_0, 8,  "linuxqq")
     //TAGKEYS(XK_w, 9,  "/opt/apps/com.qq.weixin.deepin/files/run.sh")

@@ -25,7 +25,8 @@ fi
 }
 
 notify() {
-    #update
+
+notify-send "🎁 提示" "正在检查更新..." -r 1021 ;
 ping -q -c 3 www.baidu.com > /dev/null || ( 
 	notify-send "🎁 提示" "请检查你的网络连接(ping baidu.com)" ;
 	exit ;
@@ -36,12 +37,19 @@ package_update=$(pacman -Qu | grep -Fcv "[ignored]" )
 if [ ${package_update} -ne 0 ]
 then
 	notify-send "🎁 提示" "检查到${package_update}个可用更新包\n正在为您更新..." -r 1021 ;
-	echo "gxt0818" | sudo -S  pacman -Syyuw --noconfirm || notify-send "错误,下载更新失败.检查你的网络连接, 或手动更新." -r 1023 ;
+	echo "gxt0818" | sudo -S  pacman -Syu --noconfirm && (
+		notify-send "🎁 提示" "sudo pacman -Syu 更新成功" ;
+		text=$(pacman -Qu | grep -Fcv "[ignored]" )
+		sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
+		printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
+	)	||  ( 
+		notify-send "错误，更新失败，请手动更新." -r 1023 ;
+		exit ;
+	)
 else
-	notify-send "🎁 提示" "您的系统已经是最新版了" -r 1022
+	notify-send "🎁 提示" "您没有需要更新的包!" -r 1022
 fi
 
-update
 
 }
 
