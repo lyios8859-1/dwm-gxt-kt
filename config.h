@@ -1,7 +1,7 @@
 #include <X11/XF86keysym.h>
 
 static int showsystray                   = 1;         /* 是否显示托盘栏 */
-static const int newclientathead         = 1;         /* 定义新窗口在栈顶还是栈底 */
+static const int newclientathead         = 0;         /* 定义新窗口在栈顶还是栈底 */
 static const unsigned int borderpx       = 2;         /* 窗口边框大小 */
 static const unsigned int systraypinning = 1;         /* 托盘跟随的显示器 0代表不指定显示器 */
 static const unsigned int systrayspacing = 1;         /* 托盘间距 */
@@ -15,8 +15,8 @@ static const int sidepad                 = 5;         /* horizontal padding of b
 static const int overviewgappi           = 24;        /* overview时 窗口与边缘 缝隙大小 */
 static const int overviewgappo           = 60;        /* overview时 窗口与窗口 缝隙大小 */
 static const int showbar                 = 1;         /* 是否显示状态栏 */
-static const int topbar                  = 1;         /* 指定状态栏位置 0底部 1顶部 */
-static const float mfact                 = 0.55;       /* 主工作区 大小比例 */
+static const int topbar                  = 0;         /* 指定状态栏位置 0底部 1顶部 */
+static const float mfact                 = 0.6;       /* 主工作区 大小比例 */
 static const int   nmaster               = 1;         /* 主工作区 窗口数量 */
 static const unsigned int snap           = 10;        /* 边缘依附宽度 */
 static const unsigned int baralpha       = 0xc0;      /* 状态栏透明度 */
@@ -158,8 +158,8 @@ static Key keys[] = {
     { MODKEY|ShiftMask, XK_Escape, quit, {0} },  /* super  shift  q    |  退出dwm */
     { MODKEY|ControlMask|ShiftMask, XK_Escape,    quit,            {1} },      		 /* super shift ctrl q | restart dwm*/
 
-    { MODKEY|ShiftMask,  XK_o,            selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY|ControlMask,  XK_o,            selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+    { MODKEY|ShiftMask,  XK_o,     selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
+    { MODKEY|ControlMask,  XK_o,   selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
     { MODKEY,  XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = +6} },               /* super ctrl +       |  gap增大 */
@@ -221,8 +221,8 @@ static Key keys[] = {
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */
     /* 点击窗口标题栏操作 */
-    { ClkWinTitle,         0,               Button1,          hideotherwins, {0} },                                   // 左键        |  点击标题     |  隐藏其他窗口仅保留该窗口
-    { ClkWinTitle,         0,               Button3,          togglewin,     {0} },                                   // 右键        |  点击标题     |  切换窗口显示状态
+    { ClkWinTitle,         0,               Button3,          hideotherwins, {0} },                                   // 右键         |  点击标题     |  隐藏其他窗口仅保留该窗口
+    { ClkWinTitle,         0,               Button1,          togglewin,     {0} },                                   // 左键         |  点击标题     |  切换窗口显示状态
     /* 点击窗口操作 */
     { ClkClientWin,        MODKEY,          Button1,          movemouse,     {0} },                                   // super+左键  |  拖拽窗口     |  拖拽窗口
     { ClkClientWin,        MODKEY,          Button3,          resizemouse,   {0} },                                   // super+右键  |  拖拽窗口     |  改变窗口大小
