@@ -1,0 +1,20 @@
+diff --git a/dwm.c b/dwm.c
+index 3eb6a97..9899ad3 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -2874,11 +2874,23 @@ togglescratch(const Arg *arg)
+ void
+ restorewin(const Arg *arg) {
+     int i = hiddenWinStackTop;
+     while (i > -1) {
+         if (HIDDEN(hiddenWinStack[i]) && ISVISIBLE(hiddenWinStack[i])) {
+             show(hiddenWinStack[i]);
+             focus(hiddenWinStack[i]);
+             restack(selmon);
++            for (int j = i; j < hiddenWinStackTop+1; ++j) { // need set j<hiddenWinStackTop+1. Because show will reduce hiddenWinStackTop value.
++                hiddenWinStack[j] = hiddenWinStack[j + 1];
++            }
++            //--hiddenWinStackTop; Because show(hiddenWinStack[i]) will reduce hiddenWinStackTop value.
+             return;
+         }
+         --i;
