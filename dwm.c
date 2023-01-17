@@ -2874,11 +2874,23 @@ togglescratch(const Arg *arg)
 void
 restorewin(const Arg *arg) {
     int i = hiddenWinStackTop;
+    char buf[100];
     while (i > -1) {
-        if (HIDDEN(hiddenWinStack[i]) && ISVISIBLE(hiddenWinStack[i])) {
+        if (HIDDEN(hiddenWinStack[i]) && \
+        ISVISIBLE(hiddenWinStack[i]) 
+        )
+        //hiddenWinStack[i]->tags == selmon->tagset[selmon->seltags]  
+        {
+            sprintf(buf,"debug4 top=%d i=%d",hiddenWinStackTop,i);
+            logtofile(buf);
+
             show(hiddenWinStack[i]);
             focus(hiddenWinStack[i]);
             restack(selmon);
+            for (int j = i; j < hiddenWinStackTop+1; ++j) { // need set j<hiddenWinStackTop+1. Because show will reduce hiddenWinStackTop value.
+                hiddenWinStack[j] = hiddenWinStack[j + 1];
+            }
+            //--hiddenWinStackTop; Because show(hiddenWinStack[i]) will reduce hiddenWinStackTop value.
             return;
         }
         --i;
