@@ -2,7 +2,7 @@
 
 static int showsystray                   = 1;         /* 是否显示托盘栏 */
 static const int newclientathead         = 1;         /* 定义新窗口在栈顶还是栈底 */
-static const unsigned int borderpx       = 2;         /* 窗口边框大小 */
+static const unsigned int borderpx       = 7;         /* 窗口边框大小 */
 static const unsigned int systraypinning = 1;         /* 托盘跟随的显示器 0代表不指定显示器 */
 static const unsigned int systrayspacing = 1;         /* 托盘间距 */
 static const unsigned int systrayspadding = 5;        /* 托盘和状态栏的间隙 */
@@ -62,7 +62,7 @@ static const char scratchpadname[] = "scratchpad";
 //            
 // 对应的tag序号以及快捷键:   0:1  1:2  2:3  3:4  4:5  5:9  6:c  7:m  8:0  9:w 10:l
 //static const char *tags[] = { "", "", "", "", "5", "6", "7", "8", "9" };
-static const char *tags[] = { "", "", "", "", "", "","", "﬐","","" };
+static const char *tags[] = { "", "", "", "", "", "","", "﬐","","" };
 //static const char *tags[] = { "", "","","", "","","", "﬐","","" };
 //static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -71,22 +71,22 @@ static char lockfile[] = "/tmp/dwm.lock"; // doublepressquitPatch
 
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor */
-    {"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
+    //{"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
     {"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
   //  { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
   //  { NULL,                 "wxwork.exe",          NULL,             1 << 10,      0,          0,          0,        -1 },
-    { NULL,                  NULL,                "broken",          0,            1,          0,          0,        -1 },
+    //{ NULL,                  NULL,                "broken",          0,            1,          0,          0,        -1 },
   //  { "图片查看",           "图片查看",           "图片查看",        0,            1,          0,          0,        -1 },
   //  { "图片预览",           "图片预览",           "图片预览",        0,            1,          0,          0,        -1 },
-    { NULL,                  NULL,                "crx_",            0,            1,          0,          0,        -1 },
+    //{ NULL,                  NULL,                "crx_",            0,            1,          0,          0,        -1 },
   //  {"flameshot",            NULL,                 NULL,             0,            1,          0,          0,        -1 },
   //  {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
-    {"float",                NULL,                 NULL,             0,            1,          0,          0,        -1 }, // 特殊class client默认浮动
-    {"noborder",             NULL,                 NULL,             0,            1,          0,          1,        -1 }, // 特殊class client默认无边框
-    {"global",               NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
+    {"float",         NULL,  NULL, 0,            1,          0,          0,        -1 }, // 特殊class client默认浮动
+    {"noborder",      NULL,  NULL, 0,            1,          0,          1,        -1 }, // 特殊class client默认无边框
+    {"global",   NULL,    NULL,    TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
 };
 static const char *overviewtag = "OVERVIEW";
 static const Layout overviewlayout = { "舘",  overview };
@@ -232,14 +232,16 @@ static Button buttons[] = {
     { ClkTagBar,           MODKEY,          Button1,          tag,           {0} },                                   // super+左键  |  点击tag      |  将窗口移动到对应tag
     { ClkTagBar,           0,               Button4,          viewtoleft,    {0} },                                   // 鼠标滚轮上  |  tag          |  向前切换tag
 	{ ClkTagBar,           0,               Button5,          viewtoright,   {0} },                                   // 鼠标滚轮下  |  tag          |  向后切换tag
-    /* 点击状态栏操作 */
-    { ClkStatusText,       0,               Button1,          clickstatusbar,{0} },                                   // 左键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal L
-    { ClkStatusText,       0,               Button2,          clickstatusbar,{0} },                                   // 中键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal M
-    { ClkStatusText,       0,               Button3,          clickstatusbar,{0} },                                   // 右键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal R
-    { ClkStatusText,       0,               Button4,          clickstatusbar,{0} },                                   // 鼠标滚轮上  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal U
-    { ClkStatusText,       0,               Button5,          clickstatusbar,{0} },                                   // 鼠标滚轮下  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal D
+															  //
                                                                                                                       //
     /* 点击bar空白处 */
-    { ClkBarEmpty,         0,               Button1,          spawn, SHCMD("~/scripts/call_rofi.sh window") },        // 左键        |  bar空白处    |  rofi 执行 window
-    { ClkBarEmpty,         0,               Button3,          spawn, SHCMD("~/scripts/call_rofi.sh drun") },          // 右键        |  bar空白处    |  rofi 执行 drun
+//{ ClkBarEmpty,         0,               Button1,          spawn, SHCMD("~/scripts/call_rofi.sh window") },        // 左键        |  bar空白处    |  rofi 执行 window
+    //{ ClkBarEmpty,         0,               Button3,          spawn, SHCMD("~/scripts/call_rofi.sh drun") },          // 右键        |  bar空白处    |  rofi 执行 drun
+    
+    /* 点击状态栏操作 */
+    { ClkStatusText,       0,     Button1, clickstatusbar,{0} },   // 左键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal L
+    { ClkStatusText,       0,    Button2,  clickstatusbar,{0} },    // 中键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal M
+    { ClkStatusText,       0,    Button3,  clickstatusbar,{0} },    // 右键        |  点击状态栏   |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal R
+    { ClkStatusText,       0,    Button4,  clickstatusbar,{0} },    // 鼠标滚轮上  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal U
+    { ClkStatusText,       0,     Button5, clickstatusbar,{0} },   // 鼠标滚轮下  |  状态栏       |  根据状态栏的信号执行 ~/scripts/dwmstatusbar.sh $signal D
 };

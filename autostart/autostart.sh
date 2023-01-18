@@ -1,3 +1,6 @@
 #! /bin/sh
-touch ./autostart_test.tmp
+#
+source ~/.profile
+${DWM}/statusbar/statusbar.sh cron &> ${DWM}/statusbar/logfile
+picom --experimental-backends&
 
