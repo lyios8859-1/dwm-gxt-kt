@@ -22,8 +22,9 @@ static const unsigned int snap           = 10;        /* 边缘依附宽度 */
 static const unsigned int baralpha       = 0xc0;      /* 状态栏透明度 */
 static const unsigned int borderalpha    = 0xdd;      /* 边框透明度 */
 static const char *fonts[]               = {
+//"monospace:size=15",
 			"Monaco:style=Regular:size=13",
-			"Symbols Nerd Font:style=2048-em:size=17",
+			"Symbols Nerd Font:style=2048-em:size=23",
 		        "Microsoft YaHei:size=13:style=Regular:antialias=true:autohint:true",
 			//"JoyPixels:size=15:antialias=true:autohint=true"
 };
@@ -49,9 +50,8 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
 };
 
 /* 自定义脚本位置 */
-static const char *autostartscript = "/home/gxt_kt/yaoccc/my_dwm/autostart/autostart.sh";
-//static const char *statusbarscript = "$DWM/statusbar/statusbar.sh";
-static const char *statusbarscript = "/home/gxt_kt/yaoccc/my_dwm/statusbar/statusbar.sh";//gxt_kt
+static const char *autostartscript = "/home/gxt_kt/my_desktop/dwm/autostart/autostart.sh";
+static const char *statusbarscript = "/home/gxt_kt/my_desktop/dwm/statusbar/statusbar.sh";//gxt_kt
 
 /* 自定义 scratchpad instance */
 static const char scratchpadname[] = "scratchpad";
