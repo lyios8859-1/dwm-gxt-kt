@@ -23,9 +23,9 @@ static const unsigned int baralpha       = 0xc0;      /* 状态栏透明度 */
 static const unsigned int borderalpha    = 0xdd;      /* 边框透明度 */
 static const char *fonts[]               = {
 //"monospace:size=15",
-			"Monaco:style=Regular:size=13",
-			"Symbols Nerd Font:style=2048-em:size=23",
-		        "Microsoft YaHei:size=23:style=Regular:antialias=true:autohint:true",
+			"Monaco:style=Regular:size=11",
+			"Symbols Nerd Font:style=2048-em:size=18",
+		        "Microsoft YaHei:size=11:style=Regular:antialias=true:autohint:true",
 			//"JoyPixels:size=15:antialias=true:autohint=true"
 };
 static const char *colors[][3]           = {          /* 颜色设置 ColFg, ColBg, ColBorder */ 
