@@ -9,3 +9,5 @@ sleep 4 # need to wait dwm start complete and fcitx5 start complete
 
 cfw &
 crow &
+
+libinput-gestures-setup start # touchpad
