@@ -19,14 +19,20 @@ function complement(){
 
 
 update() {
-    cpu_text=$(top -n 1 -b | sed -n '3p' | awk '{printf "%2d", 100 - $8}')
+    #cpu_text=$(top -n 1 -b | sed -n '3p' | awk '{printf "%2d", 100 - $8}')
+    #cpu_usage=`top -bn1 | awk '/Cpu/ { print $2}'`
+    # cpu_text=${cpu_usage%.*}
+    # echo "cpu_text"${cpu_text}
+    cpu_text=`python3 ${DWM}/statusbar/get_data.py cpu_usage`
     if [[ ${cpu_text} -lt 50 ]];then
         icon="" #
     else
         icon="" #
     fi
     cpu_text=${cpu_text}"%"
-    temp_text=$(sensors | grep Tctl | awk '{printf "%d", $2}')  
+    #temp_text=$(sensors | grep Tctl | awk '{printf "%d", $2}')  
+    temp_text=$(( `cat /sys/class/thermal/thermal_zone0/temp` / 1000))
+    #temp_text=`python3 ${DWM}/statusbar/get_data.py cpu_temp`
     cpu_text=`complement ${cpu_text} 3`
     text="$cpu_text$temp_text"
 

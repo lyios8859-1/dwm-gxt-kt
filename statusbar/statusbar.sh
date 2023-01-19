@@ -42,18 +42,21 @@ cron() {
     while true; do
         to=()                                                            # 存放本次需要更新的模块
 
+        sleep 1 &
+	pid=$!
 	# gxt_kt add third place
-        [ $((i % 3600)) -eq 0 ]  && to=(${to[@]} package)    
-        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} net)  
-        [ $((i % 5)) -eq 0 ]  && to=(${to[@]} wifi) 
-        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} cpu ) 
-        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} mem ) 
-        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} vol ) 
-        [ $((i % 3600)) -eq 0 ]  && to=(${to[@]} icons) 
+        [ $((i % 3600)) -eq 0 ]  && to=(${to[@]} package)
+        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} net)   
+        [ $((i % 5)) -eq 0 ]  && to=(${to[@]} wifi)  
+        [ $((i % 4)) -eq 0 ]  && to=(${to[@]} cpu )  
+        [ $((i % 3)) -eq 0 ]  && to=(${to[@]} mem )  
+        [ $((i % 2)) -eq 0 ]  && to=(${to[@]} vol )  
+        [ $((i % 3600)) -eq 0 ]  && to=(${to[@]} icons)   
         [ $((i % 10)) -eq 0 ] && to=(${to[@]} bat)   
         [ $((i % 1)) -eq 0 ]   && to=(${to[@]} my_date)                     # 每1秒   更新 date
-        update ${to[@]}                                                  # 将需要更新的模块传递给 update
-        sleep 1; let i+=1
+        update ${to[@]}    &                                              # 将需要更新的模块传递给 update
+       	let i+=1
+	wait "${pid}"
     done &
 }
 
