@@ -24,7 +24,7 @@ static const unsigned int borderalpha    = 0xdd;      /* 边框透明度 */
 static const char *fonts[]               = {
 //"monospace:size=15",
 			"Monaco:style=Regular:size=11",
-			"Symbols Nerd Font:style=2048-em:size=18",
+			"Symbols Nerd Font:style=2048-em:size=17",
 		        "Microsoft YaHei:size=11:style=Regular:antialias=true:autohint:true",
 			//"JoyPixels:size=15:antialias=true:autohint=true"
 };
@@ -62,8 +62,8 @@ static const char scratchpadname[] = "scratchpad";
 //            
 // 对应的tag序号以及快捷键:   0:1  1:2  2:3  3:4  4:5  5:9  6:c  7:m  8:0  9:w 10:l
 //static const char *tags[] = { "", "", "", "", "5", "6", "7", "8", "9" };
-static const char *tags[] = { "", "", "", "", "", "","", "﬐","","" };
-//static const char *tags[] = { "", "","","", "","","", "﬐","","" };
+static const char *tags[] = { "", "", "", "", "", "","", "","﬐","" };
+//static const char *tags[] = { "", "","","", "","","", "","﬐","" };
 //static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 /* Lockfile */
@@ -74,6 +74,7 @@ static const Rule rules[] = {
     //{"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
     {"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
+    {"music",         NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
   //  { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
@@ -212,8 +213,8 @@ static Key keys[] = {
     TAGKEYS(XK_8, 7,  0)
     TAGKEYS(XK_9, 8,  0)
     //TAGKEYS(XK_9, 5,  "obs")
-    TAGKEYS(XK_c, 6,  "google-chrome-stable")
-    //TAGKEYS(XK_m, 7,  "~/scripts/music_player.sh")
+    TAGKEYS(XK_c, 6,  "google-chrome-stable") // 6+1 = tag
+    TAGKEYS(XK_m, 7,  "/opt/YesPlayMusic/yesplaymusic")
     //TAGKEYS(XK_0, 8,  "linuxqq")
     //TAGKEYS(XK_w, 9,  "/opt/apps/com.qq.weixin.deepin/files/run.sh")
     //TAGKEYS(XK_l, 10, "/opt/apps/com.qq.weixin.work.deepin/files/run.sh")
