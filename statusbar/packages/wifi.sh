@@ -7,38 +7,55 @@ text_color="^c#000080^^b#3870560x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
-    wifi_icon="褐"
-    wifi_text=$(nmcli | grep 已连接 | awk '{print $3}')
-    [ "$wifi_text" = "" ] && wifi_text="未连接"
+	wifi_icon="󱛏"
+	if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ;
+	then
+	 	# has wifi connect
+		wifi_signal=$(awk '/^\s*w/ { print int($3 * 100 / 70)}' /proc/net/wireless)
+		if   [ "$wifi_signal" -ge 80 ]; then wifi_icon="󰤨";
+		elif   [ "$wifi_signal" -ge 60 ]; then wifi_icon="󰤥";
+		elif   [ "$wifi_signal" -ge 40 ]; then wifi_icon="󰤢";
+		elif   [ "$wifi_signal" -ge 20 ]; then wifi_icon="󰤟";
+		else wifi_icon="󰤯"; fi
+	
+	elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; 
+	then
+	 	# not connect or disable wifi
+		grep -xq '0x1003' /sys/class/net/w*/flags && wifiicon="睊" || wifiicon="󰤬"
+	fi
 
-    icon=" $wifi_icon "
-    text=" $wifi_text "
+    	icon="$wifi_icon"
+    	text="$wifi_text"
 
-    sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
-    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
+    	sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
+    	printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
 }
 
 notify() {
     update
-    connect=$(nmcli | grep 已连接 | awk '{print $3}')
-    device=$(nmcli | grep 已连接 | awk '{print $1}'  | sed 's/：已连接//')
-    text="设备: $device\n连接: $connect"
-    [ "$connect" = "" ] && text="未连接到网络"
-    notify-send -r 9527 "$wifi_icon Wifi" "\n$wifi_text"
+	if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ;
+	then
+		wifi_signal=$(awk '/^\s*w/ { print int($3 * 100 / 70)}' /proc/net/wireless)
+		wifi_name=$(nmcli -t -f name,device connection show --active | grep wlan0 | cut -d\: -f1)
+		notify-send "Wifi connected." "Wifi name : ${wifi_name}\nSignal strength : ${wifi_signal}" -r 1025
+	
+	elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; 
+	then
+	 	# not connect or disable wifi
+		send_text=""
+		grep -xq '0x1003' /sys/class/net/w*/flags && send_text="Wifi no connected" || send_text="The wifi device is disable, please cheack your wifi device"
+		notify-send "${send_text}" "Press right buttom to open wifi connect tool.(nmtui)" -r 1024
+	fi
 }
 
-call_nm() {
-    pid1=`ps aux | grep 'st -t statusutil' | grep -v grep | awk '{print $2}'`
-    pid2=`ps aux | grep 'st -t statusutil_nm' | grep -v grep | awk '{print $2}'`
-    mx=`xdotool getmouselocation --shell | grep X= | sed 's/X=//'`
-    my=`xdotool getmouselocation --shell | grep Y= | sed 's/Y=//'`
-    kill $pid1 && kill $pid2 || st -t statusutil_nm -g 60x25+$((mx - 240))+$((my + 20)) -c noborder -e 'nmtui-connect'
+call_network_tool() {
+ 	alacritty -t nmtui --class floatingTerminal -e nmtui
 }
 
 click() {
     case "$1" in
         L) notify ;;
-        R) call_nm ;;
+        R) call_network_tool ;;
     esac
 }
 
