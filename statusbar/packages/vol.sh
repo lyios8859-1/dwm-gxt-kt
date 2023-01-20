@@ -40,7 +40,11 @@ update() {
 
 notify() {
     update
-    notify-send -r 9527 -h int:value:$vol_text -h string:hlcolor:#dddddd "$vol_icon Volume"
+    if [ ! "$volunmuted" ];      then 
+	    notify-send -r 9527 "婢  mute" ; 
+    else
+    	notify-send -r 9527 -h int:value:$vol_text -h string:hlcolor:#dddddd "$vol_icon Volume" ;
+    fi
 }
 
 click() {
