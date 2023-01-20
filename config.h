@@ -218,9 +218,9 @@ static Key keys[] = {
     //TAGKEYS(XK_w, 9,  "/opt/apps/com.qq.weixin.deepin/files/run.sh")
     //TAGKEYS(XK_l, 10, "/opt/apps/com.qq.weixin.work.deepin/files/run.sh")
     
-{ 0, XF86XK_AudioMute,        spawn, SHCMD("pamixer -t; ") },
-{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("pamixer --allow-boost -i 5;") },
-{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("pamixer --allow-boost -d 5;") },
+{ 0, XF86XK_AudioMute,        spawn, SHCMD("pamixer -t; /home/gxt_kt/my_desktop/dwm/statusbar/packages/vol.sh notify &  ") },
+{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("pamixer --allow-boost -i 5;/home/gxt_kt/my_desktop/dwm/statusbar/packages/vol.sh notify & ") },
+{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("pamixer --allow-boost -d 5;/home/gxt_kt/my_desktop/dwm/statusbar/packages/vol.sh notify & ") },
 { 0, XF86XK_AudioPause,       spawn, SHCMD("playerctl stop") },
 { 0, XF86XK_AudioPrev,        spawn, SHCMD("playerctl previous") },
 { 0, XF86XK_AudioNext,        spawn, SHCMD("playerctl next") },
