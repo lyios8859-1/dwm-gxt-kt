@@ -84,7 +84,7 @@ notify() {
     _remaining="剩余: $(acpi | sed 's/^Battery 0: //g' | awk -F ',' '{print $2}' | sed 's/^[ ]//g')"
     _time="可用时间: $(acpi | sed 's/^Battery 0: //g' | awk -F ',' '{print $3}' | sed 's/^[ ]//g' | awk '{print $1}')"
     [ "$_time" = "可用时间: " ] && _time=""
-    notify-send "$bat_icon Battery" "\n$_status\n$_remaining\n$_time" -r 9527
+    notify-send "$bat_icon Battery" "\n$_status\n$_remaining\n$_time" -r 9530
 }
 
 click() {

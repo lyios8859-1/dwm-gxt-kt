@@ -152,10 +152,9 @@ static Key keys[] = {
     //{ MODKEY,              XK_b,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */
     //{ MODKEY|ShiftMask,    XK_b,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
 
-    //{ MODKEY,    XK_q,  killclient,   {0} },   /* super q     |  关闭窗口 */
     // win+q 关闭窗口容易误触，改成win+ctrl+q
     { MODKEY|ShiftMask,  XK_q,  killclient, {0} },   /* super q |  关闭窗口 */
-    //{ MODKEY|ControlMask, XK_q,  forcekillclient,  {0} },    /* super ctrl q |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
+    { MODKEY|ControlMask, XK_q, forcekillclient,  {0} },    /* super ctrl q |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
     { MODKEY|ShiftMask, XK_Escape, quit, {0} },  /* super  shift  q    |  退出dwm */
     { MODKEY|ControlMask|ShiftMask, XK_Escape,    quit,            {1} },      		 /* super shift ctrl q | restart dwm*/
 
@@ -189,7 +188,8 @@ static Key keys[] = {
     //{ MODKEY|ShiftMask,    XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh drun") },                            /* super shift d    | rofi: 执行drun         */
     //{ MODKEY,              XK_p,      spawn, SHCMD("~/scripts/call_rofi.sh custom") },                          /* super p          | rofi: 执行自定义脚本   */
     
-    { MODKEY,              XK_p,        spawn, SHCMD("rofi -show drun" ) },                                   /* super  p    | rofi: 执行window       */
+    { MODKEY,              XK_p,        spawn, SHCMD("rofi -show drun -show-icons" ) },                                   /* super  p    | rofi: 执行window       */
+    { MODKEY|ShiftMask,    XK_p,        spawn, SHCMD("rofi -show run -show-icons") },                                   /* super  p    | rofi: 执行window       */
     
     //{ MODKEY,              XK_F1,     spawn, SHCMD("pcmanfm") },                                                /* super F1         | 文件管理器             */
     //{ MODKEY,              XK_k,      spawn, SHCMD("~/scripts/blurlock.sh") },                                  /* super k          | 锁定屏幕               */
