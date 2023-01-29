@@ -191,6 +191,7 @@ struct Systray {
 
 /* function declarations */
 static void logtofile(char log[100]);
+void gDebug(const char *fmt, ...);
 
 static void tile(Monitor *m);
 static void magicgrid(Monitor *m);
@@ -415,6 +416,22 @@ logtofile(char log[100])
     char cmd [150];
     sprintf(cmd, "echo '%s' >> ~/log", log);
     system(cmd);
+}
+
+char _gDebugBuf[150];
+void gDebug(const char *fmt, ...) {
+#ifdef G_NO_DEBUG_OUTPUT 
+  return;
+#endif 
+  va_list ap;
+  va_start(ap, fmt);
+  vsprintf((char *) _gDebugBuf, fmt, ap);
+  va_end(ap);
+  int i = strlen((const char *) _gDebugBuf); 
+  char cmd[150];
+  // sprintf(cmd,"%.*s", i, _gDebugBuf);
+  sprintf(cmd, "echo '%.s' >> ~/log", i , _gDebugBuf );
+  system(cmd);
 }
 
 void
@@ -2672,6 +2689,9 @@ show(Client *c)
 
     XMapWindow(dpy, c->win);
     setclientstate(c, NormalState);
+    // if (!strcmp(c->name, scratchpadname)) {
+    //   hiddenWinStackTop--;
+    // } 
     hiddenWinStackTop--;
     arrange(c->mon);
 }
