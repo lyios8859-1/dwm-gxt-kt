@@ -1036,6 +1036,9 @@ drawbar(Monitor *m)
     } else {
         for (i = 0; i < LENGTH(tags); i++) {
             /* do not draw vacant tags */
+          if(i==1) {
+            gDebug("occ=%d m->tagset[m->seltags]=%d",occ&1<<i,m->tagset[m->seltags]&1<<i);
+          }
             if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
                 continue;
 
@@ -1614,12 +1617,10 @@ hide(Client *c) {
     XSelectInput(dpy, w, ca.your_event_mask);
     XUngrabServer(dpy);
 
-    if (!strcmp(c->name, scratchpadname)) {
-      gDebug("hide is scratchpadname\n");
-    } else {
+    //gxt_kt resolve bug
+    if (strcmp(c->name, scratchpadname)!=0) { 
       hiddenWinStack[++hiddenWinStackTop] = c;
     } 
-    gDebug("hide function val=%d",hiddenWinStackTop);
 
     focus(c->snext);
     arrange(c->mon);
@@ -2697,14 +2698,13 @@ show(Client *c)
     XMapWindow(dpy, c->win);
     setclientstate(c, NormalState);
 
-    if (!strcmp(c->name, scratchpadname)) {
-      gDebug("show is scratchpadname\n");
-    } else {
+    // gxt_kt resolve bug
+    if (strcmp(c->name, scratchpadname)!=0) {
       hiddenWinStackTop--;
-    } 
-    gDebug("hiddenWinStackTop-- and val=%d\n",hiddenWinStackTop);
+    }
 
     arrange(c->mon);
+
 }
 
 // 该方法为显示当前tag下的窗口的func，切换时会将原窗口下的win放到屏幕之外 (左边的屏幕隐藏到屏幕左边 右边的屏幕隐藏到屏幕右边)
