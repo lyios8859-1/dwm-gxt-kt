@@ -428,9 +428,10 @@ void gDebug(const char *fmt, ...) {
   vsprintf((char *) _gDebugBuf, fmt, ap);
   va_end(ap);
   int i = strlen((const char *) _gDebugBuf); 
+  char tmp[150];
+  sprintf(tmp,"%.*s", i, _gDebugBuf);
   char cmd[150];
-  // sprintf(cmd,"%.*s", i, _gDebugBuf);
-  sprintf(cmd, "echo '%.s' >> ~/log", i , _gDebugBuf );
+  sprintf(cmd, "echo '%s' >> ~/log",tmp);
   system(cmd);
 }
 
@@ -1614,6 +1615,10 @@ hide(Client *c) {
     XUngrabServer(dpy);
 
     hiddenWinStack[++hiddenWinStackTop] = c;
+    gDebug("hide function val=%d",hiddenWinStackTop);
+    if (!strcmp(c->name, scratchpadname)) {
+      gDebug("hide is scratchpadname\n");
+    } 
     focus(c->snext);
     arrange(c->mon);
 }
@@ -2689,10 +2694,11 @@ show(Client *c)
 
     XMapWindow(dpy, c->win);
     setclientstate(c, NormalState);
-    // if (!strcmp(c->name, scratchpadname)) {
-    //   hiddenWinStackTop--;
-    // } 
     hiddenWinStackTop--;
+    gDebug("hiddenWinStackTop-- and val=%d\n",hiddenWinStackTop);
+    if (!strcmp(c->name, scratchpadname)) {
+      gDebug("show is scratchpadname\n");
+    } 
     arrange(c->mon);
 }
 
