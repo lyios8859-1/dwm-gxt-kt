@@ -3,14 +3,16 @@
 source ~/.profile
 
 this=_my_date
-icon_color="^c#4B005B^^b#7E51680x88^"
-text_color="^c#4B005B^^b#7E51680x99^"
+text_color="^c#000000^^b#ffffff0x99^"
+icon_color="^c#000000^^b#ffffff0x99^"
+# icon_color="^c#4B005B^^b#7E51680x88^"
+# text_color="^c#4B005B^^b#7E51680x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
-    time_text="$(date '+%m/%d %T')"
-    icon=""
-    text="$(date '+%m/%d %T')"
+    # time_text="$(date '+%m/%d %T')"
+    icon=""
+    text=" $(date '+%T') "
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
@@ -19,7 +21,7 @@ update() {
 notify() {
     _cal=$(cal --color=always | sed 1,2d | sed 's/..7m/<b><span color="#ff79c6">/;s/..27m/<\/span><\/b>/' )
     _todo=$(cat ~/.todo.md | sed 's/\(- \[x\] \)\(.*\)/<span color="#ff79c6">\1<s>\2<\/s><\/span>/' | sed 's/- \[[ |x]\] //')
-    notify-send " Calendar" "\n$_cal\n$_todo" -r 9540
+    notify-send " Calendar" "\nData: $(date '+%y-%m-%d \nTime: %T')\n\n$_cal\n$_todo" -r 9540
 }
 
 call_todo() {

@@ -6,16 +6,16 @@ static const unsigned int borderpx       = 5;         /* 窗口边框大小 */
 static const unsigned int systraypinning = 1;         /* 托盘跟随的显示器 0代表不指定显示器 */
 static const unsigned int systrayspacing = 1;         /* 托盘间距 */
 static const unsigned int systrayspadding = 5;        /* 托盘和状态栏的间隙 */
-static int gappi                         = 12;        /* 窗口与窗口 缝隙大小 */
-static int gappo                         = 12;        /* 窗口与边缘 缝隙大小 */
-static const int _gappo                  = 12;        /* 窗口与窗口 缝隙大小 不可变 用于恢复时的默认值 */
-static const int _gappi                  = 12;        /* 窗口与边缘 缝隙大小 不可变 用于恢复时的默认值 */
+static int gappi                         = 20;        /* 窗口与窗口 缝隙大小 */
+static int gappo                         = 20;        /* 窗口与边缘 缝隙大小 */
+static const int _gappo                  = 20;        /* 窗口与窗口 缝隙大小 不可变 用于恢复时的默认值 */
+static const int _gappi                  = 20;        /* 窗口与边缘 缝隙大小 不可变 用于恢复时的默认值 */
 static const int vertpad                 = 3;         /* vertical padding of bar */
 static const int sidepad                 = 3;         /* horizontal padding of bar */
 static const int overviewgappi           = 24;        /* overview时 窗口与边缘 缝隙大小 */
 static const int overviewgappo           = 60;        /* overview时 窗口与窗口 缝隙大小 */
 static const int showbar                 = 1;         /* 是否显示状态栏 */
-static const int topbar                  = 1;         /* 指定状态栏位置 0底部 1顶部 */
+static const int topbar                  = 0;         /* 指定状态栏位置 0底部 1顶部 */
 static const float mfact                 = 0.55;       /* 主工作区 大小比例 */
 static const int   nmaster               = 1;         /* 主工作区 窗口数量 */
 static const unsigned int snap           = 10;        /* 边缘依附宽度 */
@@ -90,7 +90,7 @@ static const Rule rules[] = {
     {"global",   NULL,    NULL,    TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
 };
 static const char *overviewtag = "OVERVIEW";
-static const Layout overviewlayout = { "舘",  overview };
+static const Layout overviewlayout = { "",  overview };
 //﬿
 /* 自定义布局 */
 #include "gaplessgrid.c"

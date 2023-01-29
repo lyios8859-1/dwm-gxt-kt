@@ -17,8 +17,8 @@
 source ~/.profile
 
 this=_vol
-icon_color="^c#442266^^b#7879560x88^"
-text_color="^c#442266^^b#7879560x99^"
+icon_color="^c#ffffff^^b#7b68ee0x88^"
+text_color="^c#ffffff^^b#7b78ee0x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
@@ -31,8 +31,8 @@ update() {
     elif [ "$vol_text" -le 50 ]; then vol_icon="奔";
     else vol_icon="墳"; fi
 
-    icon="$vol_icon"
-    text="$vol_text%"
+    icon=" $vol_icon"
+    text="$vol_text% "
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp

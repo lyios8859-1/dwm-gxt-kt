@@ -3,16 +3,18 @@
 source ~/.profile
 this=_package # gxt_kt
 
-icon_color="^c#3B001B^^b#4865660x88^"
-text_color="^c#3B001B^^b#4865660x99^"
+text_color="^c#4169e1^^b#7fffd40x99^"
+icon_color="^c#4169e1^^b#7fffd40x99^"
+# icon_color="^c#3B001B^^b#4865660x88^"
+# text_color="^c#3B001B^^b#4865660x99^"
 
 signal=$(echo "^s$this^" | sed 's/_//')
 
 
 update() {
-    icon="" # 
+    icon=" " # 
     #text=$(pacman -Qu | grep -Fcv "[ignored]" | sed "s/^/📦/;s/^📦0$/[Latest]/g")
-    text=$(pacman -Qu | grep -Fcv "[ignored]" )
+    text="$(pacman -Qu | grep -Fcv "[ignored]" ) "
     #text=$(pacman -Qu | grep -Fcv "[ignored]" | sed "s/^/📦/g")
 
 if [ ${text} -ne 0 ]

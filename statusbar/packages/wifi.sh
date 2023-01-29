@@ -2,8 +2,10 @@
 source ~/.profile
 
 this=_wifi
-icon_color="^c#000080^^b#3870560x88^"
-text_color="^c#000080^^b#3870560x99^"
+# icon_color="^c#000080^^b#0064000x88^"
+# text_color="^c#000080^^b#0064000x99^"
+icon_color="^c#222222^^b#ffff000x88^"
+text_color="^c#222222^^b#ffff000x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
@@ -24,8 +26,8 @@ update() {
 		grep -xq '0x1003' /sys/class/net/w*/flags && wifiicon="睊" || wifiicon="󰤬"
 	fi
 
-    	icon="$wifi_icon"
-    	text="$wifi_text"
+    	icon=" $wifi_icon"
+    	text="$wifi_text "
 
     	sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     	printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp

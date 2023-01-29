@@ -2,9 +2,12 @@
 
 source ~/.profile
 this=_net
-icon_color="^c#3B001B^^b#4865660x88^"
-text_color="^c#3B001B^^b#4865660x99^"
-
+icon_color="^c#333333^^b#ee82ee0x88^"
+text_color="^c#333333^^b#ee82ee0x99^"
+# icon_color="^c#3E206F^^b#6E51760x88^"
+# text_color="^c#3E206F^^b#6E51760x99^"
+# icon_color="^c#3B001B^^b#4865660x88^"
+# text_color="^c#3B001B^^b#4865660x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 update_net() {
@@ -22,6 +25,10 @@ update_net() {
 
 update() {
     icon=""
+
+  upload=`python3 ${DWM}/statusbar/get_data.py upload`
+  download=`python3 ${DWM}/statusbar/get_data.py download`
+
  RX=$(update_net /sys/class/net/[ew]*/statistics/rx_bytes)
  TX=$(update_net /sys/class/net/[ew]*/statistics/tx_bytes)
 
@@ -32,21 +39,22 @@ function complement(){
   echo -e "${1}${busispace}" 
 }
 
+
 # 换算单位
 if [[ $RX -lt 1024 ]];then
     # 如果接收速率小于1024,则单位为B/s
     RX="${RX}B"
     RX=`complement ${RX} 8`
-elif [[ $RX -gt 1048576 ]];then
-    # 否则如果接收速率大于 1048576,则改变单位为MB/s
-    #RX=$(echo $RX | awk '{printf "%.1f%s" ${1}/1048576 "MB/s"}')
-    RX=$(echo $RX | awk '{printf "%.1fMB",$1/1048576}')
-    RX=`complement ${RX} 8`
-else
+elif [[ $RX -lt 1048576 ]];then
     # 否则如果接收速率大于1024但小于1048576,则单位为KB/s
     RX=$(echo $RX | awk '{printf "%.1fKB",$1/1024}')
     RX=`complement ${RX} 8`
    # RX=$(echo $RX | awk '{printf "%.1f%s" ${1}/1024 "KB/s"}')
+else
+    # 否则如果接收速率大于 1048576,则改变单位为MB/s
+    #RX=$(echo $RX | awk '{printf "%.1f%s" ${1}/1048576 "MB/s"}')
+    RX=$(echo $RX | awk '{printf "%.1fMB",$1/1048576}')
+    RX=`complement ${RX} 8`
 fi
 
 # 换算单位
@@ -68,7 +76,8 @@ fi
 
 #printf "🔼:$TX 🔽:$RX"
 #
-text="${TX}${RX}"
+# text="${TX}${RX}"
+text=" ${RX}"  # 感觉平常发送网速用不到，占地方，就不要了,加上的话就是上面一句
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
 }

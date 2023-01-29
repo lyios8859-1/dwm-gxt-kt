@@ -5,11 +5,11 @@ source ~/.profile
 
 
 this=_icons
-color="^c#2D1B46^^b#5555660x66^"
+color="^c#111111^^b#ff7f500x66^"
 signal=$(echo "^s$this^" | sed 's/_//')
-#
+#
 update() {
-    icons=("")
+    icons=("  ")
     #[ "$(sudo docker ps | grep 'v2raya')" ] && icons=(${icons[@]} "")
     #[ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
     [ "$AUTOSCREEN" = "OFF" ] && icons=(${icons[@]} "ﴸ")

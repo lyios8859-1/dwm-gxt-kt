@@ -3,8 +3,10 @@
 
 source ~/.profile
 this=_bat
-icon_color="^c#3B001B^^b#4865660x88^"
-text_color="^c#3B001B^^b#4865660x99^"
+# icon_color="^c#3B001B^^b#4865660x88^"
+# icon_color="^c#ffffff^^b#00b5b80x99^"
+text_color="^c#4169e1^^b#7fffd40x99^"
+icon_color="^c#4169e1^^b#7fffd40x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 
 function complement(){
@@ -71,8 +73,8 @@ else
     bat_icon="󰂑";
 fi
 
-    icon="$bat_icon"
-    text="$bat_text%"
+    icon=" $bat_icon"
+    text="$bat_text% "
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
