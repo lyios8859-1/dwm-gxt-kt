@@ -1614,11 +1614,13 @@ hide(Client *c) {
     XSelectInput(dpy, w, ca.your_event_mask);
     XUngrabServer(dpy);
 
-    hiddenWinStack[++hiddenWinStackTop] = c;
-    gDebug("hide function val=%d",hiddenWinStackTop);
     if (!strcmp(c->name, scratchpadname)) {
       gDebug("hide is scratchpadname\n");
+    } else {
+      hiddenWinStack[++hiddenWinStackTop] = c;
     } 
+    gDebug("hide function val=%d",hiddenWinStackTop);
+
     focus(c->snext);
     arrange(c->mon);
 }
@@ -2694,11 +2696,14 @@ show(Client *c)
 
     XMapWindow(dpy, c->win);
     setclientstate(c, NormalState);
-    hiddenWinStackTop--;
-    gDebug("hiddenWinStackTop-- and val=%d\n",hiddenWinStackTop);
+
     if (!strcmp(c->name, scratchpadname)) {
       gDebug("show is scratchpadname\n");
+    } else {
+      hiddenWinStackTop--;
     } 
+    gDebug("hiddenWinStackTop-- and val=%d\n",hiddenWinStackTop);
+
     arrange(c->mon);
 }
 
