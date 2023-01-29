@@ -1017,7 +1017,13 @@ drawbar(Monitor *m)
     for (c = m->clients; c; c = c->next) {
         if (ISVISIBLE(c))
             n++;
-        occ |= c->tags == TAGMASK ? 0 : c->tags;
+
+        // gxt_kt resolve scratchpad and show vacant tag icon bug
+        if (strcmp(c->name, scratchpadname) != 0) {
+            occ |= c->tags == TAGMASK ? 0 : c->tags;
+        }
+
+        // occ |= c->tags == TAGMASK ? 0 : c->tags;
         if (c->isurgent)
             urg |= c->tags;
     }
@@ -1036,9 +1042,6 @@ drawbar(Monitor *m)
     } else {
         for (i = 0; i < LENGTH(tags); i++) {
             /* do not draw vacant tags */
-          if(i==1) {
-            gDebug("occ=%d m->tagset[m->seltags]=%d",occ&1<<i,m->tagset[m->seltags]&1<<i);
-          }
             if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
                 continue;
 
