@@ -1692,6 +1692,18 @@ killclient(const Arg *arg)
 
     if (!selmon->sel)
         return;
+
+    // gxt_kt 
+    c = selmon->clients;
+    for (int i = 0; i < sizeof(disablekillclient) / sizeof(int *); i++) {
+        if (!strcmp(c->name, disablekillclient[i])) {
+            gDebug("!!! return c->name=%s",c->name);
+            return;
+        } else {
+            gDebug("kellclient c->name=%s",c->name);
+        }
+    }
+
     if (!sendevent(selmon->sel->win, wmatom[WMDelete], NoEventMask, wmatom[WMDelete], CurrentTime, 0 , 0, 0)) {
         XGrabServer(dpy);
         XSetErrorHandler(xerrordummy);

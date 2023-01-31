@@ -49,6 +49,12 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
     [SchemeStatusText] = { OPAQUE, 0x88, NULL },
 };
 
+
+/* 防止误关闭，一些程序关闭快捷键不会响应 */
+static const char *disablekillclient[] = {
+  "wemeetapp", // 腾讯会议顶栏
+};
+
 /* 自定义脚本位置 */
 static const char *autostartscript = "/home/gxt_kt/my_desktop/dwm/autostart/autostart.sh";
 static const char *statusbarscript = "/home/gxt_kt/my_desktop/dwm/statusbar/statusbar.sh";//gxt_kt
@@ -75,6 +81,7 @@ static const Rule rules[] = {
     {"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"music",         NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
+    {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
   //  { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
@@ -84,10 +91,19 @@ static const Rule rules[] = {
   //  { "图片预览",           "图片预览",           "图片预览",        0,            1,          0,          0,        -1 },
     //{ NULL,                  NULL,                "crx_",            0,            1,          0,          0,        -1 },
   //  {"flameshot",            NULL,                 NULL,             0,            1,          0,          0,        -1 },
-  //  {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
-    {"float",         NULL,  NULL, 0,            1,          0,          0,        -1 }, // 特殊class client默认浮动
-    {"noborder",      NULL,  NULL, 0,            1,          0,          1,        -1 }, // 特殊class client默认无边框
-    {"global",   NULL,    NULL,    TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
+      /** 部分特殊class的规则 */
+    {"FG",                   NULL,                 NULL,             TAGMASK,      1,          1,          1,        -1 }, // 浮动 + 全局
+    {"FN",                   NULL,                 NULL,             0,            1,          0,          1,        -1 }, // 浮动 + 无边框
+    {"GN",                   NULL,                 NULL,             TAGMASK,      0,          1,          1,        -1 }, // 全局 + 无边框
+    {"FGN",                  NULL,                 NULL,             TAGMASK,      1,          1,          1,        -1 }, // 浮动 + 全局 + 无边框
+                                                                                                                           
+                                                                                                                           //
+    {"float",                NULL,                 NULL,             0,            1,          0,          0,        -1 }, // 浮动
+    {"noborder",             NULL,                 NULL,             0,            0,          0,          1,        -1 }, // 无边框
+    {"global",               NULL,                 NULL,             TAGMASK,      0,          1,          0,        -1 }, // 全局
+    // {"float",         NULL,  NULL, 0,            1,          0,          0,        -1 }, // 特殊class client默认浮动
+    // {"noborder",      NULL,  NULL, 0,            1,          0,          1,        -1 }, // 特殊class client默认无边框
+    // {"global",   NULL,    NULL,    TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
 };
 static const char *overviewtag = "OVERVIEW";
 static const Layout overviewlayout = { "",  overview };
