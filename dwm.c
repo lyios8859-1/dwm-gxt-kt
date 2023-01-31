@@ -1693,14 +1693,18 @@ killclient(const Arg *arg)
     if (!selmon->sel)
         return;
 
-    // gxt_kt 
+    // gxt_kt
     c = selmon->clients;
-    for (int i = 0; i < sizeof(disablekillclient) / sizeof(int *); i++) {
+    int nums = sizeof(disablekillclient) / sizeof(int *);
+    for (int i = 0; i < nums; i++) {
         if (!strcmp(c->name, disablekillclient[i])) {
-            gDebug("!!! return c->name=%s",c->name);
+            gDebug("!!! return c->name=%s", c->name);
+            char cmd[150];
+            sprintf(cmd,"notify-send 'killclient protected' '%s'" ,c->name);
+            system(cmd);
             return;
         } else {
-            gDebug("kellclient c->name=%s",c->name);
+            gDebug("kellclient c->name=%s", c->name);
         }
     }
 

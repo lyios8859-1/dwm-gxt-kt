@@ -82,6 +82,10 @@ static const Rule rules[] = {
     {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"music",         NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
     {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    {"钉钉",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    {"dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    {"com.alibabainc.dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    {"tblive",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
   //  { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
