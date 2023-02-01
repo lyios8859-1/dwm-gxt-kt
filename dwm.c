@@ -1684,6 +1684,10 @@ keypress(XEvent *e)
             keys[i].func(&(keys[i].arg));
 }
 
+// gxt_kt 维护一个变量，如果是从强制kill函数来的，就不去检索是否在禁止kill数组里面
+// 换句话说，普通kill会检查，强制kill不会。
+unsigned char if_forcekill2kill =0;
+
 void
 killclient(const Arg *arg)
 {
@@ -1694,19 +1698,24 @@ killclient(const Arg *arg)
         return;
 
     // gxt_kt
-    c = selmon->clients;
-    int nums = sizeof(disablekillclient) / sizeof(int *);
-    for (int i = 0; i < nums; i++) {
-        if (!strcmp(c->name, disablekillclient[i])) {
-            gDebug("!!! return c->name=%s", c->name);
-            char cmd[150];
-            sprintf(cmd,"notify-send 'killclient protected' '%s'" ,c->name);
-            system(cmd);
-            return;
-        } else {
-            gDebug("kellclient c->name=%s", c->name);
+    if (if_forcekill2kill == 0) { // from forcekill to kill
+        c = selmon->clients;
+        int nums = sizeof(disablekillclient) / sizeof(int *);
+        for (int i = 0; i < nums; i++) {
+            if (!strcmp(c->name, disablekillclient[i])) {
+                // gDebug("!!! return c->name=%s", c->name);
+                char cmd[150];
+                sprintf(cmd, "notify-send  '%s' \
+                    'Killclient protected\nPlease use forcekill' ",
+                        c->name);
+                system(cmd);
+                return;
+            } else {
+                // gDebug("kellclient c->name=%s", c->name);
+            }
         }
     }
+    if_forcekill2kill = 0;
 
     if (!sendevent(selmon->sel->win, wmatom[WMDelete], NoEventMask, wmatom[WMDelete], CurrentTime, 0 , 0, 0)) {
         XGrabServer(dpy);
@@ -1729,6 +1738,10 @@ forcekillclient(const Arg *arg)
 {
     if (!selmon->sel)
         return;
+
+    // gxt_kt
+    if_forcekill2kill = 1; 
+    
     killclient(arg);
     unmanage(selmon->sel, 1);
 }

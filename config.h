@@ -53,6 +53,7 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
 /* 防止误关闭，一些程序关闭快捷键不会响应 */
 static const char *disablekillclient[] = {
   "wemeetapp", // 腾讯会议顶栏
+  "tmux", // tmux不要误关了，防止有子窗口还在运行
 };
 
 /* 自定义脚本位置 */
@@ -78,6 +79,7 @@ static char lockfile[] = "/tmp/dwm.lock"; // doublepressquitPatch
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor */
     //{"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
+    {"obs",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
     {"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"music",         NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
@@ -233,7 +235,7 @@ static Key keys[] = {
     TAGKEYS(XK_7, 6,  0)
     TAGKEYS(XK_8, 7,  0)
     TAGKEYS(XK_9, 8,  0)
-    //TAGKEYS(XK_9, 5,  "obs")
+    TAGKEYS(XK_r, 5,  "obs")
     TAGKEYS(XK_c, 6,  "google-chrome-stable") // 6+1 = tag
     TAGKEYS(XK_m, 7,  "/opt/YesPlayMusic/yesplaymusic")
     //TAGKEYS(XK_0, 8,  "linuxqq")
