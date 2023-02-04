@@ -1702,18 +1702,18 @@ killclient(const Arg *arg)
         c = selmon->clients;
         int nums = sizeof(disablekillclient) / sizeof(int *);
         for (int i = 0; i < nums; i++) {
-            if (!strcmp(c->name, disablekillclient[i])) {
-                // gDebug("!!! return c->name=%s", c->name);
+            if (!strcmp(selmon->sel->name, disablekillclient[i])) {
+                // gDebug("!!! return sel->name=%s", selmon->sel->name);
                 char cmd[150];
-                sprintf(cmd, "notify-send  '%s' \
-                    'Killclient protected\nPlease use forcekill' ",
-                        c->name);
+                sprintf(cmd,
+                        "notify-send  '%s' \
+                        'Killclient protected\nPlease use forcekill' ",
+                        selmon->sel->name);
                 system(cmd);
                 return;
-            } else {
-                // gDebug("kellclient c->name=%s", c->name);
             }
         }
+        // gDebug("kellclient sel->name=%s", selmon->sel->name);
     }
     if_forcekill2kill = 0;
 
