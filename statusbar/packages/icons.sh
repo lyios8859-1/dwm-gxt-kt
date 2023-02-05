@@ -13,7 +13,7 @@ update() {
     #[ "$(sudo docker ps | grep 'v2raya')" ] && icons=(${icons[@]} "")
     #[ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
     [ "$AUTOSCREEN" = "OFF" ] && icons=(${icons[@]} "ﴸ")
-
+    
     text="${icons[@]}"
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
@@ -35,6 +35,10 @@ notify() {
         #" 锁定") ~/scripts/blurlock.sh ;;
     #esac
 #}
+
+ChangeWallpaper() {
+
+}
 
 click() {
     case "$1" in
