@@ -21,29 +21,30 @@ update() {
 }
 
 notify() {
-    texts=""
+    texts="" 
     #[ "$(sudo docker ps | grep 'v2raya')" ] && texts="$texts\n v2raya 已启动"
     #[ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && texts="$texts\n WH-1000XM4 已链接"
     [ "$texts" != "" ] && notify-send " Info" "$texts" -r 9527
 }
 
-#call_menu() {
-    #case $(echo -e ' 关机\n 重启\n 休眠\n 锁定' | rofi -dmenu -window-title power -theme ~/scripts/config/rofi.rasi) in
-        #" 关机") sudo poweroff ;;
-        #" 重启") sudo reboot ;;
-        #" 休眠") sudo systemctl hibernate ;;
-        #" 锁定") ~/scripts/blurlock.sh ;;
-    #esac
-#}
+CallMenu() {
+    case $(echo -e '⏻ Shutdown\n Restart\n⏾ Sleep\n Lock' | rofi -dmenu -window-title power) in
+        "⏻ Shutdown") shutdown -h now ;;
+        " Restart") reboot ;;
+        # "⏾ Sleep") systemctl hibernate ;;
+        "⏾ Sleep") notify-send "⏾ Sleep Error!" "Sleep cannot use now because of amdgpu driver.\nMay solve it later." -r 4040 ;;
+        " Lock") ${DWM}/i3lock/lock.sh;; # need i3lock-color
+    esac
+}
 
 ChangeWallpaper() {
-
+  feh --recrsive --bg-fill  --randomize ~/my_desktop/backgrouds/animation/* &
 }
 
 click() {
     case "$1" in
-        L) notify; feh --randomize --bg-fill ~/Pictures/wallpaper/*.png ;;
-        #R) call_menu ;;
+        L) CallMenu ;;
+        R) ChangeWallpaper;;
     esac
 }
 
