@@ -50,7 +50,7 @@ cron() {
         [ $((i % 3)) -eq 0 ]  && to=(${to[@]} wifi)  
         [ $((i % 4)) -eq 0 ]  && to=(${to[@]} cpu )  
         [ $((i % 3)) -eq 0 ]  && to=(${to[@]} mem )  
-        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} vol )  
+        [ $((i % 20)) -eq 0 ]  && to=(${to[@]} vol )  
         [ $((i % 3600)) -eq 0 ]  && to=(${to[@]} icons)   
         [ $((i % 5)) -eq 0 ] && to=(${to[@]} bat)   
         [ $((i % 1)) -eq 0 ]   && to=(${to[@]} my_date)                     # 每1秒   更新 date

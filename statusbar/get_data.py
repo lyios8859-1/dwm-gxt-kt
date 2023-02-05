@@ -24,6 +24,51 @@ def GetRamUsage():
 #     print("上传：{0}KB/s".format("%.2f"%sent))
 #     print("下载：{0}KB/s".format("%.2f"%recv))
 
+
+# ref: https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level
+# Bug need Install : pip3 install git+https://github.com/pybluez/pybluez@master
+def GetBluetoothBattery():
+    from bluetooth_battery import BatteryStateQuerier, BatteryQueryError, BluetoothError
+    try:
+        # Autodetects SPP port
+        # query = BatteryStateQuerier( "11:22:33:44:55:66")  # Can raise BluetoothError when autodetecting port
+        query = BatteryStateQuerier("94:37:F7:73:DB:03")
+        # # or with given port
+        # query = BatteryStateQuerier("11:22:33:44:55:66", "4")
+        # result = int(query)  # returns integer between 0 and 100
+        # or
+        # result = str(query)  # returns "0%".."100%"
+        icon="󰥊"
+        result =int(query)
+        if(result>=95) : icon="󰥈"
+        elif(result>=90) : icon="󰥆"
+        elif(result>=80) : icon="󰥅"
+        elif(result>=70) : icon="󰥄"
+        elif(result>=60) : icon="󰥃"
+        elif(result>=50) : icon="󰥂"
+        elif(result>=40) : icon="󰥁"
+        elif(result>=30) : icon="󰥀"
+        elif(result>=20) : icon="󰤿"
+        elif(result>=10) : icon="󰤾"
+        else : icon="󰥇"
+
+        # print(result)
+        # result = str(query)  # Can raise BluetoothError when device is down or port is wrong
+        # print(result)
+        # return str("󰥰"+result)
+        return str(icon)
+        # Can raise BatteryQueryError when the device is unsupported
+    except BluetoothError as e:
+        # Handle device is offline
+        # print("Handle device is offline")
+        return "󱔑"
+        ...
+    except BatteryQueryError as e:
+        # Handle device is unsupported
+        # print("Handle device is unsupported")
+        return "󱃓"
+        ...
+
 if __name__=='__main__':
     match sys.argv[1] :
         case "cpu_temp" : 
@@ -37,4 +82,5 @@ if __name__=='__main__':
         #     print(getNet())
         # case "download" : 
         #     print(GetRamUsage())
-
+        case "bluetooth_battery" :
+            print(GetBluetoothBattery())

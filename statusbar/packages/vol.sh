@@ -25,6 +25,10 @@ update() {
     sink=$(pactl info | grep 'Default Sink' | awk '{print $3}')
     volunmuted=$(pactl list sinks | grep $sink -A 6 | sed -n '7p' | grep 'Mute: no')
     vol_text=$(pactl list sinks | grep $sink -A 7 | sed -n '8p' | awk '{printf int($5)}')
+
+    bluetooth_battery=`python3 ${DWM}/statusbar/get_data.py bluetooth_battery`
+    # notify-send "battery=" "${bluetooth_battery}";
+
     if [ ! "$volunmuted" ];      then vol_text="--"; vol_icon="ﱝ";
     elif [ "$vol_text" -eq 0 ];  then vol_text="00"; vol_icon="婢";
     elif [ "$vol_text" -lt 10 ]; then vol_icon="奔"; vol_text=0$vol_text;
@@ -32,7 +36,7 @@ update() {
     else vol_icon="墳"; fi
 
     icon=" $vol_icon"
-    text="$vol_text% "
+    text="$vol_text% ${bluetooth_battery} "
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
     printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
