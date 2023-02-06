@@ -463,7 +463,12 @@ applyrules(Client *c)
             c->isfloating = r->isfloating;
             c->isglobal = r->isglobal;
             c->isnoborder = r->isnoborder;
-            c->tags |= r->tags;
+
+            // c->tags |= r->tags; // gxt_kt : Let open tags not use rules's tag.
+            if(r->tags==TAGMASK) { // gxt_kt : Only enable for TAGMASK
+                c->tags |= r->tags; 
+            }
+
             if (r->isnoborder)
                 c->bw = 0;
             for (m = mons; m && m->num != r->monitor; m = m->next);
