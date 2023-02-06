@@ -181,8 +181,10 @@ static Key keys[] = {
     { MODKEY|ShiftMask, XK_Escape, quit, {0} },  /* super  shift  q    |  退出dwm */
     { MODKEY|ControlMask|ShiftMask, XK_Escape,    quit,            {1} },      		 /* super shift ctrl q | restart dwm*/
 
-    { MODKEY|ShiftMask,  XK_o,     selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY|ControlMask,  XK_o,   selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+    // { MODKEY|ShiftMask,  XK_o,     selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
+    // { MODKEY|ControlMask,  XK_o,   selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+  // It's just need to map one key to change layout between layouts[0] and layouts[1].
+    { MODKEY|ShiftMask,  XK_o,   selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
     { MODKEY,  XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = +6} },               /* super ctrl +       |  gap增大 */
