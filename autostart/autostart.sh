@@ -10,6 +10,7 @@ sleep 0 # need to wait dwm start complete and fcitx5 start complete
 cfw &
 crow &
 blueman-manager &
+copyq &
 
 libinput-gestures-setup start # touchpad open gesture
 xinput --set-prop 15 'libinput Accel Speed' 0.4 # set touchpad sensitivity
