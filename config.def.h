@@ -15,7 +15,7 @@ static const int sidepad                 = 3;         /* horizontal padding of b
 static const int overviewgappi           = 24;        /* overview时 窗口与边缘 缝隙大小 */
 static const int overviewgappo           = 60;        /* overview时 窗口与窗口 缝隙大小 */
 static const int showbar                 = 1;         /* 是否显示状态栏 */
-static const int topbar                  = 0;         /* 指定状态栏位置 0底部 1顶部 */
+static const int topbar                  = 1;         /* 指定状态栏位置 0底部 1顶部 */
 static const float mfact                 = 0.55;       /* 主工作区 大小比例 */
 static const int   nmaster               = 1;         /* 主工作区 窗口数量 */
 static const unsigned int snap           = 10;        /* 边缘依附宽度 */
@@ -69,7 +69,7 @@ static const char scratchpadname[] = "scratchpad";
 //            
 // 对应的tag序号以及快捷键:   0:1  1:2  2:3  3:4  4:5  5:9  6:c  7:m  8:0  9:w 10:l
 //static const char *tags[] = { "", "", "", "", "5", "6", "7", "8", "9" };
-static const char *tags[] = { "", "", "", "", "", "","", "","﬐","" };
+static const char *tags[] = { "", "", "", "", "", "󰤚","", "","","" };
 //static const char *tags[] = { "", "","","", "","","", "","﬐","" };
 //static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
