@@ -84,6 +84,7 @@ static const Rule rules[] = {
     {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"music",         NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
     {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    {"copyq",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, 
     {"钉钉",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"com.alibabainc.dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
@@ -213,6 +214,9 @@ static Key keys[] = {
     { MODKEY,              XK_p,        spawn, SHCMD("rofi -show drun -show-icons" ) },                                   /* super  p    | rofi: 执行window       */
     { MODKEY|ShiftMask,    XK_p,        spawn, SHCMD("rofi -show run -show-icons") },                                   /* super  p    | rofi: 执行window       */
     
+    // Notice that if you first use copyq , Remeber that config 1.disable tray show 2.Enable hidden mainwindow. Then you can use this better.
+    { MODKEY,    XK_v,        spawn, SHCMD("copyq toggle") },                                   /* super  v    | need Copyq : show copyq window      */
+
     //{ MODKEY,              XK_F1,     spawn, SHCMD("pcmanfm") },                                                /* super F1         | 文件管理器             */
     //{ MODKEY,              XK_k,      spawn, SHCMD("~/scripts/blurlock.sh") },                                  /* super k          | 锁定屏幕               */
     //{ MODKEY|Mod1Mask,    XK_Up,     spawn, SHCMD("~/scripts/set_vol.sh up") },                                /* super shift up   | 音量加                 */
