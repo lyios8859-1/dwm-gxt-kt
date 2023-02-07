@@ -54,10 +54,16 @@ call_network_tool() {
  	alacritty -t nmtui --class floatingTerminal -e nmtui
 }
 
+# some time connot connect the wifi , use this tool to edit the wifi profile
+call_nm-connection-editor() {
+    nm-connection-editor
+}
+
 click() {
     case "$1" in
         L) notify ;;
         R) call_network_tool ;;
+        M) call_nm-connection-editor;;
     esac
 }
 
