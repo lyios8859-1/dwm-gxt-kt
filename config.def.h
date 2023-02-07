@@ -57,8 +57,9 @@ static const char *disablekillclient[] = {
 };
 
 /* 自定义脚本位置 */
-static const char *autostartscript = "/home/gxt_kt/my_desktop/dwm/autostart/autostart.sh";
-static const char *statusbarscript = "/home/gxt_kt/my_desktop/dwm/statusbar/statusbar.sh";//gxt_kt
+// static const char *autostartscript = "/home/gxt_kt/my_desktop/dwm/autostart/autostart.sh";
+static const char *autostartscript = "~/my_desktop/dwm/autostart/autostart.sh";
+static const char *statusbarscript = "~/my_desktop/dwm/statusbar/statusbar.sh";//gxt_kt
 
 /* 自定义 scratchpad instance */
 static const char scratchpadname[] = "scratchpad";
@@ -228,6 +229,7 @@ static Key keys[] = {
     //{ MODKEY|ShiftMask,    XK_k,      spawn, SHCMD("~/scripts/screenkey.sh") },                                 /* super shift k    | 打开键盘输入显示       */
     //{ MODKEY|ShiftMask,    XK_q,      spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") }, /* super shift q    | 选中某个窗口并强制kill */
     //{ ShiftMask|ControlMask, XK_c,    spawn, SHCMD("xclip -o | xclip -selection c") },                          /* super shift c    | 进阶复制               */
+    { MODKEY,    XK_l,      spawn, SHCMD("~/my_desktop/dwm/i3lock/lock.sh") },             /* super shift s    | 截图                   */
 
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
