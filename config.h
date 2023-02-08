@@ -149,11 +149,11 @@ static Key keys[] = {
     { MODKEY|ShiftMask,     XK_j,      rotatestack,    {.i = +1 } }, /* rotate the stack*/
     { MODKEY|ShiftMask,     XK_k,      rotatestack,    {.i = -1 } }, /* rotate the stack*/
 
-    //{ MODKEY,              XK_Left,         viewtoleft,       {0} },                     /* super left         |  聚焦到左边的tag */
-    //{ MODKEY,              XK_Right,        viewtoright,      {0} },                     /* super right        |  聚焦到右边的tag */
+    // { MODKEY|ShiftMask,              XK_Left,         viewtoleft,       {0} },                     /* super left         |  聚焦到左边的tag */
+    // { MODKEY|ShiftMask,              XK_Right,        viewtoright,      {0} },                     /* super right        |  聚焦到右边的tag */
     
-    { MODKEY|ShiftMask,     XK_Left,         tagtoleft,        {0} },                     /* super shift left   |  将本窗口移动到左边tag */
-    { MODKEY|ShiftMask,     XK_Right,        tagtoright,       {0} },                     /* super shift right  |  将本窗口移动到右边tag */
+    // { MODKEY|ShiftMask,     XK_Left,         tagtoleft,        {0} },                     /* super shift left   |  将本窗口移动到左边tag */
+    // { MODKEY|ShiftMask,     XK_Right,        tagtoright,       {0} },                     /* super shift right  |  将本窗口移动到右边tag */
 
     { MODKEY,              XK_comma,        setmfact,         {.f = -0.05} },            /* super ,            |  缩小主工作区 */
     { MODKEY,              XK_period,       setmfact,         {.f = +0.05} },            /* super .            |  放大主工作区 */
@@ -173,8 +173,10 @@ static Key keys[] = {
     { MODKEY,              XK_g,            toggleglobal,     {0} },                     /* super g            |  开启/关闭 全局 */
     { MODKEY,              XK_a,            incnmaster,       {.i = +1} },               /* super a            |  改变主工作区窗口数量 (1 2中切换) */
 
-    //{ MODKEY,              XK_b,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */
-    //{ MODKEY|ShiftMask,    XK_b,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    { MODKEY|Mod1Mask,              XK_Left,             focusmon,         {.i = -1} },               /* super b            |  光标移动到另一个显示器 */
+    { MODKEY|Mod1Mask,              XK_Right,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */
+    { MODKEY|ShiftMask,    XK_Left,            tagmon,           {.i = -1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    { MODKEY|ShiftMask,    XK_Right,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
 
     // win+q 关闭窗口容易误触，改成win+ctrl+q
     { MODKEY|ShiftMask,  XK_q,  killclient, {0} },   /* super q |  关闭窗口 */
