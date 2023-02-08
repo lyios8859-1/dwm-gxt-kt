@@ -39,7 +39,7 @@ package_update=$(pacman -Qu | grep -Fcv "[ignored]" )
 if [ ${package_update} -ne 0 ]
 then
 	notify-send "🎁 提示" "检查到${package_update}个可用更新包\n正在为您更新..." -r 1020 ;
-	echo "gxt0818" | sudo -S  pacman -Syu --noconfirm && (
+	  sudo -S  pacman -Syu --noconfirm && (
 		notify-send "🎁 提示" "执行 sudo pacman -Syu 更新成功" -r 1020 ;
 		text=$(pacman -Qu | grep -Fcv "[ignored]" )
 		sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
