@@ -51,8 +51,6 @@ fork 自博主yaoccc  https://github.com/yaocccc/dwm
 
    测试方法为:手动复制命令到终端中执行,如果成功就没问题
 
-
-
 2. 主要可能问题点在statusbar
 
    同样也是命令执行问题,一定要安装了对应的包,否则可能会出现意外情况导致崩溃
@@ -60,6 +58,10 @@ fork 自博主yaoccc  https://github.com/yaocccc/dwm
    推荐先一个脚本一个脚本加入,不要上来全部执行.
 
    另外pacman执行sudo不需要输入密码,在`/etc/sudoers`加入`${user} ALL=(ALL) NOPASSWD: /usr/bin/pacman`
+
+3. 我自己dwm的路径为 `~/my_desktop/dwm` , 相关功能的启用需要修改到你们自己的路径.
+
+   包括~/.profile中需要设置`${DWM}`给statusbar使用
 
 
 
