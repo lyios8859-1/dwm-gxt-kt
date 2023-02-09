@@ -1,6 +1,7 @@
 #! /bin/sh
 #
 source ~/.profile
+killall statusbar.sh
 ${DWM}/statusbar/statusbar.sh cron &> ${DWM}/statusbar/logfile
 picom --experimental-backends&
 
