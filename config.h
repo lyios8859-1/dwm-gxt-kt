@@ -54,6 +54,7 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
 static const char *disablekillclient[] = {
   "wemeetapp", // 腾讯会议顶栏
   "tmux", // tmux不要误关了，防止有子窗口还在运行
+  "QQ", // QQ关闭后会直接退出,不会最小化
 };
 
 /* 自定义脚本位置 */
@@ -95,8 +96,8 @@ static const Rule rules[] = {
   //  { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
   //  { NULL,                 "wxwork.exe",          NULL,             1 << 10,      0,          0,          0,        -1 },
     //{ NULL,                  NULL,                "broken",          0,            1,          0,          0,        -1 },
-  //  { "图片查看",           "图片查看",           "图片查看",        0,            1,          0,          0,        -1 },
-  //  { "图片预览",           "图片预览",           "图片预览",        0,            1,          0,          0,        -1 },
+   { "图片查看",           "图片查看",           "图片查看",        0,            1,          0,          0,        -1 },
+   { "图片预览",           "图片预览",           "图片预览",        0,            1,          0,          0,        -1 },
     //{ NULL,                  NULL,                "crx_",            0,            1,          0,          0,        -1 },
   //  {"flameshot",            NULL,                 NULL,             0,            1,          0,          0,        -1 },
       /** 部分特殊class的规则 */
@@ -162,8 +163,8 @@ static Key keys[] = {
     { MODKEY,              XK_comma,        setmfact,         {.f = -0.05} },            /* super ,            |  缩小主工作区 */
     { MODKEY,              XK_period,       setmfact,         {.f = +0.05} },            /* super .            |  放大主工作区 */
 
-    { MODKEY,              XK_m,            hidewin,          {0} },                     /* super h            |  隐藏 窗口 */
-    { MODKEY|ShiftMask,    XK_m,            restorewin,       {0} },                     /* super shift h      |  取消隐藏 窗口 */
+    { MODKEY,              XK_d,            hidewin,          {0} },                     /* super h            |  隐藏 窗口 */
+    { MODKEY|ShiftMask,    XK_d,            restorewin,       {0} },                     /* super shift h      |  取消隐藏 窗口 */
 
     { MODKEY|ShiftMask,    XK_Return,       zoom,             {0} },                     /* super shift enter  |  将当前聚焦窗口置为主窗口 */
 
@@ -220,8 +221,8 @@ static Key keys[] = {
     //{ MODKEY|ShiftMask,    XK_d,      spawn, SHCMD("~/scripts/call_rofi.sh drun") },                            /* super shift d    | rofi: 执行drun         */
     //{ MODKEY,              XK_p,      spawn, SHCMD("~/scripts/call_rofi.sh custom") },                          /* super p          | rofi: 执行自定义脚本   */
     
-    { MODKEY,              XK_p,        spawn, SHCMD("rofi -show drun -show-icons" ) },                                   /* super  p    | rofi: 执行window       */
-    { MODKEY|ShiftMask,    XK_p,        spawn, SHCMD("rofi -show run -show-icons") },                                   /* super  p    | rofi: 执行window       */
+    { MODKEY,                XK_s,        spawn, SHCMD("rofi -show drun -show-icons" ) },                                   /* super  p    | rofi: 执行window       */
+    { MODKEY|ControlMask,    XK_s,        spawn, SHCMD("rofi -show run -show-icons") },                                   /* super  p    | rofi: 执行window       */
     
     // Notice that if you first use copyq , Remeber that config 1.disable tray show 2.Enable hidden mainwindow. Then you can use this better.
     { MODKEY,    XK_v,        spawn, SHCMD("copyq toggle") },                                   /* super  v    | need Copyq : show copyq window      */
