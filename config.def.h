@@ -25,7 +25,7 @@ static const char *fonts[]               = {
 //"monospace:size=15",
 			"Monaco:style=Regular:size=11",
 			"Symbols Nerd Font:style=2048-em:size=17",
-		        "Microsoft YaHei:size=11:style=Regular:antialias=true:autohint:true",
+		  "Microsoft YaHei:size=11:style=Regular:antialias=true:autohint:true",
 			//"JoyPixels:size=15:antialias=true:autohint=true"
 };
 static const char *colors[][3]           = {          /* 颜色设置 ColFg, ColBg, ColBorder */ 
@@ -54,7 +54,7 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
 static const char *disablekillclient[] = {
   "wemeetapp", // 腾讯会议顶栏
   "tmux", // tmux不要误关了，防止有子窗口还在运行
-  "QQ", // QQ关闭后会直接退出,不会最小化
+  "QQ", // QQ关闭后会直接退出,不会最小化,微信不需要这个操作
 };
 
 /* 自定义脚本位置 */
@@ -91,13 +91,15 @@ static const Rule rules[] = {
     {"dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"com.alibabainc.dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"tblive",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    { NULL,          NULL,          "图片查看",       TAGMASK ,            1,          0,          0,        -1 },  // qq image preview title
+    { NULL,          NULL,          "Image Preview",       TAGMASK ,            1,          0,          0,        -1 }, //wechat image preview title
+    { NULL,          NULL,          "Save File",        TAGMASK,            1,          0,          0,        -1 }, // google save file 
+    // { NULL,          NULL,           "图片预览",        0,            1,          0,          0,        -1 },
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
   //  { NULL,                 "wechat.exe",          NULL,             1 << 9,       0,          0,          0,        -1 },
   //  { NULL,                 "wxwork.exe",          NULL,             1 << 10,      0,          0,          0,        -1 },
     //{ NULL,                  NULL,                "broken",          0,            1,          0,          0,        -1 },
-   { "图片查看",           "图片查看",           "图片查看",        0,            1,          0,          0,        -1 },
-   { "图片预览",           "图片预览",           "图片预览",        0,            1,          0,          0,        -1 },
     //{ NULL,                  NULL,                "crx_",            0,            1,          0,          0,        -1 },
   //  {"flameshot",            NULL,                 NULL,             0,            1,          0,          0,        -1 },
       /** 部分特殊class的规则 */

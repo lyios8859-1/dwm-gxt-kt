@@ -1858,7 +1858,7 @@ killclient(const Arg *arg)
                 return;
             }
         }
-        // gDebug("kellclient sel->name=%s", selmon->sel->name);
+        gDebug("kellclient sel->name=%s", selmon->sel->name);
     }
     if_forcekill2kill = 0;
 
