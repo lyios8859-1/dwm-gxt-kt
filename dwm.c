@@ -107,6 +107,7 @@ typedef struct {
 	unsigned int ui;
 	float f;
 	const void *v;
+  char focus_win[20];
 } Arg;
 
 typedef struct {
@@ -1433,6 +1434,8 @@ focusstack(const Arg *arg)
         tc = selmon->clients;
     if (!tc)
         return;
+    
+    gDebug("\n---arg->focus_win=%s",arg->focus_win);
 
     for (c = selmon->clients; c; c = c->next) {
         if (ISVISIBLE(c) && (issingle || !HIDDEN(c))) {
@@ -1443,6 +1446,24 @@ focusstack(const Arg *arg)
     }
     if (last < 0) return;
 
+    for(int _i=0;_i<=last;_i++) {
+      gDebug("_i=%d x=%d,y=%d",_i,tempClients[_i]->x,tempClients[_i]->y);
+    }
+    // if(!tc) {
+    // gDebug("sel= x=%d,y=%d",tc->x,tc->y);
+    // }
+
+    if (arg) {
+      if (strcmp(arg->focus_win, "right")) {
+            gDebug("get focus_win right");
+      } else if (strcmp(arg->focus_win, "left")) {
+            gDebug("get focus_win left");
+
+      } else {
+            gDebug("get focus_win else");
+      }
+    }
+
     if (arg && arg->i == -1) {
         if (cur - 1 >= 0) c = tempClients[cur - 1];
         else c = tempClients[last];
@@ -1450,6 +1471,14 @@ focusstack(const Arg *arg)
         if (cur + 1 <= last) c = tempClients[cur + 1];
         else c = tempClients[0];
     }
+
+    // if (arg && arg->i == -1) {
+    //     if (cur - 1 >= 0) c = tempClients[cur - 1];
+    //     else c = tempClients[last];
+    // } else {
+    //     if (cur + 1 <= last) c = tempClients[cur + 1];
+    //     else c = tempClients[0];
+    // }
 
     if (issingle) {
         if (c)

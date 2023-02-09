@@ -144,8 +144,8 @@ static Key keys[] = {
     //{ MODKEY,              XK_Up,           focusstack,       {.i = -1} },               /* super up         |  本tag内切换聚焦窗口 */
     //{ MODKEY,              XK_Down,         focusstack,       {.i = +1} },               /* super down       |  本tag内切换聚焦窗口 */
 
-    { MODKEY,               XK_j,      focusstack,     {.i = +1 } }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_k,      focusstack,     {.i = -1 } }, /* 本tag内切换聚焦窗口 */
+    { MODKEY,               XK_j,      focusstack,     {.i = +1 , .focus_win="right"} }, /* 本tag内切换聚焦窗口 */
+    { MODKEY,               XK_k,      focusstack,     {.i = -1 , .focus_win="left"}}, /* 本tag内切换聚焦窗口 */
     { MODKEY|ShiftMask,     XK_j,      rotatestack,    {.i = +1 } }, /* rotate the stack*/
     { MODKEY|ShiftMask,     XK_k,      rotatestack,    {.i = -1 } }, /* rotate the stack*/
 
