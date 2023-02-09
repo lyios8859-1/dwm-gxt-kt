@@ -187,8 +187,8 @@ static Key keys[] = {
     // { MODKEY|ShiftMask,  XK_o,     selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
     // { MODKEY|ControlMask,  XK_o,   selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
   // It's just need to map one key to change layout between layouts[0] and layouts[1].
-    { MODKEY|ShiftMask,  XK_o,   selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
-    { MODKEY,  XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
+    { MODKEY|ShiftMask,  XK_z,   selectlayout,     {.v = &layouts[1]} },      /* super shift z  |  切换布局 */
+    { MODKEY,  XK_z,            showonlyorall,    {0} },                     /* super z            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = +6} },               /* super ctrl +       |  gap增大 */
     { MODKEY|ControlMask,  XK_minus,        setgap,           {.i = -6} },               /* super ctrl -       |  gap减小 */
@@ -245,7 +245,7 @@ static Key keys[] = {
     TAGKEYS(XK_7, 6,  0)
     TAGKEYS(XK_8, 7,  0)
     TAGKEYS(XK_9, 8,  0)
-    TAGKEYS(XK_r, 5,  "obs")
+    TAGKEYS(XK_o, 5,  "obs")
     TAGKEYS(XK_c, 6,  "google-chrome-stable") // 6+1 = tag
     TAGKEYS(XK_m, 7,  "/opt/YesPlayMusic/yesplaymusic")
     //TAGKEYS(XK_0, 8,  "linuxqq")
