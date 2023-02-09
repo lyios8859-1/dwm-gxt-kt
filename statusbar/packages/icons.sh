@@ -28,9 +28,9 @@ notify() {
 }
 
 CallMenu() {
-    case $(echo -e '⏻ Shutdown\n Restart\n⏾ Sleep\n Lock' | rofi -dmenu -window-title power) in
+    case $(echo -e '⏻ Shutdown\n Reboot\n⏾ Sleep\n Lock' | rofi -dmenu -window-title power) in
         "⏻ Shutdown") shutdown -h now ;;
-        " Restart") reboot ;;
+        " Reboot") reboot ;;
         # "⏾ Sleep") systemctl hibernate ;;
         "⏾ Sleep") notify-send "⏾ Sleep Error!" "Sleep cannot use now because of amdgpu driver.\nMay solve it later." -r 4040 ;;
         " Lock") ${DWM}/i3lock/lock.sh;; # need i3lock-color
