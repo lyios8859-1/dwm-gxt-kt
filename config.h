@@ -144,13 +144,12 @@ static Key keys[] = {
     //{ MODKEY,              XK_Up,           focusstack,       {.i = -1} },               /* super up         |  本tag内切换聚焦窗口 */
     //{ MODKEY,              XK_Down,         focusstack,       {.i = +1} },               /* super down       |  本tag内切换聚焦窗口 */
 
-    { MODKEY,               XK_j,      focusstack,     {.i = +1 , .focus_win='L'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_k,      focusstack,     {.i = -1 , .focus_win='H'}}, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_F5,      focusstack,     {.focus_win='H'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_F6,      focusstack,     {.focus_win='J'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_F7,      focusstack,     {.focus_win='K'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_F8,      focusstack,     {.focus_win='L'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_k,      focusstack,     {.i = -1 , .focus_win='H'}}, /* 本tag内切换聚焦窗口 */
+    // { MODKEY,               XK_j,      focusstack,     {.i = +1 , .focus_win='L'} }, /* 本tag内切换聚焦窗口 */
+    // { MODKEY,               XK_k,      focusstack,     {.i = -1 , .focus_win='H'}}, /* 本tag内切换聚焦窗口 */
+    { MODKEY,               XK_h,      focusstack,     {.focus_win='H'} }, /* 本tag内切换聚焦窗口 */
+    { MODKEY,               XK_j,      focusstack,     {.focus_win='J'} }, /* 本tag内切换聚焦窗口 */
+    { MODKEY,               XK_k,      focusstack,     {.focus_win='K'} }, /* 本tag内切换聚焦窗口 */
+    { MODKEY,               XK_l,      focusstack,     {.focus_win='L'} }, /* 本tag内切换聚焦窗口 */
     { MODKEY|ShiftMask,     XK_j,      rotatestack,    {.i = +1 } }, /* rotate the stack*/
     { MODKEY|ShiftMask,     XK_k,      rotatestack,    {.i = -1 } }, /* rotate the stack*/
 
@@ -163,8 +162,8 @@ static Key keys[] = {
     { MODKEY,              XK_comma,        setmfact,         {.f = -0.05} },            /* super ,            |  缩小主工作区 */
     { MODKEY,              XK_period,       setmfact,         {.f = +0.05} },            /* super .            |  放大主工作区 */
 
-    { MODKEY,              XK_h,            hidewin,          {0} },                     /* super h            |  隐藏 窗口 */
-    { MODKEY|ShiftMask,    XK_h,            restorewin,       {0} },                     /* super shift h      |  取消隐藏 窗口 */
+    { MODKEY,              XK_m,            hidewin,          {0} },                     /* super h            |  隐藏 窗口 */
+    { MODKEY|ShiftMask,    XK_m,            restorewin,       {0} },                     /* super shift h      |  取消隐藏 窗口 */
 
     { MODKEY|ShiftMask,    XK_Return,       zoom,             {0} },                     /* super shift enter  |  将当前聚焦窗口置为主窗口 */
 
@@ -236,7 +235,7 @@ static Key keys[] = {
     //{ MODKEY|ShiftMask,    XK_k,      spawn, SHCMD("~/scripts/screenkey.sh") },                                 /* super shift k    | 打开键盘输入显示       */
     //{ MODKEY|ShiftMask,    XK_q,      spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") }, /* super shift q    | 选中某个窗口并强制kill */
     //{ ShiftMask|ControlMask, XK_c,    spawn, SHCMD("xclip -o | xclip -selection c") },                          /* super shift c    | 进阶复制               */
-    { MODKEY,    XK_l,      spawn, SHCMD("~/my_desktop/dwm/i3lock/lock.sh") },             /* super shift s    | 截图                   */
+    { MODKEY|ControlMask,    XK_l,      spawn, SHCMD("~/my_desktop/dwm/i3lock/lock.sh") },   
 
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
