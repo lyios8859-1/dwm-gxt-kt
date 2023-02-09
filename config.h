@@ -84,7 +84,7 @@ static const Rule rules[] = {
     {"obs",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },
     {"chrome",               NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
     {"Chromium",             NULL,                 NULL,             1 << 6,       0,          0,          0,        -1 },
-    {"music",         NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
+    {"music",             NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
     {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"copyq",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, 
     {"钉钉",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
@@ -92,8 +92,8 @@ static const Rule rules[] = {
     {"com.alibabainc.dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"tblive",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     { NULL,          NULL,          "图片查看",       TAGMASK ,            1,          0,          0,        -1 },  // qq image preview title
-    { NULL,          NULL,          "Image Preview",       TAGMASK ,            1,          0,          0,        -1 }, //wechat image preview title
-    { NULL,          NULL,          "Save File",        TAGMASK,            1,          0,          0,        -1 }, // google save file 
+    { NULL,          NULL,          "Image Preview",   TAGMASK ,            1,          0,          0,        -1 }, //wechat image preview title
+    { NULL,          NULL,          "broken",      TAGMASK,            1,          0,          0,        -1 }, // qq upload file's win is broken
     // { NULL,          NULL,           "图片预览",        0,            1,          0,          0,        -1 },
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
@@ -112,9 +112,6 @@ static const Rule rules[] = {
     {"float",                NULL,                 NULL,             0,            1,          0,          0,        -1 }, // 浮动
     {"noborder",             NULL,                 NULL,             0,            0,          0,          1,        -1 }, // 无边框
     {"global",               NULL,                 NULL,             TAGMASK,      0,          1,          0,        -1 }, // 全局
-    // {"float",         NULL,  NULL, 0,            1,          0,          0,        -1 }, // 特殊class client默认浮动
-    // {"noborder",      NULL,  NULL, 0,            1,          0,          1,        -1 }, // 特殊class client默认无边框
-    // {"global",   NULL,    NULL,    TAGMASK,      1,          1,          0,        -1 }, // 特殊class client全局于所有tag
 };
 static const char *overviewtag = "OVERVIEW";
 static const Layout overviewlayout = { "",  overview };
