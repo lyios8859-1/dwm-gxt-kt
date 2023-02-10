@@ -83,6 +83,7 @@ static const char* avoid_repeat_auto_start = "/tmp/dwm_avoid_repeat_auto_start.l
 
 // restoreafterrestart
 #define SESSION_FILE "/tmp/dwm-session"
+#define SESSION_TAG_FILE "/tmp/dwm-tag-session"
 
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor */

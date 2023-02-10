@@ -2368,6 +2368,33 @@ restoreSession(void)
 	remove(SESSION_FILE);
 }
 
+//gxt_kt
+void saveTagSession() {
+	FILE *fw = fopen(SESSION_TAG_FILE, "w");
+  fprintf(fw, "%d\n", selmon->sel->tags);
+	fclose(fw);
+}
+//gxt_kt
+void restoreTagSession() {
+	FILE *fr = fopen(SESSION_TAG_FILE, "r");
+	if (!fr)
+		return;
+
+	char str[10] = {0};
+	if (fscanf(fr, "%[^\n] ", str) != EOF) { // read file
+    int tag=0;
+		int check = sscanf(str, "%d",&tag); // get data
+    view(&(Arg) { .ui = tag }); //切换到对应tag
+  }
+
+  for (Monitor *m = selmon; m; m = m->next) // rearrange all monitors
+    arrange(m);
+
+	fclose(fr);
+	
+	// delete a file
+	remove(SESSION_TAG_FILE);
+}
 void
 quit(const Arg *arg)
 {
@@ -2379,6 +2406,7 @@ quit(const Arg *arg)
   // restoreafterrestart
 	if (restart == 1) {
 		saveSession();
+    saveTagSession();
     // gDebug("saveSession");
   }
     // running = 0; // doublepressquitPatch
@@ -4031,6 +4059,7 @@ main(int argc, char *argv[])
     
     // gDebug("restoreSession");
 	  restoreSession();// restoreafterrestart
+    restoreTagSession();// gxt_kt
     run();
     // if(restart) execvp(argv[0], argv);
     if(restart) execvp(argv[0], argv); // 重启不删除文件
