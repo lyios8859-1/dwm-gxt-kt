@@ -14,4 +14,4 @@ blueman-manager &
 copyq &
 
 libinput-gestures-setup start # touchpad open gesture
-xinput --set-prop 15 'libinput Accel Speed' 0.4 # set touchpad sensitivity
+xinput --set-prop 15 'libinput Accel Speed' 0.5 # set touchpad sensitivity

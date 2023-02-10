@@ -3956,9 +3956,28 @@ main(int argc, char *argv[])
         die("pledge");
 #endif /* __OpenBSD__ */
     scan();
-    runAutostart();
+    /* 重启dwm后避免重复执行autostart脚本 */
+    FILE *file_;
+    if ((file_ = fopen(avoid_repeat_auto_start, "r"))) {
+      fclose(file_);  // exist
+      // gDebug( " file exist");
+    } else {
+      // gDebug( " file don't exist");
+      FILE *file_;
+      if ((file_ = fopen(avoid_repeat_auto_start, "w"))) {
+        fclose(file_);  // create file
+      }
+      gDebug( "create file");
+      runAutostart();
+    }
+    // runAutostart();
     run();
-    if(restart) execvp(argv[0], argv);
+    // if(restart) execvp(argv[0], argv);
+    if(restart) execvp(argv[0], argv); // 重启不删除文件
+    else { //退出就删除文件
+      remove(avoid_repeat_auto_start); //delete file when exit
+      gDebug("remove file debug point 2");
+    }
     cleanup();
     XCloseDisplay(dpy);
     return EXIT_SUCCESS;
