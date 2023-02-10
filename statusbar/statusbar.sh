@@ -30,10 +30,11 @@ refresh() {
     _vol='';
     _bat='';
     _net='';
+    _screen='';
     source $DWM/statusbar/temp                                           # 从 temp 文件中读取模块的状态
 
     # gxt_kt add second place
-    xsetroot -name "$_icons$_package$_net$_cpu$_mem$_wifi$_vol$_bat$_my_date"             # 更新状态栏
+    xsetroot -name "$_icons$_screen$_package$_net$_cpu$_mem$_wifi$_vol$_bat$_my_date"             # 更新状态栏
 }
 
 # 启动定时更新状态栏 不同的模块有不同的刷新周期 注意不要重复启动该func
@@ -52,6 +53,7 @@ cron() {
         [ $((i % 3)) -eq 0 ]  && to=(${to[@]} mem )  
         [ $((i % 20)) -eq 0 ]  && to=(${to[@]} vol )  
         [ $((i % 3600)) -eq 0 ]  && to=(${to[@]} icons)   
+        [ $((i % 60)) -eq 0 ]  && to=(${to[@]} screen)   
         [ $((i % 5)) -eq 0 ] && to=(${to[@]} bat)   
         [ $((i % 1)) -eq 0 ]   && to=(${to[@]} my_date)                     # 每1秒   更新 date
         update ${to[@]}    &                                              # 将需要更新的模块传递给 update
@@ -67,7 +69,7 @@ cron() {
 case $1 in
     cron) cron ;;
     update) shift 1; update $* ;;
-    updateall|check) update icons wifi cpu mem my_date vol bat net package ;; # gxt_kt
+    updateall|check) update screen icons wifi cpu mem my_date vol bat net package ;; # gxt_kt
     #updateall|check) update  net icons wifi my_date ;; # gxt_kt
     *) click $1 $2 ;; # 接收clickstatusbar传递过来的信号 $1: 模块名  $2: 按键(L|M|R|U|D)
 esac

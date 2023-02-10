@@ -54,7 +54,6 @@ notify() {
 OpenPavucontrol() {
     mx=`xdotool getmouselocation --shell | grep X= | sed 's/X=//'`
     my=`xdotool getmouselocation --shell | grep Y= | sed 's/Y=//'`
-
 }
 
 click() {
