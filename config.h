@@ -81,6 +81,9 @@ static char lockfile[] = "/tmp/dwm.lock"; // doublepressquitPatch
 /* W-C-S-E 热重启dwm后不会重复执行autostart脚本 */
 static const char* avoid_repeat_auto_start = "/tmp/dwm_avoid_repeat_auto_start.lock"; // doublepressquitPatch
 
+// restoreafterrestart
+#define SESSION_FILE "/tmp/dwm-session"
+
 static const Rule rules[] = {
     /* class                 instance              title             tags mask     isfloating  isglobal    isnoborder monitor */
     //{"demotest",                  NULL,                 NULL,             1 << 5,       0,          0,          0,        -1 },

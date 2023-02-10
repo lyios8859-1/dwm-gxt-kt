@@ -2317,6 +2317,57 @@ propertynotify(XEvent *e)
     }
 }
 
+ 
+// restoreafterrestart
+void
+saveSession(void)
+{
+	FILE *fw = fopen(SESSION_FILE, "w");
+	for (Client *c = selmon->clients; c != NULL; c = c->next) { // get all the clients with their tags and write them to the file
+		fprintf(fw, "%lu %u\n", c->win, c->tags);
+	}
+	fclose(fw);
+}
+
+void
+restoreSession(void)
+{
+	// restore session
+	FILE *fr = fopen(SESSION_FILE, "r");
+	if (!fr)
+		return;
+
+	char *str = malloc(23 * sizeof(char)); // allocate enough space for excepted input from text file
+	while (fscanf(fr, "%[^\n] ", str) != EOF) { // read file till the end
+		long unsigned int winId;
+		unsigned int tagsForWin;
+		int check = sscanf(str, "%lu %u", &winId, &tagsForWin); // get data
+		if (check != 2) // break loop if data wasn't read correctly
+			break;
+		
+		for (Client *c = selmon->clients; c ; c = c->next) { // add tags to every window by winId
+			if (c->win == winId) {
+				c->tags = tagsForWin;
+				break;
+			}
+		}
+    }
+
+	for (Client *c = selmon->clients; c ; c = c->next) { // refocus on windows
+		focus(c);
+		restack(c->mon);
+	}
+
+	for (Monitor *m = selmon; m; m = m->next) // rearrange all monitors
+		arrange(m);
+
+	free(str);
+	fclose(fr);
+	
+	// delete a file
+	remove(SESSION_FILE);
+}
+
 void
 quit(const Arg *arg)
 {
@@ -2324,6 +2375,12 @@ quit(const Arg *arg)
         restart = 1;
         running=0;
     }
+
+  // restoreafterrestart
+	if (restart == 1) {
+		saveSession();
+    // gDebug("saveSession");
+  }
     // running = 0; // doublepressquitPatch
 	{// doublepressquitPatch
 	FILE *fd = NULL;
@@ -3967,16 +4024,19 @@ main(int argc, char *argv[])
       if ((file_ = fopen(avoid_repeat_auto_start, "w"))) {
         fclose(file_);  // create file
       }
-      gDebug( "create file");
+      // gDebug( "create file");
       runAutostart();
     }
     // runAutostart();
+    
+    // gDebug("restoreSession");
+	  restoreSession();// restoreafterrestart
     run();
     // if(restart) execvp(argv[0], argv);
     if(restart) execvp(argv[0], argv); // 重启不删除文件
     else { //退出就删除文件
       remove(avoid_repeat_auto_start); //delete file when exit
-      gDebug("remove file debug point 2");
+      // gDebug("remove file debug point 2");
     }
     cleanup();
     XCloseDisplay(dpy);
