@@ -100,7 +100,7 @@ static const Rule rules[] = {
     {"tblive",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     { NULL,          NULL,          "图片查看",       TAGMASK ,            1,          0,          0,        -1 },  // qq image preview title
     { NULL,          NULL,          "Image Preview",   TAGMASK ,            1,          0,          0,        -1 }, //wechat image preview title
-    { NULL,          NULL,          "broken",      TAGMASK,            1,          0,          0,        -1 }, // qq upload file's win is broken
+    // { NULL,          NULL,          "broken",      TAGMASK,            1,          0,          0,        -1 }, // qq upload file's win is broken
     // { NULL,          NULL,           "图片预览",        0,            1,          0,          0,        -1 },
   //  {"music",                NULL,                 NULL,             1 << 7,       1,          0,          1,        -1 },
   //  { NULL,                 "qq",                  NULL,             1 << 8,       0,          0,          1,        -1 },
