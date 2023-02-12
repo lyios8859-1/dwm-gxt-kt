@@ -26,7 +26,7 @@ static const char *fonts[]               = {
 			"Monaco:style=Regular:size=11",
 			"Symbols Nerd Font:style=2048-em:size=17",
 		  "Microsoft YaHei:size=11:style=Regular:antialias=true:autohint:true",
-			//"JoyPixels:size=15:antialias=true:autohint=true"
+			"JoyPixels:size=13:antialias=true:autohint=true"
 };
 static const char *colors[][3]           = {          /* 颜色设置 ColFg, ColBg, ColBorder */ 
     [SchemeNorm] = { "#bbbbbb", "#333333", "#444444" },

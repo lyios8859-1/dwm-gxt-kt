@@ -26,6 +26,10 @@ refresh() {
     _wifi='';
     _cpu='';
     _mem='';
+    _music_title='';
+    _music_pre='';
+    _music_next='';
+    _music_play='';
     _my_date='';
     _vol='';
     _bat='';
@@ -34,7 +38,7 @@ refresh() {
     source $DWM/statusbar/temp                                           # 从 temp 文件中读取模块的状态
 
     # gxt_kt add second place
-    xsetroot -name "$_icons$_screen$_package$_net$_cpu$_mem$_wifi$_vol$_bat$_my_date"             # 更新状态栏
+    xsetroot -name "$_music_title$_music_pre$_music_play$_music_next$_icons$_screen$_package$_net$_cpu$_mem$_wifi$_vol$_bat$_my_date"             # 更新状态栏
 }
 
 # 启动定时更新状态栏 不同的模块有不同的刷新周期 注意不要重复启动该func
@@ -51,6 +55,10 @@ cron() {
         [ $((i % 3)) -eq 0 ]  && to=(${to[@]} wifi)  
         [ $((i % 4)) -eq 0 ]  && to=(${to[@]} cpu )  
         [ $((i % 3)) -eq 0 ]  && to=(${to[@]} mem )  
+        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} music_title )  
+        [ $((i % 10)) -eq 0 ]  && to=(${to[@]} music_pre )  
+        [ $((i % 1)) -eq 0 ]  && to=(${to[@]} music_play)  
+        [ $((i % 10)) -eq 0 ]  && to=(${to[@]} music_next )  
         [ $((i % 20)) -eq 0 ]  && to=(${to[@]} vol )  
         [ $((i % 3600)) -eq 0 ]  && to=(${to[@]} icons)   
         [ $((i % 5)) -eq 0 ]  && to=(${to[@]} screen)   
@@ -69,7 +77,7 @@ cron() {
 case $1 in
     cron) cron ;;
     update) shift 1; update $* ;;
-    updateall|check) update screen icons wifi cpu mem my_date vol bat net package ;; # gxt_kt
+    updateall|check) update screen icons wifi cpu music_title music_pre music_play music_next mem my_date vol bat net package ;; # gxt_kt
     #updateall|check) update  net icons wifi my_date ;; # gxt_kt
     *) click $1 $2 ;; # 接收clickstatusbar传递过来的信号 $1: 模块名  $2: 按键(L|M|R|U|D)
 esac

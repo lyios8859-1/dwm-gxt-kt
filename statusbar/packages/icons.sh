@@ -5,7 +5,8 @@ source ~/.profile
 
 
 this=_icons
-color="^c#111111^^b#ff7f500x66^"
+icon_color="^c#222222^^b#A3BE8C0x88^"
+text_color="^c#222222^^b#8FBCBB0x99^"
 signal=$(echo "^s$this^" | sed 's/_//')
 #
 update() {
@@ -17,14 +18,7 @@ update() {
     text="${icons[@]}"
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
-    printf "export %s='%s%s%s'\n" $this "$signal" "$color" "$text" >> $DWM/statusbar/temp
-}
-
-notify() {
-    texts="" 
-    #[ "$(sudo docker ps | grep 'v2raya')" ] && texts="$texts\n v2raya 已启动"
-    #[ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && texts="$texts\n WH-1000XM4 已链接"
-    [ "$texts" != "" ] && notify-send " Info" "$texts" -r 9527
+    printf "export %s='%s%s%s%s%s'\n" $this "$signal" "$icon_color" "$icon" "$text_color" "$text" >> $DWM/statusbar/temp
 }
 
 CallMenu() {
@@ -38,7 +32,8 @@ CallMenu() {
 }
 
 ChangeWallpaper() {
-  feh --recrsive --bg-fill  --randomize ~/my_desktop/backgrouds/animation/* &
+  # feh --recrsive --bg-fill  --randomize ~/my_desktop/backgrouds/animation/* &
+  nitrogen&
 }
 
 click() {
