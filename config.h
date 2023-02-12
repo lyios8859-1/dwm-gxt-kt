@@ -94,6 +94,7 @@ static const Rule rules[] = {
     {"music",             NULL,             NULL,             1 << 7,       0,          0,          0,        -1 },
     {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"copyq",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, 
+    {"Nitrogen",            NULL,                 NULL,             TAGMASK,      1,          0,          0,        -1 }, 
     {"钉钉",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"com.alibabainc.dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
