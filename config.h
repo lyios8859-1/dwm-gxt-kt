@@ -187,8 +187,12 @@ static Key keys[] = {
 
     { MODKEY|Mod1Mask,              XK_Left,             focusmon,         {.i = -1} },               /* super b            |  光标移动到另一个显示器 */
     { MODKEY|Mod1Mask,              XK_Right,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */
+    { MODKEY|Mod1Mask,              XK_h,             focusmon,         {.i = -1} },               /* super b            |  光标移动到另一个显示器 */
+    { MODKEY|Mod1Mask,              XK_l,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */
     { MODKEY|ShiftMask,    XK_Left,            tagmon,           {.i = -1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
     { MODKEY|ShiftMask,    XK_Right,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    { MODKEY|ShiftMask,    XK_h,            tagmon,           {.i = -1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    { MODKEY|ShiftMask,    XK_l,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
 
     // win+q 关闭窗口容易误触，改成win+ctrl+q
     { MODKEY|ShiftMask,  XK_q,  killclient, {0} },   /* super q |  关闭窗口 */
