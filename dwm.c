@@ -4066,7 +4066,6 @@ xinitvisual()
 void ExchangeTwoClient(Client* c1, Client* c2) {
   if(c1==NULL || c2==NULL || c1->mon!=c2->mon) { return ; }
   Client tmp__;
-  gDebug("ExchangeTwoClient %s %s",c1->name,c2->name);
 
   Client *tmp1 = c1->mon->clients;
   if(c1==c1->mon->clients) {
@@ -4075,7 +4074,6 @@ void ExchangeTwoClient(Client* c1, Client* c2) {
   } else {
     for (; tmp1 != NULL; tmp1 = tmp1->next) {
       if(tmp1->next==c1) {
-        gDebug("find tmp1 %s",c1->name);
         break;
       }
     }
@@ -4088,13 +4086,10 @@ void ExchangeTwoClient(Client* c1, Client* c2) {
   } else {
     for (; tmp2 != NULL; tmp2 = tmp2->next) {
       if(tmp2->next==c2) {
-        gDebug("find tmp2 %s",c2->name);
         break;
       }
     }
   }
-
-  gDebug("debug point 2");
 
   if(tmp1==NULL||tmp2==NULL) {
     return ;
@@ -4105,7 +4100,6 @@ void ExchangeTwoClient(Client* c1, Client* c2) {
   Client* tmp=c1->next;
   c1->next=c2->next;
   c2->next=tmp;
-  gDebug("debug point 1");
 	focus(c1);
 	arrange(c1->mon);
   pointerfocuswin(c1);

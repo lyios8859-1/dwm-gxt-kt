@@ -171,8 +171,8 @@ static Key keys[] = {
 
 
     { MODKEY|ShiftMask,    XK_h,            ExchangeClient,           {.i = 0} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
-    { MODKEY|ShiftMask,     XK_j,      ExchangeClient,    {.i = 1 } }, /* rotate the stack*/
-    { MODKEY|ShiftMask,     XK_k,      ExchangeClient,    {.i = 2 } }, /* rotate the stack*/
+    { MODKEY|ShiftMask,    XK_j,      ExchangeClient,    {.i = 1 } }, /* rotate the stack*/
+    { MODKEY|ShiftMask,    XK_k,      ExchangeClient,    {.i = 2 } }, /* rotate the stack*/
     { MODKEY|ShiftMask,    XK_l,            ExchangeClient,           {.i = 3} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
 
     // { MODKEY|ShiftMask,              XK_Left,         viewtoleft,       {0} },                     /* super left         |  聚焦到左边的tag */
