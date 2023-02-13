@@ -107,7 +107,6 @@ typedef struct {
 	unsigned int ui;
 	float f;
 	const void *v;
-  char focus_win;
 } Arg;
 
 typedef struct {
@@ -230,6 +229,7 @@ static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 
 static void focusin(XEvent *e);
+static void focusdir(const Arg *arg);
 static void focus(Client *c);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
@@ -1425,7 +1425,7 @@ focusmon(const Arg *arg)
 }
 
 void
-focusstack(const Arg *arg)
+focusdir(const Arg *arg)
 {
     Client *tempClients[100];
     Client *c = NULL, *tc = selmon->sel;
@@ -1437,7 +1437,6 @@ focusstack(const Arg *arg)
         tc = selmon->clients;
     if (!tc)
         return;
-    
 
     for (c = selmon->clients; c; c = c->next) {
         if (ISVISIBLE(c) && (issingle || !HIDDEN(c))) {
@@ -1448,14 +1447,13 @@ focusstack(const Arg *arg)
     }
     if (last < 0) return;
 
-    // gxt_kt
     int sel_x=tc->x;
     int sel_y=tc->y;
     long long int distance=LLONG_MAX;
     int temp_focus=0;
     Client *tempFocusClients=NULL;
     if (arg) {
-      if (arg->focus_win == 'L') {
+      if (arg->i == 3) {
               for (int _i = 0; _i <= last; _i++) {
                   // 第一步先筛选出右边的窗口 优先选择同一层次的
                   if(tempClients[_i]->x > sel_x && tempClients[_i]->y == sel_y ) {
@@ -1487,7 +1485,7 @@ focusstack(const Arg *arg)
               if(tempFocusClients && tempFocusClients->x<=16384 && tempFocusClients->y<=16384) { 
                   c=tempFocusClients;
               }
-      } else if (arg->focus_win == 'H') {
+      } else if (arg->i == 0) { //left
               for (int _i = 0; _i <= last; _i++) {
                   if(tempClients[_i]->x < sel_x && tempClients[_i]->y == sel_y ) {
                     int dis_x=tempClients[_i]->x - sel_x;
@@ -1516,7 +1514,7 @@ focusstack(const Arg *arg)
               if(tempFocusClients && tempFocusClients->x<=16384 && tempFocusClients->y<=16384) { 
                   c=tempFocusClients;
               }
-      } else if (arg->focus_win == 'J') {
+      } else if (arg->i == 1) { //up
               for (int _i = 0; _i <= last; _i++) {
                   if(tempClients[_i]->y > sel_y && tempClients[_i]->x == sel_x ) {
                     int dis_x=tempClients[_i]->x - sel_x;
@@ -1545,7 +1543,7 @@ focusstack(const Arg *arg)
               if(tempFocusClients && tempFocusClients->x<=16384 && tempFocusClients->y<=16384) { 
                   c=tempFocusClients;
               }
-      } else if (arg->focus_win == 'K') {
+      } else if (arg->i == 2) { //down
               for (int _i = 0; _i <= last; _i++) {
                   if(tempClients[_i]->y < sel_y && tempClients[_i]->x == sel_x ) {
                     int dis_x=tempClients[_i]->x - sel_x;
@@ -1575,24 +1573,52 @@ focusstack(const Arg *arg)
                   c=tempFocusClients;
               }
       } else {
-        if (arg && arg->i == -1) {
-            if (cur - 1 >= 0) c = tempClients[cur - 1];
-            else c = tempClients[last];
-        } else {
-            if (cur + 1 <= last) c = tempClients[cur + 1];
-            else c = tempClients[0];
-        }
       }
     }
 
+    if (issingle) {
+        if (c)
+            hideotherwins(&(Arg) { .v = c });
+    } else {
+        if (c) {
+            pointerfocuswin(c);
+            restack(selmon);
+        }
+    }
+}
 
-    // if (arg && arg->i == -1) {
-    //     if (cur - 1 >= 0) c = tempClients[cur - 1];
-    //     else c = tempClients[last];
-    // } else {
-    //     if (cur + 1 <= last) c = tempClients[cur + 1];
-    //     else c = tempClients[0];
-    // }
+
+void
+focusstack(const Arg *arg)
+{
+    Client *tempClients[100];
+    Client *c = NULL, *tc = selmon->sel;
+    int last = -1, cur = 0, issingle = issinglewin(NULL);
+
+    if (tc && tc->isfullscreen) /* no support for focusstack with fullscreen windows */
+        return;
+    if (!tc)
+        tc = selmon->clients;
+    if (!tc)
+        return;
+    
+
+    for (c = selmon->clients; c; c = c->next) {
+        if (ISVISIBLE(c) && (issingle || !HIDDEN(c))) {
+            last ++;
+            tempClients[last] = c;
+            if (c == tc) cur = last;
+        }
+    }
+    if (last < 0) return;
+
+    if (arg && arg->i == -1) {
+        if (cur - 1 >= 0) c = tempClients[cur - 1];
+        else c = tempClients[last];
+    } else {
+        if (cur + 1 <= last) c = tempClients[cur + 1];
+        else c = tempClients[0];
+    }
 
     if (issingle) {
         if (c)

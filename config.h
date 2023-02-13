@@ -154,10 +154,14 @@ static Key keys[] = {
 
     // { MODKEY,               XK_j,      focusstack,     {.i = +1 , .focus_win='L'} }, /* 本tag内切换聚焦窗口 */
     // { MODKEY,               XK_k,      focusstack,     {.i = -1 , .focus_win='H'}}, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_h,      focusstack,     {.focus_win='H'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_j,      focusstack,     {.focus_win='J'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_k,      focusstack,     {.focus_win='K'} }, /* 本tag内切换聚焦窗口 */
-    { MODKEY,               XK_l,      focusstack,     {.focus_win='L'} }, /* 本tag内切换聚焦窗口 */
+    // { MODKEY,               XK_h,      focusstack,     {.focus_win='H'} }, /* 本tag内切换聚焦窗口 */
+    // { MODKEY,               XK_j,      focusstack,     {.focus_win='J'} }, /* 本tag内切换聚焦窗口 */
+    // { MODKEY,               XK_k,      focusstack,     {.focus_win='K'} }, /* 本tag内切换聚焦窗口 */
+    // { MODKEY,               XK_l,      focusstack,     {.focus_win='L'} }, /* 本tag内切换聚焦窗口 */
+  	{ MODKEY,                XK_h,   focusdir,       {.i = 0 } }, // left
+  	{ MODKEY,                XK_j,   focusdir,       {.i = 1 } }, // down 
+  	{ MODKEY,                XK_k,   focusdir,       {.i = 2 } }, // up
+  	{ MODKEY,                XK_l,   focusdir,       {.i = 3 } }, // right
     { MODKEY|ShiftMask,     XK_j,      rotatestack,    {.i = +1 } }, /* rotate the stack*/
     { MODKEY|ShiftMask,     XK_k,      rotatestack,    {.i = -1 } }, /* rotate the stack*/
 
