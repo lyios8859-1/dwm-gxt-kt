@@ -144,6 +144,10 @@ static const Layout layouts[] = {
 static Key keys[] = {
     /* modifier            key              function          argument */
     //{ MODKEY,              XK_equal,        togglesystray,    {0} },                     /* super +          |  切换 托盘栏显示状态 */
+  	{ MODKEY,                XK_F1,   ExchangeClient,       {.i=0} }, // right
+  	{ MODKEY,                XK_F2,   ExchangeClient,       {.i=1} }, // right
+  	{ MODKEY,                XK_F3,   ExchangeClient,       {.i=2} }, // right
+  	{ MODKEY,                XK_F4,   ExchangeClient,       {.i=3} }, // right
 
     { Mod1Mask,            XK_Tab,          focusstack,       {.i = +1} },               /* alt tab            |  本tag内切换聚焦窗口 */
     { Mod1Mask|ShiftMask,  XK_Tab,          focusstack,       {.i = -1} },               /* alt shift tab      |  本tag内切换聚焦窗口 */
@@ -162,8 +166,14 @@ static Key keys[] = {
   	{ MODKEY,                XK_j,   focusdir,       {.i = 1 } }, // down 
   	{ MODKEY,                XK_k,   focusdir,       {.i = 2 } }, // up
   	{ MODKEY,                XK_l,   focusdir,       {.i = 3 } }, // right
-    { MODKEY|ShiftMask,     XK_j,      rotatestack,    {.i = +1 } }, /* rotate the stack*/
-    { MODKEY|ShiftMask,     XK_k,      rotatestack,    {.i = -1 } }, /* rotate the stack*/
+    // { MODKEY|ShiftMask,     XK_j,      rotatestack,    {.i = +1 } }, /* rotate the stack*/
+    // { MODKEY|ShiftMask,     XK_k,      rotatestack,    {.i = -1 } }, /* rotate the stack*/
+
+
+    { MODKEY|ShiftMask,    XK_h,            ExchangeClient,           {.i = 0} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    { MODKEY|ShiftMask,     XK_j,      ExchangeClient,    {.i = 1 } }, /* rotate the stack*/
+    { MODKEY|ShiftMask,     XK_k,      ExchangeClient,    {.i = 2 } }, /* rotate the stack*/
+    { MODKEY|ShiftMask,    XK_l,            ExchangeClient,           {.i = 3} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
 
     // { MODKEY|ShiftMask,              XK_Left,         viewtoleft,       {0} },                     /* super left         |  聚焦到左边的tag */
     // { MODKEY|ShiftMask,              XK_Right,        viewtoright,      {0} },                     /* super right        |  聚焦到右边的tag */
@@ -195,8 +205,8 @@ static Key keys[] = {
     { MODKEY|Mod1Mask,              XK_l,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */
     { MODKEY|ShiftMask,    XK_Left,            tagmon,           {.i = -1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
     { MODKEY|ShiftMask,    XK_Right,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
-    { MODKEY|ShiftMask,    XK_h,            tagmon,           {.i = -1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
-    { MODKEY|ShiftMask,    XK_l,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    // { MODKEY|ShiftMask,    XK_h,            tagmon,           {.i = -1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
+    // { MODKEY|ShiftMask,    XK_l,            tagmon,           {.i = +1} },               /* super shift b      |  将聚焦窗口移动到另一个显示器 */
 
     // win+q 关闭窗口容易误触，改成win+ctrl+q
     { MODKEY|ShiftMask,  XK_q,  killclient, {0} },   /* super q |  关闭窗口 */

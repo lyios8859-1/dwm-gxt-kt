@@ -236,6 +236,12 @@ static void focusstack(const Arg *arg);
 
 static void pointerfocuswin(Client *c);
 
+
+
+Client *DirectionSelect(const Arg *arg);
+void ExchangeClient(const Arg *arg);
+void ExchangeTwoClient(Client *c1,Client *c2);
+
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
@@ -1424,19 +1430,17 @@ focusmon(const Arg *arg)
     pointerfocuswin(NULL);
 }
 
-void
-focusdir(const Arg *arg)
-{
+Client *DirectionSelect(const Arg *arg) {
     Client *tempClients[100];
     Client *c = NULL, *tc = selmon->sel;
     int last = -1, cur = 0, issingle = issinglewin(NULL);
 
     if (tc && tc->isfullscreen) /* no support for focusstack with fullscreen windows */
-        return;
+        return NULL;
     if (!tc)
         tc = selmon->clients;
     if (!tc)
-        return;
+        return NULL;
 
     for (c = selmon->clients; c; c = c->next) {
         if (ISVISIBLE(c) && (issingle || !HIDDEN(c))) {
@@ -1445,136 +1449,159 @@ focusdir(const Arg *arg)
             if (c == tc) cur = last;
         }
     }
-    if (last < 0) return;
 
+    if (last < 0) return NULL;
     int sel_x=tc->x;
     int sel_y=tc->y;
     long long int distance=LLONG_MAX;
     int temp_focus=0;
     Client *tempFocusClients=NULL;
     if (arg) {
-      if (arg->i == 3) {
-              for (int _i = 0; _i <= last; _i++) {
-                  // 第一步先筛选出右边的窗口 优先选择同一层次的
-                  if(tempClients[_i]->x > sel_x && tempClients[_i]->y == sel_y ) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
+        if (arg->i == 3) {
+            for (int _i = 0; _i <= last; _i++) {
+                // 第一步先筛选出右边的窗口 优先选择同一层次的
+                if (tempClients[_i]->x > sel_x && tempClients[_i]->y == sel_y) {
+                    int dis_x = tempClients[_i]->x - sel_x;
+                    int dis_y = tempClients[_i]->y - sel_y;
+                    long long int tmp_distance =
+                        dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                    if (tmp_distance < distance) {
+                        distance = tmp_distance;
+                        tempFocusClients = tempClients[_i];
                     }
-                  }               
-              }
-              // 没筛选到,再去除同一层次的要求,重新筛选
-              if(!tempFocusClients) {
-                distance=LLONG_MAX; 
-                for (int _i = 0; _i <= last; _i++) {
-                  if(tempClients[_i]->x > sel_x) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
-                    }
-                  }               
                 }
-              }
-              // 确认选择
-              if(tempFocusClients && tempFocusClients->x<=16384 && tempFocusClients->y<=16384) { 
-                  c=tempFocusClients;
-              }
-      } else if (arg->i == 0) { //left
-              for (int _i = 0; _i <= last; _i++) {
-                  if(tempClients[_i]->x < sel_x && tempClients[_i]->y == sel_y ) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
-                    }
-                  }               
-              }
-              if(!tempFocusClients) {
-                distance=LLONG_MAX; 
+            }
+            // 没筛选到,再去除同一层次的要求,重新筛选
+            if (!tempFocusClients) {
+                distance = LLONG_MAX;
                 for (int _i = 0; _i <= last; _i++) {
-                  if(tempClients[_i]->x < sel_x) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
+                    if (tempClients[_i]->x > sel_x) {
+                        int dis_x = tempClients[_i]->x - sel_x;
+                        int dis_y = tempClients[_i]->y - sel_y;
+                        long long int tmp_distance =
+                            dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                        if (tmp_distance < distance) {
+                          distance = tmp_distance;
+                          tempFocusClients = tempClients[_i];
+                        }
                     }
-                  }               
                 }
-              }
-              if(tempFocusClients && tempFocusClients->x<=16384 && tempFocusClients->y<=16384) { 
-                  c=tempFocusClients;
-              }
-      } else if (arg->i == 1) { //up
-              for (int _i = 0; _i <= last; _i++) {
-                  if(tempClients[_i]->y > sel_y && tempClients[_i]->x == sel_x ) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
+            }
+            // 确认选择
+            if (tempFocusClients && tempFocusClients->x <= 16384 &&
+                tempFocusClients->y <= 16384) {
+                c = tempFocusClients;
+            }
+        } else if (arg->i == 0) {  // left
+            for (int _i = 0; _i <= last; _i++) {
+                if (tempClients[_i]->x < sel_x && tempClients[_i]->y == sel_y) {
+                    int dis_x = tempClients[_i]->x - sel_x;
+                    int dis_y = tempClients[_i]->y - sel_y;
+                    long long int tmp_distance =
+                        dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                    if (tmp_distance < distance) {
+                        distance = tmp_distance;
+                        tempFocusClients = tempClients[_i];
                     }
-                  }               
-              }
-              if(!tempFocusClients) {
-                distance=LLONG_MAX; 
+                }
+            }
+            if (!tempFocusClients) {
+                distance = LLONG_MAX;
                 for (int _i = 0; _i <= last; _i++) {
-                  if(tempClients[_i]->y > sel_y) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
+                    if (tempClients[_i]->x < sel_x) {
+                        int dis_x = tempClients[_i]->x - sel_x;
+                        int dis_y = tempClients[_i]->y - sel_y;
+                        long long int tmp_distance =
+                            dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                        if (tmp_distance < distance) {
+                          distance = tmp_distance;
+                          tempFocusClients = tempClients[_i];
+                        }
                     }
-                  }               
                 }
-              }
-              if(tempFocusClients && tempFocusClients->x<=16384 && tempFocusClients->y<=16384) { 
-                  c=tempFocusClients;
-              }
-      } else if (arg->i == 2) { //down
-              for (int _i = 0; _i <= last; _i++) {
-                  if(tempClients[_i]->y < sel_y && tempClients[_i]->x == sel_x ) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
+            }
+            if (tempFocusClients && tempFocusClients->x <= 16384 &&
+                tempFocusClients->y <= 16384) {
+                c = tempFocusClients;
+            }
+        } else if (arg->i == 1) {  // up
+            for (int _i = 0; _i <= last; _i++) {
+                if (tempClients[_i]->y > sel_y && tempClients[_i]->x == sel_x) {
+                    int dis_x = tempClients[_i]->x - sel_x;
+                    int dis_y = tempClients[_i]->y - sel_y;
+                    long long int tmp_distance =
+                        dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                    if (tmp_distance < distance) {
+                        distance = tmp_distance;
+                        tempFocusClients = tempClients[_i];
                     }
-                  }               
-              }
-              if(!tempFocusClients) {
-                distance=LLONG_MAX; 
+                }
+            }
+            if (!tempFocusClients) {
+                distance = LLONG_MAX;
                 for (int _i = 0; _i <= last; _i++) {
-                  if(tempClients[_i]->y < sel_y) {
-                    int dis_x=tempClients[_i]->x - sel_x;
-                    int dis_y=tempClients[_i]->y - sel_y;
-                    long long int tmp_distance=dis_x*dis_x+dis_y*dis_y; // 计算距离
-                    if(tmp_distance<distance) {
-                      distance=tmp_distance;
-                      tempFocusClients=tempClients[_i];
+                    if (tempClients[_i]->y > sel_y) {
+                        int dis_x = tempClients[_i]->x - sel_x;
+                        int dis_y = tempClients[_i]->y - sel_y;
+                        long long int tmp_distance =
+                            dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                        if (tmp_distance < distance) {
+                          distance = tmp_distance;
+                          tempFocusClients = tempClients[_i];
+                        }
                     }
-                  }               
                 }
-              }
-              if(tempFocusClients && tempFocusClients->x<=16384 && tempFocusClients->y<=16384) { 
-                  c=tempFocusClients;
-              }
-      } else {
-      }
+            }
+            if (tempFocusClients && tempFocusClients->x <= 16384 &&
+                tempFocusClients->y <= 16384) {
+                c = tempFocusClients;
+            }
+        } else if (arg->i == 2) {  // down
+            for (int _i = 0; _i <= last; _i++) {
+                if (tempClients[_i]->y < sel_y && tempClients[_i]->x == sel_x) {
+                    int dis_x = tempClients[_i]->x - sel_x;
+                    int dis_y = tempClients[_i]->y - sel_y;
+                    long long int tmp_distance =
+                        dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                    if (tmp_distance < distance) {
+                        distance = tmp_distance;
+                        tempFocusClients = tempClients[_i];
+                    }
+                }
+            }
+            if (!tempFocusClients) {
+                distance = LLONG_MAX;
+                for (int _i = 0; _i <= last; _i++) {
+                    if (tempClients[_i]->y < sel_y) {
+                        int dis_x = tempClients[_i]->x - sel_x;
+                        int dis_y = tempClients[_i]->y - sel_y;
+                        long long int tmp_distance =
+                            dis_x * dis_x + dis_y * dis_y;  // 计算距离
+                        if (tmp_distance < distance) {
+                          distance = tmp_distance;
+                          tempFocusClients = tempClients[_i];
+                        }
+                    }
+                }
+            }
+            if (tempFocusClients && tempFocusClients->x <= 16384 &&
+                tempFocusClients->y <= 16384) {
+                c = tempFocusClients;
+            }
+        } else {
+          return NULL;
+        }
     }
+  return c;
+}
+
+void
+focusdir(const Arg *arg)
+{
+    Client *c = NULL;
+    int issingle = issinglewin(NULL);
+    
+    c=DirectionSelect(arg);
 
     if (issingle) {
         if (c)
@@ -4034,6 +4061,66 @@ xinitvisual()
         depth = DefaultDepth(dpy, screen);
         cmap = DefaultColormap(dpy, screen);
     }
+}
+
+void ExchangeTwoClient(Client* c1, Client* c2) {
+  if(c1==NULL || c2==NULL || c1->mon!=c2->mon) { return ; }
+  Client tmp__;
+  gDebug("ExchangeTwoClient %s %s",c1->name,c2->name);
+
+  Client *tmp1 = c1->mon->clients;
+  if(c1==c1->mon->clients) {
+    tmp1 = &tmp__;
+    tmp1->next=c1;
+  } else {
+    for (; tmp1 != NULL; tmp1 = tmp1->next) {
+      if(tmp1->next==c1) {
+        gDebug("find tmp1 %s",c1->name);
+        break;
+      }
+    }
+  }
+
+  Client *tmp2 = c2->mon->clients;
+  if(c2==c2->mon->clients) {
+    tmp2 = &tmp__;
+    tmp2->next=c2;
+  } else {
+    for (; tmp2 != NULL; tmp2 = tmp2->next) {
+      if(tmp2->next==c2) {
+        gDebug("find tmp2 %s",c2->name);
+        break;
+      }
+    }
+  }
+
+  gDebug("debug point 2");
+
+  if(tmp1==NULL||tmp2==NULL) {
+    return ;
+  }
+
+  tmp1->next=c2;
+  tmp2->next=c1;
+  Client* tmp=c1->next;
+  c1->next=c2->next;
+  c2->next=tmp;
+  gDebug("debug point 1");
+	focus(c1);
+	arrange(c1->mon);
+  pointerfocuswin(c1);
+}
+void
+ExchangeClient(const Arg *arg)
+{
+    // Client *c = selmon->sel;
+    // if (c && (c->isfloating || c->isfullscreen))
+    //     return;
+    // ExchangeTwoClient(c,c->next);
+    Client *c = selmon->sel;
+    if (c && (c->isfloating || c->isfullscreen))
+        return;
+    ExchangeTwoClient(c,DirectionSelect(arg));
 }
 
 void
