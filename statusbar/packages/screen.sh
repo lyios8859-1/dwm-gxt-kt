@@ -41,8 +41,7 @@ notify() {
 CallMenu() {
     update
     notify
-    case $(echo -e '4k(L)+2k(P)(R)(2.0)\n4k(L)+2k(P)(R)(1.75)\n4k(L)+\
-      2k(P)(R)(1.5)\n4k(S)+1k(S)(2)\n4k_Single' | rofi -dmenu -window-title Screen${CONNECTED_MONITORS}/${CONNECTED_PORTS}) in
+    case $(echo -e '4k(L)+2k(P)(R)(2.0)\n4k(L)+2k(P)(R)(1.75)\n4k(L)+2k(P)(R)(1.5)\n4k(S)+1k(S)(2)\n4k_Single' | rofi -dmenu -window-title Screen${CONNECTED_MONITORS}/${CONNECTED_PORTS}) in
         "4k(L)+2k(P)(R)(2.0)") 4k_L____2k_P_R_2_0;;
         "4k(L)+2k(P)(R)(1.75)") 4k_L____2k_P_R_1_75;;
         "4k(L)+2k(P)(R)(1.5)") 4k_L____2k_P_R_1_5 ;;
@@ -53,14 +52,16 @@ CallMenu() {
 
 4k_L____2k_P_R_1_5() {
   xrandr --output DP-0 --off \
-  --output DP-1 --off --output DP-2 --off \
+  --output DP-1 --off \
+  --output DP-2 --off \
   --output DP-3 --off \
   --output HDMI-0 --primary --mode 2560x1440 --rate 120 --scale 1.5x1.5 --pos 3840x0 --rotate normal \
   --output eDP-1-0 --mode 3840x2160 --rate 60 --dpi 192 --pos 0x0 --rotate normal
 }
 4k_L____2k_P_R_1_75() {
   xrandr --output DP-0 --off \
-  --output DP-1 --off --output DP-2 --off \
+  --output DP-1 --off \
+  --output DP-2 --off \
   --output DP-3 --off \
   --output HDMI-0 --primary --mode 2560x1440 --rate 120 --scale 1.75x1.75 --pos 3840x0 --rotate normal \
   --output eDP-1-0 --mode 3840x2160 --rate 60 --dpi 192 --pos 0x0 --rotate normal
@@ -68,7 +69,8 @@ CallMenu() {
 
 4k_L____2k_P_R_2_0() {
   xrandr --output DP-0 --off \
-  --output DP-1 --off --output DP-2 --off \
+  --output DP-1 --off \
+  --output DP-2 --off \
   --output DP-3 --off \
   --output HDMI-0 --primary --mode 2560x1440 --rate 120 --scale 2.0x2.0 --pos 3840x0 --rotate normal \
   --output eDP-1-0 --mode 3840x2160 --rate 60 --dpi 192 --pos 0x0 --rotate normal
@@ -76,14 +78,20 @@ CallMenu() {
 
 4k_S___1k_S_2_0() {
   xrandr --output DP-0 --off \
-  --output DP-1 --off --output DP-2 --off \
+  --output DP-1 --off \
+  --output DP-2 --off \
   --output DP-3 --off \
   --output HDMI-0 --primary --mode 1920x1080 --rate 60 --scale 2x2 --pos 0x0 --rotate normal \
   --output eDP-1-0 --mode 3840x2160 --rate 60 --dpi 192 --pos 0x0 --rotate normal
 }
 
 4k_Single() {
-  xrandr --output eDP-1-0 --mode 3840x2160   --rate 60 --dpi 192 
+  xrandr  --output DP-0 --off \
+  --output DP-1 --off \
+  --output DP-2 --off \
+  --output DP-3 --off \
+  --output HDMI-0 --off \
+  --output eDP-1-0 --mode 3840x2160   --rate 60 --dpi 192 
 }
 
 click() {
