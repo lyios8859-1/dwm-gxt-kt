@@ -144,10 +144,6 @@ static const Layout layouts[] = {
 static Key keys[] = {
     /* modifier            key              function          argument */
     //{ MODKEY,              XK_equal,        togglesystray,    {0} },                     /* super +          |  切换 托盘栏显示状态 */
-  	{ MODKEY,                XK_F1,   ExchangeClient,       {.i=0} }, // right
-  	{ MODKEY,                XK_F2,   ExchangeClient,       {.i=1} }, // right
-  	{ MODKEY,                XK_F3,   ExchangeClient,       {.i=2} }, // right
-  	{ MODKEY,                XK_F4,   ExchangeClient,       {.i=3} }, // right
 
     { Mod1Mask,            XK_Tab,          focusstack,       {.i = +1} },               /* alt tab            |  本tag内切换聚焦窗口 */
     { Mod1Mask|ShiftMask,  XK_Tab,          focusstack,       {.i = -1} },               /* alt shift tab      |  本tag内切换聚焦窗口 */
