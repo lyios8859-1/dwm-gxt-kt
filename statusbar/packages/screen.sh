@@ -17,7 +17,7 @@ update() {
     
     icon=" $icons"
     CONNECTED_PORTS=$(xrandr | grep -w 'connected' | awk '{print $1}' | wc -l)
-    CONNECTED_MONITORS=$(xrandr --Clientmonitors | sed 1d | awk '{print $4}' | wc -l)
+    CONNECTED_MONITORS=$(xrandr --listmonitors | sed 1d | awk '{print $4}' | wc -l)
     text=" ${CONNECTED_MONITORS}/${CONNECTED_PORTS} "
 
     sed -i '/^export '$this'=.*$/d' $DWM/statusbar/temp
