@@ -12,7 +12,7 @@
  *
  * Each child of the root window is called a client, except windows which have
  * set the override_redirect flag. Clients are organized in a linked client
- * list on each monitor, the focus history is remembered through a stack list
+ * Client on each monitor, the focus history is remembered through a stack Client
  * on each monitor. Each client contains a bit array to indicate the tags of a
  * client.
  *
@@ -94,7 +94,7 @@ enum {
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetSystemTray, NetSystemTrayOP, NetSystemTrayOrientation, NetSystemTrayOrientationHorz,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
-       NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+       NetWMWindowTypeDialog, NetClientClient, NetLast }; /* EWMH atoms */
 enum { Manager, Xembed, XembedInfo, XLast }; /* Xembed atoms */
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkBarEmpty,
@@ -318,7 +318,7 @@ static void unmapnotify(XEvent *e);
 
 static void updatebarpos(Monitor *m);
 static void updatebars(void);
-static void updateclientlist(void);
+static void updateclientClient(void);
 static int updategeom(void);
 static void updatenumlockmask(void);
 static void updatesizehints(Client *c);
@@ -1496,7 +1496,7 @@ getsystraywidth()
 int
 gettextprop(Window w, Atom atom, char *text, unsigned int size)
 {
-    char **list = NULL;
+    char **Client = NULL;
     int n;
     XTextProperty name;
 
@@ -1508,9 +1508,9 @@ gettextprop(Window w, Atom atom, char *text, unsigned int size)
     if (name.encoding == XA_STRING)
         strncpy(text, (char *)name.value, size - 1);
     else {
-        if (XmbTextPropertyToTextList(dpy, &name, &list, &n) >= Success && n > 0 && *list) {
-            strncpy(text, *list, size - 1);
-            XFreeStringList(list);
+        if (XmbTextPropertyToTextClient(dpy, &name, &Client, &n) >= Success && n > 0 && *Client) {
+            strncpy(text, *Client, size - 1);
+            XFreeStringClient(Client);
         }
     }
     text[size - 1] = '\0';
@@ -1764,7 +1764,7 @@ manage(Window w, XWindowAttributes *wa)
         XRaiseWindow(dpy, c->win);
     attach(c);
     attachstack(c);
-    XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
+    XChangeProperty(dpy, root, netatom[NetClientClient], XA_WINDOW, 32, PropModeAppend,
             (unsigned char *) &(c->win), 1);
     XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
     if (!HIDDEN(c))
@@ -2560,7 +2560,7 @@ setup(void)
     netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
     netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
     netatom[NetWMWindowTypeDialog] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
-    netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
+    netatom[NetClientClient] = XInternAtom(dpy, "_NET_CLIENT_Client", False);
     xatom[Manager] = XInternAtom(dpy, "MANAGER", False);
     xatom[Xembed] = XInternAtom(dpy, "_XEMBED", False);
     xatom[XembedInfo] = XInternAtom(dpy, "_XEMBED_INFO", False);
@@ -2589,7 +2589,7 @@ setup(void)
     /* EWMH support per view */
     XChangeProperty(dpy, root, netatom[NetSupported], XA_ATOM, 32,
             PropModeReplace, (unsigned char *) netatom, NetLast);
-    XDeleteProperty(dpy, root, netatom[NetClientList]);
+    XDeleteProperty(dpy, root, netatom[NetClientClient]);
     /* select events */
     wa.cursor = cursor[CurNormal]->cursor;
     wa.event_mask = SubstructureRedirectMask|SubstructureNotifyMask
@@ -2961,7 +2961,7 @@ unmanage(Client *c, int destroyed)
     }
     free(c);
     focus(NULL);
-    updateclientlist();
+    updateclientClient();
     arrange(m);
 }
 
@@ -3029,15 +3029,15 @@ updatebarpos(Monitor *m)
 }
 
 void
-updateclientlist()
+updateclientClient()
 {
     Client *c;
     Monitor *m;
 
-    XDeleteProperty(dpy, root, netatom[NetClientList]);
+    XDeleteProperty(dpy, root, netatom[NetClientClient]);
     for (m = mons; m; m = m->next)
         for (c = m->clients; c; c = c->next)
-            XChangeProperty(dpy, root, netatom[NetClientList],
+            XChangeProperty(dpy, root, netatom[NetClientClient],
                     XA_WINDOW, 32, PropModeAppend,
                     (unsigned char *) &(c->win), 1);
 }

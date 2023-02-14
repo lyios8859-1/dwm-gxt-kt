@@ -4065,41 +4065,64 @@ xinitvisual()
 
 void ExchangeTwoClient(Client* c1, Client* c2) {
   if(c1==NULL || c2==NULL || c1->mon!=c2->mon) { return ; }
-  Client tmp__;
 
-  Client *tmp1 = c1->mon->clients;
-  if(c1==c1->mon->clients) {
-    tmp1 = &tmp__;
-    tmp1->next=c1;
-  } else {
-    for (; tmp1 != NULL; tmp1 = tmp1->next) {
-      if(tmp1->next==c1) {
-        break;
-      }
+  // 先找c1的上一个节点
+  Client head1;
+  Client *headp1=&head1;
+  headp1->next=selmon->clients;
+  Client *tmp1 = headp1;
+  for (; tmp1 != NULL; tmp1 = tmp1->next) {
+    if(tmp1->next!=NULL) {
+      if( tmp1->next==c1 )
+      break;
+    } else {
+      break;
     }
   }
 
-  Client *tmp2 = c2->mon->clients;
-  if(c2==c2->mon->clients) {
-    tmp2 = &tmp__;
-    tmp2->next=c2;
-  } else {
-    for (; tmp2 != NULL; tmp2 = tmp2->next) {
-      if(tmp2->next==c2) {
-        break;
-      }
+  // 再找c2的上一个节点
+  Client head2;
+  Client *headp2=&head2;
+  headp2->next=selmon->clients;
+  Client *tmp2 = headp2;
+  for (; tmp2 != NULL; tmp2 = tmp2->next) {
+    if(tmp2->next!=NULL) {
+      if( tmp2->next==c2 )
+      break;
+    } else {
+      break;
     }
   }
 
-  if(tmp1==NULL||tmp2==NULL) {
-    return ;
+  if(tmp1==NULL) { /* gDebug("tmp1==null"); */ return ; }
+  if(tmp2==NULL) {/*  gDebug("tmp2==null"); */ return ; }
+  if(tmp1->next==NULL) {/*  gDebug("tmp1->next==null"); */ return ; }
+  if(tmp2->next==NULL) { /* gDebug("tmp2->next==null");  */return ; }
+
+  // 当c1和c2为相邻节点时
+  if(c1->next==c2) {
+    c1->next=c2->next;
+    c2->next=c1;
+    tmp1->next=c2;
+  } else if(c2->next==c1) {
+    c2->next=c1->next;
+    c1->next=c2;
+    tmp2->next=c1;
+  } else { // 不为相邻节点
+    tmp1->next=c2;
+    tmp2->next=c1;
+    Client* tmp=c1->next;
+    c1->next=c2->next;
+    c2->next=tmp;
   }
 
-  tmp1->next=c2;
-  tmp2->next=c1;
-  Client* tmp=c1->next;
-  c1->next=c2->next;
-  c2->next=tmp;
+  // 当更换节点为头节点时，重置头节点
+  if(c1==selmon->clients) {
+    selmon->clients=c2;
+  }else if(c2==selmon->clients) {
+    selmon->clients=c1;
+  }
+  
 	focus(c1);
 	arrange(c1->mon);
   pointerfocuswin(c1);
@@ -4107,10 +4130,6 @@ void ExchangeTwoClient(Client* c1, Client* c2) {
 void
 ExchangeClient(const Arg *arg)
 {
-    // Client *c = selmon->sel;
-    // if (c && (c->isfloating || c->isfullscreen))
-    //     return;
-    // ExchangeTwoClient(c,c->next);
     Client *c = selmon->sel;
     if (c && (c->isfloating || c->isfullscreen))
         return;

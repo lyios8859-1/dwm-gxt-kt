@@ -23,8 +23,8 @@ signal=$(echo "^s$this^" | sed 's/_//')
 
 update() {
     sink=$(pactl info | grep 'Default Sink' | awk '{print $3}')
-    volunmuted=$(pactl list sinks | grep $sink -A 6 | sed -n '7p' | grep 'Mute: no')
-    vol_text=$(pactl list sinks | grep $sink -A 7 | sed -n '8p' | awk '{printf int($5)}')
+    volunmuted=$(pactl Client sinks | grep $sink -A 6 | sed -n '7p' | grep 'Mute: no')
+    vol_text=$(pactl Client sinks | grep $sink -A 7 | sed -n '8p' | awk '{printf int($5)}')
 
     # bluetooth_battery=`python3 ${DWM}/statusbar/get_data.py bluetooth_battery`
     # notify-send "battery=" "${bluetooth_battery}";
