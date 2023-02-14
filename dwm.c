@@ -194,6 +194,7 @@ static void logtofile(char log[100]);
 void gDebug(const char *fmt, ...);
 
 static void tile(Monitor *m);
+static void tile_right(Monitor *m);
 static void magicgrid(Monitor *m);
 static void overview(Monitor *m);
 static void grid(Monitor *m, uint gappo, uint uappi);
@@ -3932,6 +3933,65 @@ grid(Monitor *m, uint gappo, uint gappi)
                ch - 2 * c->bw,
                0);
 	}
+}
+/* m->ww win_width 窗口宽度
+ * m->wh win_height 窗口高度
+ * m->wx win_x 左上角坐标x
+ * m->wy win_y 左上角坐标y
+ * *
+ */
+void
+tile_right(Monitor *m)
+{
+    unsigned int i, n, mw, mh, sh, my, sy; // mw: master的宽度, mh: master的高度, sh: stack的高度, my: master的y坐标, sy: stack的y坐标
+    unsigned int mx;//master x
+    unsigned int  sw;
+    Client *c;
+
+    for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+    if (n == 0) return;
+
+    mh = m->nmaster == 0 ? 0 : (m->wh-2*gappo-gappi*(m->nmaster-1)) / m->nmaster;       // 单个master的高度
+    sh = n == m->nmaster ? 0 : (m->wh-2*gappo-gappi*(n-m->nmaster-1)) / (n - m->nmaster); // 单个stack的高度
+    sw=(m->ww)*m->mfact;
+  
+    if (n > m->nmaster) {
+      mw = m->nmaster ? ((m->ww) * (1-m->mfact)) : 0; // master_width
+      mx=m->wx+sw+gappi/2;
+    }
+    else {
+        mw = m->ww;
+        mx = m->wx+gappo;
+    }
+    
+
+    // 当增加了nmaster,并且只有一个窗口时
+    if(m->nmaster<=2 && n==1) { // one master window
+      for (i = 0, my = sy = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+        resize(c,m->mx+gappo,m->wy+gappo,m->ww-2*c->bw-2*gappo,m->wh-2*c->bw-gappo,0);
+      }
+      return ;
+    }
+
+    for (i = 0, my = sy = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+        if (i < m->nmaster) { // master
+            resize(c,
+                   mx,
+                   m->wy + my + gappo + gappi*i,
+                   mw - 2 * c->bw -gappi/2 -gappo ,
+                   mh - 2 * c->bw,
+                   0);
+            my += HEIGHT(c);
+        } else { // slaver
+            resize(c,
+                   m->wx+gappo,
+                   m->wy + sy+gappo+(i-m->nmaster)*gappi,
+                   sw - 2 * c->bw -gappo - gappi/2,
+                   sh - 2* c->bw,
+                   0);
+            sy += HEIGHT(c);
+        }
+    }
 }
 
 Client *
