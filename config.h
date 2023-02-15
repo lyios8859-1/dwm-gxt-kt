@@ -18,6 +18,7 @@ static const int showbar                 = 1;         /* 是否显示状态栏 *
 static const int topbar                  = 1;         /* 指定状态栏位置 0底部 1顶部 */
 static const float mfact                 = 0.5;       /* 主工作区 大小比例 */
 static const int   nmaster               = 1;         /* 主工作区 窗口数量 */
+static const int nstack      = 0;    /* number of clients in primary stack area */
 static const unsigned int snap           = 10;        /* 边缘依附宽度 */
 static const unsigned int baralpha       = 0xc0;      /* 状态栏透明度 */
 static const unsigned int borderalpha    = 0xdd;      /* 边框透明度 */
@@ -126,15 +127,32 @@ static const Layout overviewlayout = { "",  overview };
 //﬿
 /* 自定义布局 */
 #include "gaplessgrid.c"
+// static const Layout layouts[] = {
+//   /* symbol     arrange function */
+//     { "﬿",  tile },         /* 主次栈 */
+//     { "﩯", magicgrid },    /* 网格 */
+//     { "|1|", tile_right }, /* actually not use*/
+//     { "|2|",      gaplessgrid }, /* actually not use*/
+// 	  { NULL,       NULL },
+//     //{ "[M]",      monocle },
+// };
 static const Layout layouts[] = {
-  /* symbol     arrange function */
-    { "﬿",  tile },         /* 主次栈 */
-    { "﩯", magicgrid },    /* 网格 */
-    { "|1|", tile_right }, /* actually not use*/
-    { "|2|",      gaplessgrid }, /* actually not use*/
-	  { NULL,       NULL },
-    //{ "[M]",      monocle },
-};
+	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis } */
+	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
+	// { "><>",      NULL,             {0} },    /* no layout function means floating behavior */ // 被win+shift+f 替代，不用这个
+	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
+	{ "|||",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout //其实就是tile
+	// { ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
+	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
+	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
+	{ "===",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // bstackhoriz
+	{ "|M|",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, monoclesymbols } }, // centeredmaster
+	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
+	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
+	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
+	{ "[T]",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
+	{ NULL,       NULL,             {0} },
+ };
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define MODKEY Mod4Mask
@@ -196,6 +214,20 @@ static Key keys[] = {
 
     { MODKEY,              XK_g,            toggleglobal,     {0} },                     /* super g            |  开启/关闭 全局 */
     { MODKEY,              XK_a,            incnmaster,       {.i = +1} },               /* super a            |  改变主工作区窗口数量 (1 2中切换) */
+    
+  // flextile
+    { MODKEY,   XK_i,      incnstack,      {.i = +1 } },
+    { MODKEY,   XK_u,      incnstack,      {.i = -1 } },
+  	{ MODKEY|ControlMask,           XK_w,      rotatelayoutaxis, {.i = +1 } },  /* flextile, 1 = layout axis */
+  	{ MODKEY|ControlMask,           XK_e,      rotatelayoutaxis, {.i = +2 } },  /* flextile, 2 = master axis */
+  	{ MODKEY|ControlMask,           XK_r,      rotatelayoutaxis, {.i = +3 } },  /* flextile, 3 = stack axis */
+  	{ MODKEY|ControlMask,           XK_t,      rotatelayoutaxis, {.i = +4 } },  /* flextile, 4 = secondary stack axis */
+  	{ MODKEY|ControlMask|ShiftMask, XK_w,      rotatelayoutaxis, {.i = -1 } },  /* flextile, 1 = layout axis */
+  	{ MODKEY|ControlMask|ShiftMask, XK_e,      rotatelayoutaxis, {.i = -2 } },  /* flextile, 2 = master axis */
+  	{ MODKEY|ControlMask|ShiftMask, XK_r,      rotatelayoutaxis, {.i = -3 } },  /* flextile, 3 = stack axis */
+  	{ MODKEY|ControlMask|ShiftMask, XK_t,      rotatelayoutaxis, {.i = -4 } },  /* flextile, 4 = secondary stack axis */
+  	{ MODKEY|ControlMask,           XK_Return, mirrorlayout,   {0} },           /* flextile, flip master and stack areas */
+  // flextile
 
     { MODKEY|Mod1Mask,              XK_Left,             focusmon,         {.i = -1} },               /* super b            |  光标移动到另一个显示器 */
     { MODKEY|Mod1Mask,              XK_Right,            focusmon,         {.i = +1} },               /* super b            |  光标移动到另一个显示器 */

@@ -143,8 +143,20 @@ typedef struct {
 } Key;
 
 typedef struct {
+	int nmaster;
+	int nstack;
+	int layout;
+	int masteraxis; // master stack area
+	int stack1axis; // primary stack area
+	int stack2axis; // secondary stack area, e.g. centered master
+	void (*symbolfunc)(Monitor *, unsigned int);
+} LayoutPreset;
+
+
+typedef struct {
 	const char *symbol;
 	void (*arrange)(Monitor *);
+	LayoutPreset preset;
 } Layout;
 
 typedef struct Pertag Pertag;
@@ -152,6 +164,8 @@ struct Monitor {
 	char ltsymbol[16];
 	float mfact;
 	int nmaster;
+	int ltaxis[4];
+	int nstack;
 	int num;
 	int by;               /* bar geometry */
 	int bt;               /* number of tasks */
@@ -271,6 +285,7 @@ static void forcekillclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
+static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static void movewin(const Arg *arg);
@@ -360,6 +375,8 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void xinitvisual();
 static void zoom(const Arg *arg);
 
+#include "flextile-deluxe.h"
+
 /* variables */
 static Systray *systray =  NULL;
 static const char broken[] = "broken";
@@ -414,9 +431,13 @@ struct Pertag {
 	int nmasters[LENGTH(tags) + 1]; /* number of windows in master area */
 	float mfacts[LENGTH(tags) + 1]; /* mfacts per tag */
 	unsigned int sellts[LENGTH(tags) + 1]; /* selected layouts */
-	const Layout *ltidxs[LENGTH(tags) + 1][2]; /* matrix of tags and layouts indexes  */
+	// const Layout *ltidxs[LENGTH(tags) + 1][2]; /* matrix of tags and layouts indexes  */
+	int nstacks[LENGTH(tags) + 1]; /* number of windows in primary stack area */
+	int ltaxis[LENGTH(tags) + 1][LTAXIS_LAST];
+	const Layout *ltidxs[LENGTH(tags) + 1][3]; /* matrix of tags and layouts indexes  */
 	int showbars[LENGTH(tags) + 1]; /* display bar for the current tag */
 };
+#include "flextile-deluxe.c"
 
 /* function implementations */
 void
@@ -934,11 +955,18 @@ createmon(void)
     m->tagset[0] = m->tagset[1] = 1;
     m->mfact = mfact;
     m->nmaster = nmaster;
+	  m->nstack = nstack;
     m->showbar = showbar;
     m->topbar = topbar;
     m->lt[0] = &layouts[0];
     m->lt[1] = &layouts[1 % LENGTH(layouts)];
     strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+
+  	m->ltaxis[LAYOUT] = m->lt[0]->preset.layout;
+  	m->ltaxis[MASTER] = m->lt[0]->preset.masteraxis;
+  	m->ltaxis[STACK]  = m->lt[0]->preset.stack1axis;
+  	m->ltaxis[STACK2] = m->lt[0]->preset.stack2axis;
+
     m->pertag = ecalloc(1, sizeof(Pertag));
     m->pertag->curtag = m->pertag->prevtag = 1;
     m->isoverview = 0;
@@ -947,9 +975,16 @@ createmon(void)
         m->pertag->nmasters[i] = m->nmaster;
         m->pertag->mfacts[i] = m->mfact;
 
+    		m->pertag->nstacks[i] = m->nstack;
+
         m->pertag->ltidxs[i][0] = m->lt[0];
         m->pertag->ltidxs[i][1] = m->lt[1];
         m->pertag->sellts[i] = m->sellt;
+
+        m->pertag->ltaxis[i][LAYOUT] = m->ltaxis[LAYOUT];
+        m->pertag->ltaxis[i][MASTER] = m->ltaxis[MASTER];
+        m->pertag->ltaxis[i][STACK]  = m->ltaxis[STACK];
+        m->pertag->ltaxis[i][STACK2] = m->ltaxis[STACK2];
 
         m->pertag->showbars[i] = m->showbar;
     }
@@ -2885,6 +2920,23 @@ setlayout(const Arg *arg)
         selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
     if (arg->v)
         selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
+  
+  // gxt_kt
+	if (selmon->lt[selmon->sellt]->preset.nmaster && selmon->lt[selmon->sellt]->preset.nmaster != -1)
+		selmon->nmaster = selmon->lt[selmon->sellt]->preset.nmaster;
+	if (selmon->lt[selmon->sellt]->preset.nstack && selmon->lt[selmon->sellt]->preset.nstack != -1)
+		selmon->nstack = selmon->lt[selmon->sellt]->preset.nstack;
+
+	selmon->ltaxis[LAYOUT] = selmon->lt[selmon->sellt]->preset.layout;
+	selmon->ltaxis[MASTER] = selmon->lt[selmon->sellt]->preset.masteraxis;
+	selmon->ltaxis[STACK]  = selmon->lt[selmon->sellt]->preset.stack1axis;
+	selmon->ltaxis[STACK2] = selmon->lt[selmon->sellt]->preset.stack2axis;
+
+	selmon->pertag->ltaxis[selmon->pertag->curtag][LAYOUT] = selmon->ltaxis[LAYOUT];
+	selmon->pertag->ltaxis[selmon->pertag->curtag][MASTER] = selmon->ltaxis[MASTER];
+	selmon->pertag->ltaxis[selmon->pertag->curtag][STACK]  = selmon->ltaxis[STACK];
+	selmon->pertag->ltaxis[selmon->pertag->curtag][STACK2] = selmon->ltaxis[STACK2];
+
     arrange(selmon);
 }
 
@@ -3764,11 +3816,16 @@ view(const Arg *arg)
     }
 
     selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
+	  selmon->nstack = selmon->pertag->nstacks[selmon->pertag->curtag];
     selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
     selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
     selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
     selmon->lt[selmon->sellt^1] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt^1];
 
+    selmon->ltaxis[LAYOUT] = selmon->pertag->ltaxis[selmon->pertag->curtag][LAYOUT];
+    selmon->ltaxis[MASTER] = selmon->pertag->ltaxis[selmon->pertag->curtag][MASTER];
+    selmon->ltaxis[STACK]  = selmon->pertag->ltaxis[selmon->pertag->curtag][STACK];
+    selmon->ltaxis[STACK2] = selmon->pertag->ltaxis[selmon->pertag->curtag][STACK2];
     if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
         togglebar(NULL);
 
