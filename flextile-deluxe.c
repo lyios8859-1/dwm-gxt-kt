@@ -748,11 +748,11 @@ flextile(Monitor *m)
 	#endif // VANITYGAPS_PATCH && !VANITYGAPS_MONOCLE_PATCH
 
   // gxt_kt set the gap
- //  ov=gappo;
- //  oh=gappo;
- //  ih=gappi;
- //  iv=gappi;
-	// for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+  ov=gappo;
+  oh=gappo;
+  ih=gappi;
+  iv=gappi;
+	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
 
 	(&flexlayouts[abs(m->ltaxis[LAYOUT])])->arrange(m, m->wx + ov, m->wy + oh, m->wh - 2*oh, m->ww - 2*ov, ih, iv, n);
 	return;
