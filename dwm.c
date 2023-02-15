@@ -2918,7 +2918,7 @@ setlayout(const Arg *arg)
 {
     if (arg->v != selmon->lt[selmon->sellt])
         selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
-    if (arg->v) {
+    if (arg->v) 
         selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
 
   // gxt_kt
@@ -2936,7 +2936,7 @@ setlayout(const Arg *arg)
 	selmon->pertag->ltaxis[selmon->pertag->curtag][MASTER] = selmon->ltaxis[MASTER];
 	selmon->pertag->ltaxis[selmon->pertag->curtag][STACK]  = selmon->ltaxis[STACK];
 	selmon->pertag->ltaxis[selmon->pertag->curtag][STACK2] = selmon->ltaxis[STACK2];
-  }
+  
   
 
     arrange(selmon);
