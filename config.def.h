@@ -136,9 +136,10 @@ static const Layout overviewlayout = { "",  overview };
 // 	  { NULL,       NULL },
 //     //{ "[M]",      monocle },
 // };
+// 全局采用flextile布局
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis } */
-	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
+	{ "﬿",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
 	// { "><>",      NULL,             {0} },    /* no layout function means floating behavior */ // 被win+shift+f 替代，不用这个
 	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ "|||",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout //其实就是tile
@@ -218,15 +219,17 @@ static Key keys[] = {
   // flextile
     { MODKEY,   XK_i,      incnstack,      {.i = +1 } },
     { MODKEY,   XK_u,      incnstack,      {.i = -1 } },
-  	{ MODKEY|ControlMask,           XK_w,      rotatelayoutaxis, {.i = +1 } },  /* flextile, 1 = layout axis */
-  	{ MODKEY|ControlMask,           XK_e,      rotatelayoutaxis, {.i = +2 } },  /* flextile, 2 = master axis */
-  	{ MODKEY|ControlMask,           XK_r,      rotatelayoutaxis, {.i = +3 } },  /* flextile, 3 = stack axis */
-  	{ MODKEY|ControlMask,           XK_t,      rotatelayoutaxis, {.i = +4 } },  /* flextile, 4 = secondary stack axis */
-  	{ MODKEY|ControlMask|ShiftMask, XK_w,      rotatelayoutaxis, {.i = -1 } },  /* flextile, 1 = layout axis */
-  	{ MODKEY|ControlMask|ShiftMask, XK_e,      rotatelayoutaxis, {.i = -2 } },  /* flextile, 2 = master axis */
-  	{ MODKEY|ControlMask|ShiftMask, XK_r,      rotatelayoutaxis, {.i = -3 } },  /* flextile, 3 = stack axis */
-  	{ MODKEY|ControlMask|ShiftMask, XK_t,      rotatelayoutaxis, {.i = -4 } },  /* flextile, 4 = secondary stack axis */
-  	{ MODKEY|ControlMask,           XK_Return, mirrorlayout,   {0} },           /* flextile, flip master and stack areas */
+  	// { MODKEY|ControlMask,           XK_w,      rotatelayoutaxis, {.i = +1 } },  /* flextile, 1 = layout axis */
+  	// { MODKEY|ControlMask,           XK_e,      rotatelayoutaxis, {.i = +2 } },  /* flextile, 2 = master axis */
+  	// { MODKEY|ControlMask,           XK_r,      rotatelayoutaxis, {.i = +3 } },  /* flextile, 3 = stack axis */
+  	// { MODKEY|ControlMask,           XK_t,      rotatelayoutaxis, {.i = +4 } },  /* flextile, 4 = secondary stack axis */
+  	// { MODKEY|ControlMask|ShiftMask, XK_w,      rotatelayoutaxis, {.i = -1 } },  /* flextile, 1 = layout axis */
+  	// { MODKEY|ControlMask|ShiftMask, XK_e,      rotatelayoutaxis, {.i = -2 } },  /* flextile, 2 = master axis */
+  	// { MODKEY|ControlMask|ShiftMask, XK_r,      rotatelayoutaxis, {.i = -3 } },  /* flextile, 3 = stack axis */
+  	// { MODKEY|ControlMask|ShiftMask, XK_t,      rotatelayoutaxis, {.i = -4 } },  /* flextile, 4 = secondary stack axis */
+  	{ MODKEY|ControlMask,           XK_Return, rotatelayoutaxis,   {0} },           /* flextile, flip master and stack areas */
+	  { MODKEY|ShiftMask,      XK_comma, rotatelayoutaxis,    {.i = -1 } },
+	  { MODKEY|ShiftMask,      XK_period, rotatelayoutaxis,    {.i = +1 } },
   // flextile
 
     { MODKEY|Mod1Mask,              XK_Left,             focusmon,         {.i = -1} },               /* super b            |  光标移动到另一个显示器 */
@@ -247,10 +250,10 @@ static Key keys[] = {
     // { MODKEY|ShiftMask,  XK_o,     selectlayout,     {.v = &layouts[0]} },      /* super shift space  |  切换到网格布局 */
     // { MODKEY|ControlMask,  XK_o,   selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
   // It's just need to map one key to change layout between layouts[0] and layouts[1].
-    { MODKEY|ShiftMask,  XK_z,   selectlayout,     {.v = &layouts[1]} },      /* super shift z  |  切换布局 */
-    { MODKEY|ControlMask,  XK_z,   selectlayout,     {.v = &layouts[2]} },      /* super shift z  |  切换布局 */
-	  { MODKEY|ShiftMask,      XK_comma, cyclelayout,    {.i = -1 } },
-	  { MODKEY|ShiftMask,      XK_period, cyclelayout,    {.i = +1 } },
+    // { MODKEY|ShiftMask,  XK_z,   selectlayout,     {.v = &layouts[1]} },      /* super shift z  |  切换布局 */
+    // { MODKEY|ControlMask,  XK_z,   selectlayout,     {.v = &layouts[2]} },      /* super shift z  |  切换布局 */
+	  // { MODKEY|ShiftMask,      XK_comma, cyclelayout,    {.i = -1 } },
+	  // { MODKEY|ShiftMask,      XK_period, cyclelayout,    {.i = +1 } },
     { MODKEY,  XK_z,            showonlyorall,    {0} },                     /* super z            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = +6} },               /* super ctrl +       |  gap增大 */
