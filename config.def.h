@@ -130,8 +130,9 @@ static const Layout layouts[] = {
   /* symbol     arrange function */
     { "﬿",  tile },         /* 主次栈 */
     { "﩯", magicgrid },    /* 网格 */
-    { "|+|", tile_right }, /* actually not use*/
-    { "|+|",      gaplessgrid }, /* actually not use*/
+    { "|1|", tile_right }, /* actually not use*/
+    { "|2|",      gaplessgrid }, /* actually not use*/
+	  { NULL,       NULL },
     //{ "[M]",      monocle },
 };
 
@@ -216,6 +217,8 @@ static Key keys[] = {
   // It's just need to map one key to change layout between layouts[0] and layouts[1].
     { MODKEY|ShiftMask,  XK_z,   selectlayout,     {.v = &layouts[1]} },      /* super shift z  |  切换布局 */
     { MODKEY|ControlMask,  XK_z,   selectlayout,     {.v = &layouts[2]} },      /* super shift z  |  切换布局 */
+	  { MODKEY|ShiftMask,      XK_comma, cyclelayout,    {.i = -1 } },
+	  { MODKEY|ShiftMask,      XK_period, cyclelayout,    {.i = +1 } },
     { MODKEY,  XK_z,            showonlyorall,    {0} },                     /* super z            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = +6} },               /* super ctrl +       |  gap增大 */

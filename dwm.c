@@ -307,6 +307,7 @@ static void setfocus(Client *c);
 
 static void selectlayout(const Arg *arg);
 static void setlayout(const Arg *arg);
+static void cyclelayout(const Arg *arg);
 
 static void fullscreen(const Arg *arg);
 static void setfullscreen(Client *c, int fullscreen);
@@ -2885,6 +2886,23 @@ setlayout(const Arg *arg)
     if (arg->v)
         selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
     arrange(selmon);
+}
+
+void
+cyclelayout(const Arg *arg) {
+	Layout *l;
+	for(l = (Layout *)layouts; l != selmon->lt[selmon->sellt]; l++);
+	if(arg->i > 0) {
+		if(l->symbol && (l + 1)->symbol)
+			setlayout(&((Arg) { .v = (l + 1) }));
+		else
+			setlayout(&((Arg) { .v = layouts }));
+	} else {
+		if(l != layouts && (l - 1)->symbol)
+			setlayout(&((Arg) { .v = (l - 1) }));
+		else
+			setlayout(&((Arg) { .v = &layouts[LENGTH(layouts) - 2] }));
+	}
 }
 
 void
