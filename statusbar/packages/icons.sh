@@ -26,7 +26,8 @@ CallMenu() {
         "⏻ Shutdown") shutdown -h now ;;
         " Reboot") reboot ;;
         # "⏾ Sleep") systemctl hibernate ;;
-        "⏾ Sleep") notify-send "⏾ Sleep Error!" "Sleep cannot use now because of amdgpu driver.\nMay solve it later." -r 4040 ;;
+        "⏾ Sleep") systemctl suspend ;;
+        # "⏾ Sleep") notify-send "⏾ Sleep Error!" "Sleep cannot use now because of amdgpu driver.\nMay solve it later." -r 4040 ;;
         " Lock") ${DWM}/i3lock/lock.sh;; # need i3lock-color
     esac
 }
