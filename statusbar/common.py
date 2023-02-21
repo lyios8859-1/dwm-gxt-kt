@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import fcntl
 # import sys
 # import subprocess
 import re
@@ -13,8 +14,10 @@ def write_to_file(string,package_name):
   if (os.path.exists(TEMP_FILE)==False):
     os.system("touch "+TEMP_FILE)
   with open(TEMP_FILE, 'r+') as f:
+    fcntl.flock(f.fileno(), fcntl.LOCK_EX) 
     lines=f.readlines()
   with open(TEMP_FILE, 'w+') as f:
+    fcntl.flock(f.fileno(), fcntl.LOCK_EX) 
     find=False
     for line in lines :
       flag=re.match("\^s"+package_name,line)
@@ -25,24 +28,6 @@ def write_to_file(string,package_name):
         find=True
     if find==False :
       f.write(string)
-
-
-# def click(str='') :
-#   match str:
-#     case 'L':
-#       os.system("echo 'LLL' >> python_debug")
-#     case 'M':
-#       os.system("echo 'MMM' >> python_debug")
-#     case 'R':
-#       os.system("echo 'RRR' >> python_debug")
-#     case 'U':
-#       os.system("echo 'UUU' >> python_debug")
-#     case 'D':
-#       os.system("echo 'DDD' >> python_debug")
-#     case  _: pass
-
-# def notify(str='') :
-#   pass
 
 if __name__ == "__main__":
   pass

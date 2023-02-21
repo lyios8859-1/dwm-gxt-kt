@@ -66,10 +66,10 @@ def click(str='') :
   match str:
     case 'L':
       notify()
-      os.system("echo 'LLL' >> python_debug")
-    case 'M':
       pass
+    case 'M':
       os.system("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+      pass
     case 'R':
       os.system("killall pavucontrol || pavucontrol --class floatingTerminal &")
       pass
@@ -77,19 +77,16 @@ def click(str='') :
       pass
       os.system("pactl set-sink-volume @DEFAULT_SINK@ +5%; notify")
     case 'D':
-      pass
       os.system("pactl set-sink-volume @DEFAULT_SINK@ -5%; notify")
+      pass
     case  _: pass
 
 
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     if(sys.argv[1]=="update") :
-      print("update")
-      os.system("echo 'update' >> python_debug")
       pass
     else :
-      print("else")
       click(sys.argv[1])
   else :
     update()

@@ -29,15 +29,15 @@ def update(loop=False):
 def click(str='') :
   match str:
     case 'L':
-      os.system("echo 'LLL' >> python_debug")
+      pass
     case 'M':
-      os.system("echo 'MMM' >> python_debug")
+      pass
     case 'R':
-      os.system("echo 'RRR' >> python_debug")
+      pass
     case 'U':
-      os.system("echo 'UUU' >> python_debug")
+      pass
     case 'D':
-      os.system("echo 'DDD' >> python_debug")
+      pass
     case  _: pass
 
 def notify(str='') :
@@ -46,11 +46,8 @@ def notify(str='') :
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     if(sys.argv[1]=="update") :
-      print("update")
-      os.system("echo 'update' >> python_debug")
       pass
     else :
-      print("else")
       click(sys.argv[1])
   else :
     update()

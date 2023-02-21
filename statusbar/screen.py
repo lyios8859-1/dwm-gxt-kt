@@ -161,11 +161,8 @@ def click(str='') :
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     if(sys.argv[1]=="update") :
-      print("update")
-      os.system("echo 'update' >> python_debug")
       pass
     else :
-      print("else")
       click(sys.argv[1])
   else :
     update()

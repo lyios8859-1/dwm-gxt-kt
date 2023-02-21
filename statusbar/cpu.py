@@ -44,31 +44,23 @@ def click(string='') :
   match string:
     case 'L':
       notify()
-      os.system("echo 'LLL' >> python_debug")
     case 'M':
       pass
-      os.system("echo 'MMM' >> python_debug")
     case 'R':
       os.system("alacritty -t statusutil --class floatingTerminal -e btop")
       pass
-      os.system("echo 'RRR' >> python_debug")
     case 'U':
       pass
-      os.system("echo 'UUU' >> python_debug")
     case 'D':
       pass
-      os.system("echo 'DDD' >> python_debug")
     case  _: pass
 
 
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     if(sys.argv[1]=="update") :
-      print("update")
-      os.system("echo 'update' >> python_debug")
       pass
     else :
-      print("else")
       click(sys.argv[1])
   update()
    

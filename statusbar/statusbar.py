@@ -2,6 +2,7 @@
 
 import os
 import sys
+import fcntl
 import subprocess
 import _thread
 import time
@@ -31,13 +32,10 @@ for name in packages_list:
   exec('import ' + str(name))
 
 
-
-
 def ExecOtherFile():
   cmd='python3 '+ common.PACKAGES_PATH + str(sys.argv[1]) + '.py '
   for string in sys.argv[2:]:
     cmd=cmd+string+' '
-  print(cmd)
   result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
 
@@ -53,6 +51,7 @@ def Run() :
     if (os.path.exists(common.TEMP_FILE)==False):
       os.system("touch "+common.TEMP_FILE)
     with open(common.TEMP_FILE, 'r+') as f:
+      fcntl.flock(f.fileno(), fcntl.LOCK_EX) 
       lines=f.readlines()
       while i<len(packages_list) :
         name=packages_list[i]
@@ -74,19 +73,15 @@ def Run() :
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     if(sys.argv[1]=="cron") :
-      print("cron")
       Run()
-      os.system("echo 'cron' >> python_debug")
       pass
     elif(sys.argv[1]=="update") :
-      print("update")
-      os.system("echo 'update' >> python_debug")
       pass
     else :
-      print("else")
       for string in sys.argv :
         print(string)
-        cmd="echo '" +str(string) + "'" + ">> python_debug"
+        # cmd="echo '" +str(string) + "'" + ">> python_debug"
+        cmd="echo '" +str(string) + "'"
         # cmd = "echo '123' >> python_debug"
         result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
