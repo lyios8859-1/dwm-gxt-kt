@@ -1,34 +1,96 @@
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
-Error org.freedesktop.DBus.Error.ServiceUnknown: The name org.mpris.MediaPlayer2.yesplaymusic was not provided by any .service files
+:: Synchronizing package databases...
+ core downloading...
+ extra downloading...
+ community downloading...
+ archlinuxcn downloading...
+ multilib downloading...
+error: failed retrieving file 'core.db' from mirrors.hit.edu.cn : SSL connection timeout
+Exception ignored in thread started by: <function update at 0x7f0b32befc70>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/date.py", line 23, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32bef0a0>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/memory.py", line 26, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32beeef0>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/cpu.py", line 31, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32c8a290>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/music_title.py", line 30, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32beed40>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/net.py", line 50, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32c8add0>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/screen.py", line 34, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32befa30>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/battery.py", line 72, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32c8a7a0>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/music_play.py", line 39, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Exception ignored in thread started by: <function update at 0x7f0b32bef7f0>
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/vol.py", line 54, in update
+    common.write_to_file(txt+"\n",str(name))
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/common.py", line 18, in write_to_file
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte
+Traceback (most recent call last):
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/statusbar.py", line 76, in <module>
+    Run()
+  File "/home/gxt_kt/my_desktop/dwm/statusbar/statusbar.py", line 55, in Run
+    lines=f.readlines()
+  File "/usr/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x86 in position 67: invalid start byte

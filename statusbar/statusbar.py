@@ -47,11 +47,11 @@ def Run() :
     exec("_thread.start_new_thread("+str(name)+".update,(True,))")
 
   while True :
-    time.sleep(1)
+    common.threadLock.acquire()
+    tmp=""
     if (os.path.exists(common.TEMP_FILE)==False):
       os.system("touch "+common.TEMP_FILE)
     with open(common.TEMP_FILE, 'r+') as f:
-      fcntl.flock(f.fileno(), fcntl.LOCK_EX) 
       lines=f.readlines()
       while i<len(packages_list) :
         name=packages_list[i]
@@ -60,13 +60,13 @@ def Run() :
         for line in lines :
           flag=re.match(str(match_string),line)
           if flag!=None :
-            # exec(str(name)+"_txt"+"=line.encode('utf-8').decode('utf-8').strip()")
             exec(str(name)+"_txt"+"=line.encode('utf-8').decode('utf-8').replace('\\n','')")
             tmp+=locals()[str(name)+"_txt"]
             break
       i=0
+    common.threadLock.release()
     os.system("xsetroot -name '"+str(tmp)+"'")
-    tmp=""
+    time.sleep(1)
 
 
 
@@ -78,12 +78,12 @@ if __name__ == "__main__":
     elif(sys.argv[1]=="update") :
       pass
     else :
-      for string in sys.argv :
-        print(string)
-        # cmd="echo '" +str(string) + "'" + ">> python_debug"
-        cmd="echo '" +str(string) + "'"
-        # cmd = "echo '123' >> python_debug"
-        result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+      # for string in sys.argv :
+      #   print(string)
+      #   # cmd="echo '" +str(string) + "'" + ">> python_debug"
+      #   cmd="echo '" +str(string) + "'"
+      #   # cmd = "echo '123' >> python_debug"
+      #   result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
       ExecOtherFile()
   # Run()

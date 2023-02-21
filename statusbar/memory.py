@@ -33,15 +33,16 @@ def update(loop=False):
 def click(str='') :
   match str:
     case 'L':
-      os.system("echo 'LLL' >> python_debug")
+      pass
     case 'M':
-      os.system("echo 'MMM' >> python_debug")
+      pass
     case 'R':
-      os.system("echo 'RRR' >> python_debug")
+      pass
+      os.system("alacritty -t statusutil --class floatingTerminal -e btop")
     case 'U':
-      os.system("echo 'UUU' >> python_debug")
+      pass
     case 'D':
-      os.system("echo 'DDD' >> python_debug")
+      pass
     case  _: pass
 
 def notify(str='') :
