@@ -28,24 +28,52 @@ def update(loop=False,exec=True):
       break
     time.sleep(DELAY_TIME)
 
+def shutdown():
+  os.system("shutdown -h now")
+def reboot():
+  os.system("reboot")
+def sleep():
+  os.system("systemctl suspend ")
+  # os.system("systemctl hibernate ")
+def lock():
+  os.system("bash "+str(common.DWM_PATH)+"i3lock/lock.sh")
+
+def system_rofi_set() :
+    #      key:display information   value:function
+    choose={"⏻ Shutdown":"shutdown",
+            " Reboot":"reboot",
+            "⏾ Sleep":"sleep",
+            " Lock":"lock",
+            }
+    cmd="echo $(echo -e '"
+    for choose_string in choose.keys():
+      cmd+=choose_string+"\\n"
+    cmd=cmd[:-2]
+    cmd+="' | rofi -dmenu -window-title Power)"
+    print(cmd)
+    result = subprocess.run(cmd, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    choose_ret=result.stdout.decode('utf-8').replace("\n","")
+    print(choose_ret)
+    match_function=choose[choose_ret]
+    try:
+      exec(str(match_function)+"()")
+    except Exception:
+      pass
 
 def click(str='') :
   match str:
     case 'L':
-      os.system("echo 'LLL' >> python_debug")
+      system_rofi_set()
+      pass
     case 'M':
       pass
-      os.system("echo 'MMM' >> python_debug")
     case 'R':
       pass
       os.system("nitrogen&")
-      os.system("echo 'RRR' >> python_debug")
     case 'U':
       pass
-      os.system("echo 'UUU' >> python_debug")
     case 'D':
       pass
-      os.system("echo 'DDD' >> python_debug")
     case  _: pass
 
 def notify(str='') :

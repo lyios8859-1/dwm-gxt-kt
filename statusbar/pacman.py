@@ -10,21 +10,28 @@ import common
 
 text_color="^c#4169e1^^b#7fffd40x99^"
 icon_color="^c#4169e1^^b#7fffd40x99^"
-DELAY_TIME=3000
+DELAY_TIME=18000
 
 filename= os.path.basename(__file__)
 name=re.sub("\..*",'',filename)
 
 def get_update_packages_nums():
   num=0
-  os.system("notify-send 'Updating... ... ...' -r 1011")
+  os.system("notify-send 'Get update info... ... ...' -r 1011")
   os.system("sudo pacman -Sy")
-  os.system("notify-send 'Updating completed !' -r 1011")
+  os.system("notify-send 'Get Update info completed !' -r 1011")
   cmd="echo $(pacman -Qu | grep -Fcv '[ignored]' )"
   result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   num=int(result.stdout.decode('utf-8').replace('\n',''))
-  os.system("notify-send 'Totally "+str(num)+" packages need to update' -r 1011")
+  os.system("notify-send 'Totally "+str(num)+" packages can update' -r 1011")
   return str(num)
+
+def update_packages():
+  num=get_update_packages_nums()
+  os.system("notify-send 'Preparing update ... ... ...' -r 1012")
+  os.system("sudo pacman -Su")
+  os.system("notify-send 'Update completed' -r 1012")
+
 
 
 def update(loop=False,exec=True):
@@ -41,8 +48,6 @@ def update(loop=False,exec=True):
 
 def notify(str='') :
   pass
-  # cmd='notify-send "  CPU tops"  "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head  | '+"sed 's/$/&%/g')"+'"'+" -r 1014"
-  # os.system(cmd)
 
 def click(str='') :
   match str:
@@ -51,6 +56,7 @@ def click(str='') :
     case 'M':
       pass
     case 'R':
+      update_packages()
       pass
     case 'U':
       pass
@@ -64,6 +70,7 @@ if __name__ == "__main__":
     if(sys.argv[1]=="update") :
       pass
     else :
+      update(exec=False)
       click(sys.argv[1])
       update(exec=False)
   else :

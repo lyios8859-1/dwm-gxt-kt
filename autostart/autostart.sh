@@ -1,13 +1,14 @@
 #! /bin/sh
 #
-source ~/.profile
-killall statusbar.sh
+# source ~/.profile
+killall statusbar.py
 # ${DWM}/statusbar/statusbar.sh cron &> ${DWM}/statusbar/logfile
-python3 ${DWM}/statusbar/statusbar.py cron &> ${DWM}/statusbar/logfile
+# python3 ${DWM}/statusbar/statusbar.py cron &> ${DWM}/statusbar/logfile
 picom --experimental-backends&
+python3 ~/my_desktop/dwm/statusbar/statusbar.py cron &>/dev/null
 
 # If you find fcitx5 icon is located at the most left of the straybar, please increase the delay value
-sleep 0 # need to wait dwm start complete and fcitx5 start complete
+sleep 1 # need to wait dwm start complete and fcitx5 start complete
 
 cfw &
 crow &

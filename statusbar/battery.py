@@ -84,8 +84,8 @@ def notify(str='') :
 def click(str='') :
   match str:
     case 'L':
-      notify()
-      os.system("echo 'LLL' >> python_debug")
+      os.system("gnome-power-statistics&")
+      pass
     case 'M':
       pass
     case 'R':

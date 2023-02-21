@@ -143,19 +143,14 @@ def click(str='') :
     case 'L':
       notify()
       screen_rofi_set()
-      os.system("echo 'LLL' >> python_debug")
     case 'M':
       pass
-      os.system("echo 'MMM' >> python_debug")
     case 'R':
       pass
-      os.system("echo 'RRR' >> python_debug")
     case 'U':
       pass
-      os.system("echo 'UUU' >> python_debug")
     case 'D':
       pass
-      os.system("echo 'DDD' >> python_debug")
     case  _: pass
 
 
