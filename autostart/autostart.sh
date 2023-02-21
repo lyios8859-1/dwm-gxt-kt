@@ -2,7 +2,8 @@
 #
 source ~/.profile
 killall statusbar.sh
-${DWM}/statusbar/statusbar.sh cron &> ${DWM}/statusbar/logfile
+# ${DWM}/statusbar/statusbar.sh cron &> ${DWM}/statusbar/logfile
+python3 ${DWM}/statusbar/statusbar.py cron &> ${DWM}/statusbar/logfile
 picom --experimental-backends&
 
 # If you find fcitx5 icon is located at the most left of the straybar, please increase the delay value

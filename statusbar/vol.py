@@ -45,7 +45,7 @@ def get_vol_content():
     else : vol_icon="墳"
   return str(vol_icon)+str(vol_text)
 
-def update(loop=False):
+def update(loop=False,exec=True):
   while True :
     icon=""
     icon=" "+get_vol_content()+" "
@@ -53,7 +53,8 @@ def update(loop=False):
     txt="^s"+str(name)+"^"+str(icon_color)+str(icon)+str(text_color)+str(text)
     common.write_to_file(txt+"\n",str(name))
     if loop == False : 
-      os.system("xsetroot -name '"+str(txt)+"'")
+      if exec==True :
+        os.system("xsetroot -name '"+str(txt)+"'")
       break
     time.sleep(DELAY_TIME)
 
@@ -88,5 +89,6 @@ if __name__ == "__main__":
       pass
     else :
       click(sys.argv[1])
+      update(exec=False)
   else :
     update()
