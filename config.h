@@ -61,7 +61,8 @@ static const char *disablekillclient[] = {
 /* 自定义脚本位置 */
 // static const char *autostartscript = "/home/gxt_kt/my_desktop/dwm/autostart/autostart.sh";
 static const char *autostartscript = "~/my_desktop/dwm/autostart/autostart.sh";
-static const char *statusbarscript = "~/my_desktop/dwm/statusbar/statusbar.sh";//gxt_kt
+// static const char *statusbarscript = "~/my_desktop/dwm/statusbar/statusbar.sh";//gxt_kt
+static const char *statusbarscript = "~/my_desktop/dwm/statusbar/statusbar.py";//gxt_kt
 
 /* 自定义 scratchpad instance */
 static const char scratchpadname[] = "scratchpad";

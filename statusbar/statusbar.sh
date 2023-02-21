@@ -39,6 +39,7 @@ refresh() {
 
     # gxt_kt add second place
     xsetroot -name "$_music_title$_music_pre$_music_play$_music_next$_icons$_screen$_package$_net$_cpu$_mem$_wifi$_vol$_bat$_my_date"             # 更新状态栏
+    echo "$_music_title$_music_pre$_music_play$_music_next$_icons$_screen$_package$_net$_cpu$_mem$_wifi$_vol$_bat$_my_date" >> ~/python_debug
 }
 
 # 启动定时更新状态栏 不同的模块有不同的刷新周期 注意不要重复启动该func

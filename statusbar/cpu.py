@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import subprocess
+import re
+import time
+import common
+import psutil
+
+
+text_color="^c#000000^^b#ffffff0x99^"
+icon_color="^c#000000^^b#ffffff0x99^"
+DELAY_TIME=1
+
+filename= os.path.basename(__file__)
+name=re.sub("\..*",'',filename)
+
+def update(loop=False):
+  while True :
+    icon=""
+    cpu_usage=int(psutil.cpu_percent())
+    if(cpu_usage>50) : icon=" "
+    else : icon=" "
+    cpu_usage="{:<3}".format(str(cpu_usage)+"%")
+    # print(cpu_usage)
+    cmd = "cat /sys/class/thermal/thermal_zone0/temp"
+    result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    temperature=int(float(result.stdout.decode('utf-8').replace('\n',''))/1000)
+    text=cpu_usage+""+str(temperature)+" "
+    # print(text)
+    txt="^s"+str(name)+"^"+str(icon_color)+str(icon)+str(text_color)+str(text)
+    common.write_to_file(txt+"\n",str(name))
+    if loop == False : 
+      os.system("xsetroot -name '"+str(txt)+"'")
+      break
+    time.sleep(DELAY_TIME)
+
+def notify(string='') :
+  cmd='notify-send "  CPU tops"  "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head  | '+"sed 's/$/&%/g')"+'"'+" -r 1014"
+  os.system(cmd)
+
+def click(string='') :
+  match string:
+    case 'L':
+      notify()
+      os.system("echo 'LLL' >> python_debug")
+    case 'M':
+      pass
+      os.system("echo 'MMM' >> python_debug")
+    case 'R':
+      os.system("alacritty -t statusutil --class floatingTerminal -e btop")
+      pass
+      os.system("echo 'RRR' >> python_debug")
+    case 'U':
+      pass
+      os.system("echo 'UUU' >> python_debug")
+    case 'D':
+      pass
+      os.system("echo 'DDD' >> python_debug")
+    case  _: pass
+
+
+if __name__ == "__main__":
+  if len(sys.argv) > 1:
+    if(sys.argv[1]=="update") :
+      print("update")
+      os.system("echo 'update' >> python_debug")
+      pass
+    else :
+      print("else")
+      click(sys.argv[1])
+  update()
+   
