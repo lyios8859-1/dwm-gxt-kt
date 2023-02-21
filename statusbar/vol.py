@@ -15,9 +15,14 @@ DELAY_TIME=1
 filename= os.path.basename(__file__)
 name=re.sub("\..*",'',filename)
 
+vol_text="--"
+vol_icon="ﱝ"
+volumuted=""
+
 def get_vol_content():
-  vol_text="--"
-  vol_icon="ﱝ"
+  global vol_text
+  global vol_icon
+  global volumuted
 
   cmd="echo $(pactl info | grep 'Default Sink' | awk '{print $3}')"
   result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -36,14 +41,14 @@ def get_vol_content():
     vol_icon="ﱝ"
   else :
     vol=int(vol_text)
-    vol_text=vol_text+"%"
+    vol_text=vol_text
     if vol==0 : 
       vol_icon="婢"
       vol_text="00"
     elif vol<10 : vol_icon="奔" 
     elif vol<50 : vol_icon="奔"
     else : vol_icon="墳"
-  return str(vol_icon)+str(vol_text)
+  return str(vol_icon)+str(vol_text)+"%"
 
 def update(loop=False,exec=True):
   while True :
@@ -58,10 +63,18 @@ def update(loop=False,exec=True):
       break
     time.sleep(DELAY_TIME)
 
-def notify(str='') :
+def notify(string='') :
+  global vol_text
+  global vol_icon
+  global volumuted
+
+  cmd=""
+  if volumuted=="" :
+    cmd="notify-send -r 9527 '婢  mute'  "
+  else :
+    cmd="notify-send -r 9527 -h int:value:"+str(int(vol_text))+" -h string:hlcolor:#dddddd "+'"'+str(vol_icon)+" Volume"+'"' ;
+  os.system(cmd)
   pass
-  # cmd='notify-send "  CPU tops"  "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head  | '+"sed 's/$/&%/g')"+'"'+" -r 1014"
-  # os.system(cmd)
 
 def click(str='') :
   match str:
@@ -70,6 +83,7 @@ def click(str='') :
       pass
     case 'M':
       os.system("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+      notify()
       pass
     case 'R':
       os.system("killall pavucontrol || pavucontrol --class floatingTerminal &")
@@ -77,8 +91,10 @@ def click(str='') :
     case 'U':
       pass
       os.system("pactl set-sink-volume @DEFAULT_SINK@ +5%; notify")
+      notify()
     case 'D':
       os.system("pactl set-sink-volume @DEFAULT_SINK@ -5%; notify")
+      notify()
       pass
     case  _: pass
 
@@ -88,6 +104,7 @@ if __name__ == "__main__":
     if(sys.argv[1]=="update") :
       pass
     else :
+      update(exec=False)
       click(sys.argv[1])
       update(exec=False)
   else :

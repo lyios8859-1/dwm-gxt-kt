@@ -1,5 +1,5 @@
 #!/bin/bash
-# source ~/.profile
+
 BLANK='#00000000'
 CLEAR='#ffffff22'
 DEFAULT='#cdb0eecc'
