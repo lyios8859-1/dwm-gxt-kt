@@ -6,6 +6,7 @@ import subprocess
 import re
 import time
 import common
+import _thread
 
 
 text_color="^c#4169e1^^b#7fffd40x99^"
@@ -75,6 +76,9 @@ def update(loop=False,exec=True):
         os.system("xsetroot -name '"+str(txt)+"'")
       break
     time.sleep(DELAY_TIME)
+
+def update_thread():
+  _thread.start_new_thread(update,(False,False))
 
 def notify(str='') :
   pass

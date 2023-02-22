@@ -6,6 +6,7 @@ import subprocess
 import re
 import time
 import common
+import _thread
 
 
 icon_color="^c#222222^^b#ffff000x88^"
@@ -63,6 +64,9 @@ def update(loop=False,exec=True):
         os.system("xsetroot -name '"+str(txt)+"'")
       break
     time.sleep(DELAY_TIME)
+
+def update_thread():
+  _thread.start_new_thread(update,(False,False))
 
 def notify(string='') :
   connect_status_=connect_status()

@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+from concurrent.futures import thread
 import os
 import sys
 import subprocess
 import re
 import time
 import common
+import _thread
 
 text_color="^c#000000^^b#ffffff0x99^"
 icon_color="^c#000000^^b#ffffff0x99^"
@@ -24,6 +26,10 @@ def update(loop=False,exec=True):
         os.system("xsetroot -name '"+str(txt)+"'")
       break
     time.sleep(1)
+
+def update_thread():
+  _thread.start_new_thread(update,(False,False))
+
 
 def notify(str='') :
   cmd = "notify-send "+'"'+" Calendar"+'"'+' "'+"\\nData: $(date '+%y-%m-%d \\nTime: %T')"+'"'+"  -r 9540"

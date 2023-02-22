@@ -8,27 +8,28 @@ import _thread
 import time
 import re
 import common
+import threading
+from apscheduler.schedulers.blocking import BlockingScheduler
 
-packages_list=[
-               'music_title',
-               'music_pre',
-               'music_play',
-               'music_next',
-               'icon',
-               'screen',
-               # 'pacman',
-               # 'net',
-               # 'cpu',
-               # 'memory',
-               # 'wifi',
-               # 'vol',
-               # 'battery',
-               'date',
-               ]
-
+packages_list={
+               'music_title':1,
+               'music_pre':10,
+               'music_play':1,
+               'music_next':10,
+               'icon':100,
+               'screen':5,
+               'pacman':18000,
+               'net':1,
+               'cpu':1,
+               'memory':3,
+               'wifi':3,
+               'vol':1,
+               'battery':3,
+               'date':1,
+               }
 
 # import packages
-for name in packages_list:
+for name in packages_list.keys():
   exec('import ' + str(name))
 
 
@@ -39,12 +40,39 @@ def ExecOtherFile():
   result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
 
-def Run() :
+def MainRefresh():
+  common.threadLock.acquire()
   tmp=""
-  i=0
+  if (os.path.exists(common.TEMP_FILE)==False):
+    os.system("touch "+common.TEMP_FILE)
+  with open(common.TEMP_FILE, 'r+') as f:
+    lines=f.readlines()
+    packages=packages_list.keys()
+    for name in packages:
+      match_string="^\^s"+str(name)
+      for line in lines :
+        flag=re.match(str(match_string),line)
+        if flag!=None :
+          exec(str(name)+"_txt"+"=line.encode('utf-8').decode('utf-8').replace('\\n','')")
+          tmp+=locals()[str(name)+"_txt"]
+          break
+  common.threadLock.release()
+  os.system("xsetroot -name '"+str(tmp)+"'")
+
+
+def Run() :
   # add new thread
-  for name in packages_list:
-    exec("_thread.start_new_thread("+str(name)+".update,(True,))")
+  # for name in packages_list:
+  #   exec("_thread.start_new_thread("+str(name)+".update,(True,))")
+
+  scheduler = BlockingScheduler()
+  for key,value in packages_list.items():
+    cmd="scheduler.add_job("+str(key)+".update_thread, 'interval', seconds="+str(int(value))+", id='"+str(key)+"')"
+    exec(cmd)
+  scheduler.add_job(MainRefresh, 'interval', seconds=1, id='MainRefresh')
+  # scheduler.add_job(date.update, 'interval', seconds=1, id='test_job1')
+  scheduler.start()
+
 
   while True :
     common.threadLock.acquire()

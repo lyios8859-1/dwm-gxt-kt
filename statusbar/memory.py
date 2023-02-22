@@ -7,6 +7,7 @@ import re
 import time
 from typing import Tuple
 import common
+import _thread
 
 import psutil
 
@@ -30,6 +31,8 @@ def update(loop=False,exec=True):
       break
     time.sleep(DELAY_TIME)
 
+def update_thread():
+  _thread.start_new_thread(update,(False,False))
 
 def click(str='') :
   match str:

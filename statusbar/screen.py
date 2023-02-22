@@ -5,6 +5,7 @@ import sys
 import subprocess
 import re
 import time
+import _thread
 import common
 
 
@@ -37,6 +38,9 @@ def update(loop=False,exec=True):
         os.system("xsetroot -name '"+str(txt)+"'")
       break
     time.sleep(DELAY_TIME)
+
+def update_thread():
+  _thread.start_new_thread(update,(False,False))
 
 def get_all_screen_status() :
     eDP=""

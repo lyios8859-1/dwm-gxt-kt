@@ -6,6 +6,7 @@ import subprocess
 import re
 import time
 import common
+import _thread
 import psutil
 
 
@@ -34,6 +35,9 @@ def update(loop=False,exec=True):
         os.system("xsetroot -name '"+str(txt)+"'")
       break
     time.sleep(DELAY_TIME)
+
+def update_thread():
+  _thread.start_new_thread(update,(False,False))
 
 def notify(string='') :
   cmd='notify-send "  CPU tops"  "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head  | '+"sed 's/$/&%/g')"+'"'+" -r 1014"
