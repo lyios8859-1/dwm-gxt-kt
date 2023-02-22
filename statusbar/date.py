@@ -11,6 +11,7 @@ import _thread
 
 text_color="^c#000000^^b#ffffff0x99^"
 icon_color="^c#000000^^b#ffffff0x99^"
+DELAY_TIME=1
 
 filename= os.path.basename(__file__)
 name=re.sub("\..*",'',filename)
@@ -25,7 +26,7 @@ def update(loop=False,exec=True):
       if exec==True :
         os.system("xsetroot -name '"+str(txt)+"'")
       break
-    time.sleep(1)
+    time.sleep(DELAY_TIME)
 
 def update_thread():
   _thread.start_new_thread(update,(False,False))

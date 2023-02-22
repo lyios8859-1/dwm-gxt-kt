@@ -11,7 +11,7 @@ import common
 
 icon_color="^c#3B001B^^b#ffb6c10x88^"
 text_color="^c#3B001B^^b#ffb6c10x99^"
-DELAY_TIME=5
+DELAY_TIME=1
 
 filename= os.path.basename(__file__)
 name=re.sub("\..*",'',filename)

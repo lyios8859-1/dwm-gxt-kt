@@ -11,7 +11,7 @@ import _thread
 
 icon_color="^c#222222^^b#ffff000x88^"
 text_color="^c#222222^^b#ffff000x99^"
-DELAY_TIME=1
+DELAY_TIME=2
 
 filename= os.path.basename(__file__)
 name=re.sub("\..*",'',filename)
