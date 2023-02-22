@@ -30,15 +30,44 @@ def get_speed(val:int)->str:
   return ret
 
 def getnet()->Tuple[str,str]:
-    send_before = psutil.net_io_counters().bytes_sent  # 已发送的流量
-    recv_before = psutil.net_io_counters().bytes_recv  # 已接收的流量
-    time.sleep(DELAY_TIME)
-    send_now = psutil.net_io_counters().bytes_sent
-    recv_now = psutil.net_io_counters().bytes_recv
-    send = (send_now - send_before)
-    recv = (recv_now - recv_before)
-    send_string=str(get_speed(send))
-    recv_string=str(get_speed(recv))
+    rx_bytes_cur=0
+    cmd="cat /sys/class/net/[ew]*/statistics/rx_bytes"
+    result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    rx_bytes_string=result.stdout.decode('utf-8')
+    for rx in rx_bytes_string.splitlines():
+      rx_bytes_cur+=int(rx)
+    TX_POSITON="~/.cache/rx_bytes"
+    if (os.path.exists(TX_POSITON)==False):
+      os.system("touch "+TX_POSITON)
+    cmd="cat "+TX_POSITON
+    result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    rx_bytes_pre=result.stdout.decode('utf-8').replace("\n","")
+    rx_bytes=abs(int(rx_bytes_cur)-int(rx_bytes_pre))
+    # write new rx_bytes_cur
+    cmd="echo "+str(rx_bytes_cur)+" > "+TX_POSITON
+    os.system(cmd)
+
+    tx_bytes_cur=0
+    cmd="cat /sys/class/net/[ew]*/statistics/tx_bytes"
+    result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    tx_bytes_string=result.stdout.decode('utf-8')
+    for tx in tx_bytes_string.splitlines():
+      tx_bytes_cur+=int(tx)
+    TX_POSITON="~/.cache/tx_bytes"
+    if (os.path.exists(TX_POSITON)==False):
+      os.system("touch "+TX_POSITON)
+    cmd="cat "+TX_POSITON
+    result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    tx_bytes_pre=result.stdout.decode('utf-8').replace("\n","")
+    tx_bytes=abs(int(tx_bytes_cur)-int(tx_bytes_pre))
+    # write new tx_bytes_cur
+    cmd="echo "+str(tx_bytes_cur)+" > "+TX_POSITON
+    os.system(cmd)
+
+    send_string=str(get_speed(tx_bytes))
+    recv_string=str(get_speed(rx_bytes))
+    print(send_string)
+    print(recv_string)
     return (" "+send_string,""+recv_string)
 
 def update(loop=False,exec=True):
@@ -53,7 +82,7 @@ def update(loop=False,exec=True):
       if exec==True :
         os.system("xsetroot -name '"+str(txt)+"'")
       break
-    # time.sleep(DELAY_TIME)
+    time.sleep(DELAY_TIME)
 
 def update_thread():
   _thread.start_new_thread(update,(False,False))
@@ -61,15 +90,15 @@ def update_thread():
 def click(str='') :
   match str:
     case 'L':
-      os.system("echo 'LLL' >> python_debug")
+      pass
     case 'M':
-      os.system("echo 'MMM' >> python_debug")
+      pass
     case 'R':
-      os.system("echo 'RRR' >> python_debug")
+      pass
     case 'U':
-      os.system("echo 'UUU' >> python_debug")
+      pass
     case 'D':
-      os.system("echo 'DDD' >> python_debug")
+      pass
     case  _: pass
 
 def notify(str='') :
