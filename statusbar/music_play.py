@@ -47,23 +47,18 @@ def update(loop=False,exec=True):
 def update_thread():
   _thread.start_new_thread(update,(False,False))
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
       os.system("playerctl play-pause")
-      os.system("echo 'LLL' >> python_debug")
     case 'M':
       pass
-      os.system("echo 'MMM' >> python_debug")
     case 'R':
       pass
-      os.system("echo 'RRR' >> python_debug")
     case 'U':
       pass
-      os.system("echo 'UUU' >> python_debug")
     case 'D':
       pass
-      os.system("echo 'DDD' >> python_debug")
     case  _: pass
 
 def notify(str='') :
