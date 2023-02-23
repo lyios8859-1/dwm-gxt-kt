@@ -168,17 +168,17 @@ def notify(str='') :
     send_string=""
     for string in get_all_screen_status():
       send_string+=string
-    os.system("notify-send "+" '󰹑 Screen Info' "+"'"+send_string+"'")
+    os.system("notify-send "+" '󰹑 Screen Info' "+"'"+send_string+"' -r 1212")
     pass
 
 def click(string='') :
   match string:
     case 'L':
-      # notify()
       screen_rofi_set()
     case 'M':
       pass
     case 'R':
+      notify()
       pass
     case 'U':
       pass
