@@ -20,6 +20,51 @@ vol_text="--"
 vol_icon="ﱝ"
 volumuted=""
 
+# ref: https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level
+# Bug need Install : pip3 install git+https://github.com/pybluez/pybluez@master
+def GetBluetoothBattery():
+    # from bluetooth_battery import BatteryStateQuerier, BatteryQueryError, BluetoothError
+    from bluetooth_battery import BatteryStateQuerier, BatteryQueryError 
+    from bluetooth import  BluetoothError
+    try:
+        # Autodetects SPP port
+        # query = BatteryStateQuerier( "11:22:33:44:55:66")  # Can raise BluetoothError when autodetecting port
+        query = BatteryStateQuerier("94:37:F7:73:DB:03")
+        # # or with given port
+        # query = BatteryStateQuerier("11:22:33:44:55:66", "4")
+        # result = int(query)  # returns integer between 0 and 100
+        # or
+        # result = str(query)  # returns "0%".."100%"
+        icon="󰥊"
+        result =int(query)
+        if(result>=95) : icon="󰥈"
+        elif(result>=90) : icon="󰥆"
+        elif(result>=80) : icon="󰥅"
+        elif(result>=70) : icon="󰥄"
+        elif(result>=60) : icon="󰥃"
+        elif(result>=50) : icon="󰥂"
+        elif(result>=40) : icon="󰥁"
+        elif(result>=30) : icon="󰥀"
+        elif(result>=20) : icon="󰤿"
+        elif(result>=10) : icon="󰤾"
+        else : icon="󰥇"
+
+        # print(result)
+        # result = str(query)  # Can raise BluetoothError when device is down or port is wrong
+        # print(result)
+        # return str("󰥰"+result)
+        return str(icon)
+        # Can raise BatteryQueryError when the device is unsupported
+    except BluetoothError as e:
+        # Handle device is offline
+        # print("Handle device is offline")
+        return "󱔑"
+    except BatteryQueryError as e:
+        # Handle device is unsupported
+        # print("Handle device is unsupported")
+        return "󱃓"
+
+
 def get_vol_content():
   global vol_text
   global vol_icon
@@ -49,6 +94,7 @@ def get_vol_content():
     elif vol<10 : vol_icon="奔" 
     elif vol<50 : vol_icon="奔"
     else : vol_icon="墳"
+  # return str(vol_icon)+str(vol_text)+"%"+" "+GetBluetoothBattery()
   return str(vol_icon)+str(vol_text)+"%"
 
 def update(loop=False,exec=True):
@@ -71,6 +117,7 @@ def notify(string='') :
   global vol_text
   global vol_icon
   global volumuted
+  get_vol_content();
 
   cmd=""
   if volumuted=="" :
@@ -107,6 +154,8 @@ if __name__ == "__main__":
   if len(sys.argv) > 1:
     if(sys.argv[1]=="update") :
       pass
+    elif(sys.argv[1]=="notify") :
+      notify()
     else :
       update(exec=False)
       click(sys.argv[1])

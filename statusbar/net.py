@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Bug need Install : pip3 install git+https://github.com/pybluez/pybluez@master
 
 import os
 import sys
@@ -66,8 +67,8 @@ def getnet()->Tuple[str,str]:
 
     send_string=str(get_speed(tx_bytes))
     recv_string=str(get_speed(rx_bytes))
-    print(send_string)
-    print(recv_string)
+    # print(send_string)
+    # print(recv_string)
     return (" "+send_string,""+recv_string)
 
 def update(loop=False,exec=True):
