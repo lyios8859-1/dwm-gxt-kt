@@ -97,10 +97,10 @@ static const Rule rules[] = {
     {"wemeetapp",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     {"copyq",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, 
     {"Nitrogen",            NULL,                 NULL,             TAGMASK,      1,          0,          0,        -1 }, 
-    {"钉钉",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
-    {"dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
-    {"com.alibabainc.dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
-    {"tblive",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    // {"钉钉",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    // {"dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    // {"com.alibabainc.dingtalk",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
+    // {"tblive",            NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 腾讯会议在切换tag时有诡异bug导致退出 变成global来规避该问题
     { NULL,          NULL,          "图片查看",       TAGMASK ,            1,          0,          0,        -1 },  // qq image preview title
     { NULL,          NULL,          "Image Preview",   TAGMASK ,            1,          0,          0,        -1 }, //wechat image preview title
     // { NULL,          NULL,          "broken",      TAGMASK,            1,          0,          0,        -1 }, // qq upload file's win is broken
@@ -121,7 +121,7 @@ static const Rule rules[] = {
                                                                                                                            //
     {"float",                NULL,                 NULL,             0,            1,          0,          0,        -1 }, // 浮动
     {"noborder",             NULL,                 NULL,             0,            0,          0,          1,        -1 }, // 无边框
-    {"global",               NULL,                 NULL,             TAGMASK,      0,          1,          0,        -1 }, // 全局
+    {"global",               NULL,                 NULL,             TAGMASK,      1,          1,          0,        -1 }, // 全局
 };
 static const char *overviewtag = "OVERVIEW";
 static const Layout overviewlayout = { "",  overview };
