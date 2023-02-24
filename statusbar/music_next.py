@@ -9,7 +9,6 @@ import _thread
 import common
 
 music_program=common.MUSIC_PROGRAM
-print(music_program)
 
 icon_color="^c#3B001B^^b#ffb6c10x88^"
 text_color="^c#3B001B^^b#ffb6c10x99^"
