@@ -8,6 +8,7 @@ import time
 import _thread
 import common
 
+music_program=common.MUSIC_PROGRAM
 
 icon_color="^c#3B001B^^b#ffb6c10x88^"
 text_color="^c#3B001B^^b#ffb6c10x99^"
@@ -31,10 +32,10 @@ def update(loop=False,exec=True):
 def update_thread():
   _thread.start_new_thread(update,(False,False))
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
-      os.system("playerctl previous")
+      os.system("playerctl previous "+"-p "+str(music_program))
     case 'M':
       pass
     case 'R':
@@ -45,7 +46,7 @@ def click(str='') :
       pass
     case  _: pass
 
-def notify(str='') :
+def notify(string='') :
   pass
 
 if __name__ == "__main__":

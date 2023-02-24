@@ -164,10 +164,10 @@ def screen_rofi_set() :
     except Exception:
       pass
 
-def notify(str='') :
+def notify(string='') :
     send_string=""
-    for string in get_all_screen_status():
-      send_string+=string
+    for string_ in get_all_screen_status():
+      send_string+=string_
     os.system("notify-send "+" '󰹑 Screen Info' "+"'"+send_string+"' -r 1212")
     pass
 

@@ -34,8 +34,8 @@ def update(loop=False,exec=True):
 def update_thread():
   _thread.start_new_thread(update,(False,False))
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
       pass
     case 'M':
@@ -49,7 +49,7 @@ def click(str='') :
       pass
     case  _: pass
 
-def notify(str='') :
+def notify(string='') :
   pass
 
 if __name__ == "__main__":

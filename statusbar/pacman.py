@@ -50,11 +50,11 @@ def update(loop=False,exec=True):
 def update_thread():
   _thread.start_new_thread(update,(False,False))
 
-def notify(str='') :
+def notify(string='') :
   pass
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
       notify()
     case 'M':

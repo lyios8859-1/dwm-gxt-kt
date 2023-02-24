@@ -64,8 +64,8 @@ def system_rofi_set() :
     except Exception:
       pass
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
       system_rofi_set()
       pass
@@ -80,7 +80,7 @@ def click(str='') :
       pass
     case  _: pass
 
-def notify(str='') :
+def notify(string='') :
   pass
 
 if __name__ == "__main__":

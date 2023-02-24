@@ -32,13 +32,13 @@ def update_thread():
   _thread.start_new_thread(update,(False,False))
 
 
-def notify(str='') :
+def notify(string='') :
   cmd = "notify-send "+'"'+" Calendar"+'"'+' "'+"\\nData: $(date '+%y-%m-%d \\nTime: %T')"+'"'+"  -r 9540"
   os.system(cmd)
   pass
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
       notify()
       pass

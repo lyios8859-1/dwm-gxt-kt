@@ -8,6 +8,7 @@ import time
 import _thread
 import common
 
+music_program=common.MUSIC_PROGRAM
 
 icon_color="^c#3B001B^^b#ffb6c10x88^"
 text_color="^c#3B001B^^b#ffb6c10x99^"
@@ -17,7 +18,7 @@ filename= os.path.basename(__file__)
 name=re.sub("\..*",'',filename)
 
 def get_music_title():
-    cmd="echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.yesplaymusic /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/title/{n;p}' "+"| cut -d '"+'"'+"' -f 2) 2>/dev/null"
+    cmd="echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2."+str(music_program)+" /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/title/{n;p}' "+"| cut -d '"+'"'+"' -f 2) 2>/dev/null"
     result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     title=result.stdout.decode('utf-8').replace('\n','')
     title=title.replace("'","") # 解决一些歌曲带'的问题
@@ -38,8 +39,8 @@ def update(loop=False,exec=True):
 def update_thread():
   _thread.start_new_thread(update,(False,False))
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
       os.system("xdotool keydown Super m keyup m Super")
     case 'M':
@@ -52,7 +53,7 @@ def click(str='') :
       pass
     case  _: pass
 
-def notify(str='') :
+def notify(string='') :
   pass
 
 if __name__ == "__main__":

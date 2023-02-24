@@ -127,8 +127,8 @@ def notify(string='') :
   os.system(cmd)
   pass
 
-def click(str='') :
-  match str:
+def click(string='') :
+  match string:
     case 'L':
       notify()
       pass

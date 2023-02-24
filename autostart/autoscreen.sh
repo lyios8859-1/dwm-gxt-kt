@@ -1,6 +1,11 @@
 #! /bin/bash
-while true
-do
-  autorandr;
-  sleep 3;
-done
+
+
+# while true
+# do
+#   autorandr --change;
+#   sleep 2;
+# done
+
+
+autorandr --change

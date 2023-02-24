@@ -8,6 +8,7 @@ import time
 import _thread
 import common
 
+music_program=common.MUSIC_PROGRAM
 
 icon_color="^c#3B001B^^b#ffb6c10x88^"
 text_color="^c#3B001B^^b#ffb6c10x99^"
@@ -18,7 +19,7 @@ name=re.sub("\..*",'',filename)
 
 def geticon():
   icon=""
-  cmd="echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.yesplaymusic /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:PlaybackStatus | grep -Eo '"+'"'+".*?"+'"'+"'"+ " | cut -d '"+'"'+"'"+" -f 2) 2>/dev/null"
+  cmd="echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2."+str(music_program)+" /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:PlaybackStatus | grep -Eo '"+'"'+".*?"+'"'+"'"+ " | cut -d '"+'"'+"'"+" -f 2) 2>/dev/null"
   # print(cmd)
   result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   play_status=result.stdout.decode('utf-8').replace('\n','')
@@ -50,7 +51,7 @@ def update_thread():
 def click(string='') :
   match string:
     case 'L':
-      os.system("playerctl play-pause")
+      os.system("playerctl play-pause "+"-p "+str(music_program))
     case 'M':
       pass
     case 'R':
@@ -61,7 +62,7 @@ def click(string='') :
       pass
     case  _: pass
 
-def notify(str='') :
+def notify(string='') :
   pass
 
 if __name__ == "__main__":

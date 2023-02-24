@@ -31,6 +31,8 @@ DWM_PATH="/home/gxt_kt/my_desktop/dwm/"
 PACKAGES_PATH=DWM_PATH+"statusbar/"
 TEMP_FILE="/home/gxt_kt/python_tmp"
 
+MUSIC_PROGRAM="yesplaymusic"
+
 threadLock = threading.Lock()
 def write_to_file(string,package_name):
   threadLock.acquire()
