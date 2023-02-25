@@ -130,6 +130,7 @@ static const Rule rules[] = {
     {"Nitrogen",    NULL,       NULL,      TAGMASK,     1,         0,        0,        -1},
     {NULL,          NULL,     "图片查看",  TAGMASK,     1,         0,        0,        -1},  // qq image preview title
     {NULL,          NULL, "Image Preview", TAGMASK,     1,         0,        0,        -1},  // wechat image preview title
+    {NULL,          NULL,"Bluetooth Devices",TAGMASK,   1,         0,        0,        -1},  // bluetooth manager
     // {"钉钉",      NULL,       NULL,      TAGMASK, 1, 1,          0,        -1 },
     // {"dingtalk",   NULL,    NULL,      TAGMASK, 1,          1,          0, -1 }, 
     // {"com.alibabainc.dingtalk",    NULL,  NULL, TAGMASK, 1,  1,  0,  -1 }, 
