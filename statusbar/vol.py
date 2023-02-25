@@ -28,12 +28,10 @@ def GetBluetoothBattery():
     from bluetooth import  BluetoothError
     try:
         # Autodetects SPP port
-        # query = BatteryStateQuerier( "11:22:33:44:55:66")  # Can raise BluetoothError when autodetecting port
         query = BatteryStateQuerier("94:37:F7:73:DB:03")
         # # or with given port
         # query = BatteryStateQuerier("11:22:33:44:55:66", "4")
         # result = int(query)  # returns integer between 0 and 100
-        # or
         # result = str(query)  # returns "0%".."100%"
         icon="󰥊"
         result =int(query)
@@ -49,20 +47,40 @@ def GetBluetoothBattery():
         elif(result>=10) : icon="󰤾"
         else : icon="󰥇"
 
-        # print(result)
-        # result = str(query)  # Can raise BluetoothError when device is down or port is wrong
-        # print(result)
         # return str("󰥰"+result)
         return str(icon)
         # Can raise BatteryQueryError when the device is unsupported
     except BluetoothError as e:
         # Handle device is offline
-        # print("Handle device is offline")
         return "󱔑"
     except BatteryQueryError as e:
         # Handle device is unsupported
-        # print("Handle device is unsupported")
         return "󱃓"
+
+
+def GetBluetoothBatteryByPactl():
+    icon="󰥊"
+    # cmd = 'pactl list cards | grep -E "bluetooth\.battery" '
+    cmd = 'pactl list cards | grep -E "bluetooth\.battery" | grep -E "[0-9]*%" | grep -Eo "[0-9]*" '
+    result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    battery=result.stdout.decode('utf-8').replace('\n','')
+    if battery!="" : 
+      result =int(battery)
+      if(result>=95) : icon="󰥈"
+      elif(result>=90) : icon="󰥆"
+      elif(result>=80) : icon="󰥅"
+      elif(result>=70) : icon="󰥄"
+      elif(result>=60) : icon="󰥃"
+      elif(result>=50) : icon="󰥂"
+      elif(result>=40) : icon="󰥁"
+      elif(result>=30) : icon="󰥀"
+      elif(result>=20) : icon="󰤿"
+      elif(result>=10) : icon="󰤾"
+      else : icon="󰥇"
+    else :
+      icon="󱔑"
+    return icon
+
 
 
 def get_vol_content():
@@ -91,11 +109,12 @@ def get_vol_content():
     if vol==0 : 
       vol_icon="婢"
       vol_text="00"
-    elif vol<10 : vol_icon="奔" 
-    elif vol<50 : vol_icon="奔"
+    # elif vol<10 : vol_icon="奔" 
+    # elif vol<50 : vol_icon="奔"
     else : vol_icon="墳"
+  return str(vol_icon)+str(vol_text)+"%"+" "+GetBluetoothBatteryByPactl()
   # return str(vol_icon)+str(vol_text)+"%"+" "+GetBluetoothBattery()
-  return str(vol_icon)+str(vol_text)+"%"
+  # return str(vol_icon)+str(vol_text)+"%"
 
 def update(loop=False,exec=True):
   while True :
