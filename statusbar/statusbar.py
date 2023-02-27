@@ -9,7 +9,8 @@ import time
 import re
 import common
 import threading
-from apscheduler.schedulers.blocking import BlockingScheduler
+# from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 packages_list=common.PACKAGES_LISTS
 
@@ -26,22 +27,25 @@ def ExecOtherFile():
 
 
 def MainRefresh():
-  common.threadLock.acquire()
   tmp=""
+  lines=""
+
+  common.threadLock.acquire()
   if (os.path.exists(common.TEMP_FILE)==False):
     os.system("touch "+common.TEMP_FILE)
   with open(common.TEMP_FILE, 'r+') as f:
     lines=f.readlines()
-    packages=packages_list.keys()
-    for name in packages:
-      match_string="^\^s"+str(name)
-      for line in lines :
-        flag=re.match(str(match_string),line)
-        if flag!=None :
-          exec(str(name)+"_txt"+"=line.encode('utf-8').decode('utf-8').replace('\\n','')")
-          tmp+=locals()[str(name)+"_txt"]
-          break
   common.threadLock.release()
+
+  packages=packages_list.keys()
+  for name in packages:
+    match_string="^\^s"+str(name)
+    for line in lines :
+      flag=re.match(str(match_string),line)
+      if flag!=None :
+        exec(str(name)+"_txt"+"=line.encode('utf-8').decode('utf-8').replace('\\n','')")
+        tmp+=locals()[str(name)+"_txt"]
+        break
   os.system("xsetroot -name '"+str(tmp)+"'")
 
 
@@ -50,36 +54,18 @@ def Run() :
   # for name in packages_list:
   #   exec("_thread.start_new_thread("+str(name)+".update,(True,))")
 
-  scheduler = BlockingScheduler()
+  # scheduler = BlockingScheduler()
+  scheduler = BackgroundScheduler()
   for key,value in packages_list.items():
     cmd="scheduler.add_job("+str(key)+".update_thread, 'interval', seconds="+str(int(value))+", id='"+str(key)+"')"
     exec(cmd)
-  scheduler.add_job(MainRefresh, 'interval', seconds=1, id='MainRefresh')
-  # scheduler.add_job(date.update, 'interval', seconds=1, id='test_job1')
+  # scheduler.add_job(MainRefresh, 'interval', seconds=1, id='MainRefresh')
   scheduler.start()
 
-
   while True :
-    common.threadLock.acquire()
-    tmp=""
-    if (os.path.exists(common.TEMP_FILE)==False):
-      os.system("touch "+common.TEMP_FILE)
-    with open(common.TEMP_FILE, 'r+') as f:
-      lines=f.readlines()
-      while i<len(packages_list) :
-        name=packages_list[i]
-        i=i+1
-        match_string="^\^s"+str(name)
-        for line in lines :
-          flag=re.match(str(match_string),line)
-          if flag!=None :
-            exec(str(name)+"_txt"+"=line.encode('utf-8').decode('utf-8').replace('\\n','')")
-            tmp+=locals()[str(name)+"_txt"]
-            break
-      i=0
-    common.threadLock.release()
-    os.system("xsetroot -name '"+str(tmp)+"'")
-    time.sleep(1)
+    # print("debug point 1")
+    MainRefresh()
+    time.sleep(0.5)
 
 
 
