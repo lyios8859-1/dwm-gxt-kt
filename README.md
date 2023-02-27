@@ -21,7 +21,8 @@ b站简单演示链接：[https://www.bilibili.com/video/BV1hY4y127ef](https://w
 
 3. 如果你现在在用dwm，想做一些增强但是没法实现，也可以直接和我说，如果我觉得想法很精彩，在力所能及的范围内也会主动去做的
 
-4. 复杂问题没法简单说的可以联系邮箱`gxt_kt@163.com`，或者访问[gxt-kt.cn](gxt-kt.cn)留言
+4. 复杂问题没法简单说的可以联系邮箱`gxt_kt@163.com`，或者访问[http://gxt-kt.cn/](http://gxt-kt.cn/)留言
+
 
 
 ## 本仓库修改内容
