@@ -246,7 +246,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,    XK_q,       killclient,        {0} },        // 关闭当前窗口
     { MODKEY|ControlMask,  XK_q,       forcekillclient,   {0} },        // 强制关闭当前窗口
     { MODKEY|ShiftMask,    XK_Escape,  quit,              {0} },        // 退出dwm
-    { MODKEY|ControlMask|ShiftMask, XK_Escape, quit,      {1} },        // 重启dwm 
+    { MODKEY|ControlMask|ShiftMask,XK_Escape, quit,       {1} },        // 重启dwm 
 //-----------------------------------------------------------------------------
   
 
@@ -343,6 +343,8 @@ static Key keys[] = {
     // { MODKEY|ShiftMask,    XK_Left,     tagtoleft,        {0} },      // 将本窗口移动到左边tag
     // { MODKEY|ShiftMask,    XK_Right,    tagtoright,       {0} },      // 将本窗口移动到右边tag 
 //-----------------------------------------------------------------------------
+    { MODKEY,              XK_F1,     GoBackToPreTag,        {0} },          // 开启/关闭 全屏
+    // { MODKEY,              XK_F11,     fullscreen,        {0} },          // 开启/关闭 全屏
 
 
 

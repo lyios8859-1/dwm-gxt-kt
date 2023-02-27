@@ -159,8 +159,18 @@ typedef struct {
 	LayoutPreset preset;
 } Layout;
 
+// gxt_kt
+typedef struct {
+  // #define RESTORE_TAG_MAXNUM 5
+  // int tag_restore[RESTORE_TAG_MAXNUM];
+  // int p;
+  int last_tag; // o
+  int cur_tag; // i
+} tag_restore;
+
 typedef struct Pertag Pertag;
 struct Monitor {
+  tag_restore tag_res; // gxt_kt
 	char ltsymbol[16];
 	float mfact;
 	int nmaster;
@@ -365,6 +375,10 @@ static void viewtoleft(const Arg *arg);
 static void viewtoright(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void toggleoverview(const Arg *arg);
+
+void PushTag(void);
+void GoBackToPreTag(void);
+void GoBackToNextTag(void);
 
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
@@ -3795,6 +3809,7 @@ setgap(const Arg *arg)
 void
 view(const Arg *arg)
 {
+    
     int i;
     unsigned int tmptag;
     Client *c;
@@ -3843,6 +3858,8 @@ view(const Arg *arg)
             spawn(&(Arg){ .v = (const char*[]){ "/bin/sh", "-c", arg->v, NULL } });
         }
     }
+
+    PushTag();
 }
 
 // 显示所有tag 或 跳转到聚焦窗口的tag
@@ -4333,4 +4350,25 @@ main(int argc, char *argv[])
     cleanup();
     XCloseDisplay(dpy);
     return EXIT_SUCCESS;
+}
+
+
+void GoBackToNextTag(void) {
+}
+
+void GoBackToPreTag(void) {
+  if(selmon->tag_res.last_tag<=0) return;
+  Arg arg = {0};
+  arg.ui=selmon->tag_res.last_tag;
+  view(&arg);
+  int curtags = selmon->tagset[selmon->seltags];
+  gDebug("seltag=%d",curtags);
+}
+
+void PushTag(void) {
+  int current_tag=selmon->tagset[selmon->seltags];
+  if(current_tag==selmon->tag_res.cur_tag) return;
+
+  selmon->tag_res.last_tag=selmon->tag_res.cur_tag;
+  selmon->tag_res.cur_tag=current_tag;
 }
