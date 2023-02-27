@@ -500,8 +500,6 @@ applyrules(Client *c)
     class    = ch.res_class ? ch.res_class : broken;
     instance = ch.res_name  ? ch.res_name  : broken;
 
-    // use for debug rules
-    // gDebug("c->name=%s",c->name);
 
     for (i = 0; i < LENGTH(rules); i++) {
         r = &rules[i];
@@ -513,10 +511,7 @@ applyrules(Client *c)
             c->isglobal = r->isglobal;
             c->isnoborder = r->isnoborder;
 
-            // c->tags |= r->tags; // gxt_kt : Let open tags not use rules's tag.
-            if(r->tags==TAGMASK) { // gxt_kt : Only enable for TAGMASK
-                c->tags |= r->tags; 
-            }
+            c->tags |= r->tags; 
 
             if (r->isnoborder)
                 c->bw = 0;

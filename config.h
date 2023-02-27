@@ -129,10 +129,10 @@ static const char* avoid_repeat_auto_start = "/tmp/dwm_avoid_repeat_auto_start.l
 static const Rule rules[] = {
 //-----------------------------------------------------------------------------
   // class         instance    title      tags_mask  isfloating isglobal isnoborder monitor
-    {"obs",         NULL,       NULL,      1 << 5,      0,         0,        0,        -1},
-    {"chrome",      NULL,       NULL,      1 << 6,      0,         0,        0,        -1},
-    {"Chromium",    NULL,       NULL,      1 << 6,      0,         0,        0,        -1},
-    {"music",       NULL,       NULL,      1 << 7,      0,         0,        0,        -1},
+    // {"obs",         NULL,       NULL,      1 << 5,      0,         0,        0,        -1},
+    // {"chrome",      NULL,       NULL,      1 << 6,      0,         0,        0,        -1},
+    // {"Chromium",    NULL,       NULL,      1 << 6,      0,         0,        0,        -1},
+    // {"music",       NULL,       NULL,      1 << 7,      0,         0,        0,        -1},
     {"wemeetapp",   NULL,       NULL,      TAGMASK,     1,         1,        0,        -1}, // 腾讯会议有bug,需要使用global类型
     {"copyq",       NULL,       NULL,      TAGMASK,     1,         1,        0,        -1},
     {"Nitrogen",    NULL,       NULL,      TAGMASK,     1,         0,        0,        -1},
