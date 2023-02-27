@@ -28,6 +28,14 @@ static const unsigned int borderalpha     = 0xdd;      /* 边框透明度 */
 
 
 //=============================================================================
+//                 快速切换历史tag 
+//=============================================================================
+#define RESTORE_TAG_MAXNUM 5 // 用于恢复时存储的最多记录tag数，一般不需要更改，必须大于等于1
+#define SWITCH_TAG_LOOP 0    // 是否支持循环（穿越）,1为支持
+// 如果习惯是单按键切换最近的两个窗口，则设置 RESTORE_TAG_MAXNUM 为2 , SWITCH_TAG_LOOP 为1
+
+
+//=============================================================================
 // 字体配置
 //=============================================================================
 static const char *fonts[]               = {
@@ -248,6 +256,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,    XK_Escape,  quit,              {0} },        // 退出dwm
     { MODKEY|ControlMask|ShiftMask,XK_Escape, quit,       {1} },        // 重启dwm 
 //-----------------------------------------------------------------------------
+    { MODKEY,              XK_o,       GoBackToPreTag,    {0} },        // 切换历史tag
+    { MODKEY,              XK_i,       GoBackToNextTag,   {0} },        // 切换历史tag 
+//-----------------------------------------------------------------------------
   
 
 //=============================================================================
@@ -286,8 +297,8 @@ static Key keys[] = {
 	  { MODKEY|ShiftMask,    XK_comma,   cyclelayout,       {.i = -1 } },   // 循环布局 都有效
 	  { MODKEY|ShiftMask,    XK_period,  cyclelayout,       {.i = +1 } },   // 循环布局 都有效
 //-----------------------------------------------------------------------------
-    { MODKEY,              XK_i,       incnstack,         {.i = +1 } },   // 增加从堆栈数 仅flextile有效
-    { MODKEY,              XK_u,       incnstack,         {.i = -1 } },   // 减少从堆栈数 仅flextile有效
+    { MODKEY,          XK_bracketleft, incnstack,         {.i = -1 } },   // 增加从堆栈数 仅flextile有效
+    { MODKEY,          XK_bracketright,incnstack,         {.i = +1 } },   // 减少从堆栈数 仅flextile有效
   	{ MODKEY|ControlMask,  XK_Return,  mirrorlayout,      {0} },          // 翻转主区域和堆栈区域 仅flextile有效
 //-----------------------------------------------------------------------------
 	  { MODKEY|ControlMask,  XK_comma,   rotatelayoutaxis,  {.i = -1 } },   // 循环另一种布局 仅flextile有效
@@ -343,8 +354,6 @@ static Key keys[] = {
     // { MODKEY|ShiftMask,    XK_Left,     tagtoleft,        {0} },      // 将本窗口移动到左边tag
     // { MODKEY|ShiftMask,    XK_Right,    tagtoright,       {0} },      // 将本窗口移动到右边tag 
 //-----------------------------------------------------------------------------
-    { MODKEY,              XK_F1,     GoBackToPreTag,        {0} },          // 开启/关闭 全屏
-    // { MODKEY,              XK_F11,     fullscreen,        {0} },          // 开启/关闭 全屏
 
 
 
@@ -364,7 +373,7 @@ static Key keys[] = {
     TAGKEYS(XK_7, 6,  0)
     TAGKEYS(XK_8, 7,  0)
     TAGKEYS(XK_9, 8,  0)
-    TAGKEYS(XK_o, 5,  "obs")
+    TAGKEYS(XK_r, 5,  "obs")
     TAGKEYS(XK_c, 6,  "google-chrome-stable") 
     TAGKEYS(XK_m, 7,  "/opt/YesPlayMusic/yesplaymusic")
 //-----------------------------------------------------------------------------
@@ -374,7 +383,7 @@ static Key keys[] = {
     
     
 //=============================================================================
-//    根据相关信号执行指令，一般不需要更改，但需要注意相关指令包存在
+//    根据相关信号执行指令，除python脚本位置外一般不需要更改，但需要注意相关指令包存在
 //=============================================================================
 { 0, XF86XK_AudioMute,         spawn, SHCMD("pamixer -t;  python3 /home/gxt_kt/my_desktop/dwm/statusbar/vol.py notify ") },
 { 0, XF86XK_AudioRaiseVolume,  spawn, SHCMD("pamixer -i 5;python3 /home/gxt_kt/my_desktop/dwm/statusbar/vol.py notify ") },

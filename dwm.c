@@ -159,13 +159,14 @@ typedef struct {
 	LayoutPreset preset;
 } Layout;
 
+
+#define RESTORE_TAG_MAXNUM 5
 // gxt_kt
 typedef struct {
-  // #define RESTORE_TAG_MAXNUM 5
-  // int tag_restore[RESTORE_TAG_MAXNUM];
-  // int p;
-  int last_tag; // o
-  int cur_tag; // i
+  int tag_restore[RESTORE_TAG_MAXNUM];
+  int p;
+  // int last_tag; // o
+  // int cur_tag; // i
 } tag_restore;
 
 typedef struct Pertag Pertag;
@@ -377,6 +378,7 @@ static void toggleview(const Arg *arg);
 static void toggleoverview(const Arg *arg);
 
 void PushTag(void);
+void InspectTagRestore(void);
 void GoBackToPreTag(void);
 void GoBackToNextTag(void);
 
@@ -1002,6 +1004,13 @@ createmon(void)
 
         m->pertag->showbars[i] = m->showbar;
     }
+
+    // gxt_kt
+    m->tag_res.tag_restore[0]=1; // 2**0
+    for(int i=1;i<RESTORE_TAG_MAXNUM;i++) {
+      m->tag_res.tag_restore[i]=0;
+    }
+    m->tag_res.p=0;
 
     return m;
 }
@@ -3859,7 +3868,10 @@ view(const Arg *arg)
         }
     }
 
-    PushTag();
+    if(arg->i!=1) {
+      InspectTagRestore();
+      PushTag();
+    }
 }
 
 // 显示所有tag 或 跳转到聚焦窗口的tag
@@ -3912,6 +3924,73 @@ viewtoright(const Arg *arg) {
             }
         }
     }
+}
+
+void GoBackToNextTag(void) {
+  if(SWITCH_TAG_LOOP) {
+    do {
+      --selmon->tag_res.p;
+      if(selmon->tag_res.p<0) selmon->tag_res.p=RESTORE_TAG_MAXNUM-1;
+    }while( selmon->tag_res.p<0 || selmon->tag_res.p>=RESTORE_TAG_MAXNUM ||
+      selmon->tag_res.tag_restore[selmon->tag_res.p]<=0);
+  } else {
+    --selmon->tag_res.p;
+    if(selmon->tag_res.p<0||selmon->tag_res.p>=RESTORE_TAG_MAXNUM || 
+      selmon->tag_res.tag_restore[selmon->tag_res.p]<=0) {
+      ++selmon->tag_res.p;
+      return;
+    };
+  }
+  Arg arg = {0};
+  arg.ui=selmon->tag_res.tag_restore[selmon->tag_res.p];
+  arg.i=1;
+  view(&arg);
+}
+
+void GoBackToPreTag(void) {
+  if(SWITCH_TAG_LOOP) {
+    do {
+      ++selmon->tag_res.p;
+      if(selmon->tag_res.p>=RESTORE_TAG_MAXNUM) selmon->tag_res.p=0;
+    }while( selmon->tag_res.p<0 || selmon->tag_res.p>=RESTORE_TAG_MAXNUM ||
+      selmon->tag_res.tag_restore[selmon->tag_res.p]<=0);
+  } else {
+    ++selmon->tag_res.p;
+    if(selmon->tag_res.p<0 || selmon->tag_res.p>=RESTORE_TAG_MAXNUM ||
+      selmon->tag_res.tag_restore[selmon->tag_res.p]<=0) {
+      --selmon->tag_res.p;
+      return;
+    };
+  }
+  Arg arg = {0};
+  arg.ui=selmon->tag_res.tag_restore[selmon->tag_res.p];
+  arg.i=1;
+  view(&arg);
+}
+
+void InspectTagRestore(void) {
+  int p=selmon->tag_res.p;
+  if(p>0) { // 大于0说明已经处于打断状态，需要移动
+    // 全部往前移动   
+    for(int i=0;i<RESTORE_TAG_MAXNUM;i++) {
+      if(i+p<RESTORE_TAG_MAXNUM) {
+        selmon->tag_res.tag_restore[i]=selmon->tag_res.tag_restore[i+p];
+      } else { // 空缺位清零
+        selmon->tag_res.tag_restore[i]=0;
+      }
+    }
+    selmon->tag_res.p=0; //重置p
+  }
+}
+
+void PushTag(void) {
+  int current_tag=selmon->tagset[selmon->seltags];
+  if(current_tag==selmon->tag_res.tag_restore[0]) return;
+
+  for(int i=RESTORE_TAG_MAXNUM-1;i>0;i--) {
+    selmon->tag_res.tag_restore[i]=selmon->tag_res.tag_restore[i-1];
+  }
+  selmon->tag_res.tag_restore[0]=current_tag;
 }
 
 void
@@ -4353,22 +4432,3 @@ main(int argc, char *argv[])
 }
 
 
-void GoBackToNextTag(void) {
-}
-
-void GoBackToPreTag(void) {
-  if(selmon->tag_res.last_tag<=0) return;
-  Arg arg = {0};
-  arg.ui=selmon->tag_res.last_tag;
-  view(&arg);
-  int curtags = selmon->tagset[selmon->seltags];
-  gDebug("seltag=%d",curtags);
-}
-
-void PushTag(void) {
-  int current_tag=selmon->tagset[selmon->seltags];
-  if(current_tag==selmon->tag_res.cur_tag) return;
-
-  selmon->tag_res.last_tag=selmon->tag_res.cur_tag;
-  selmon->tag_res.cur_tag=current_tag;
-}
