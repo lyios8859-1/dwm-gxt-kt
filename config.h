@@ -3,12 +3,12 @@
 //=============================================================================
 //                基础配置，看自己习惯
 //=============================================================================
-static int showsystray                    = 1;         /* 是否显示托盘栏 */
 static const int newclientathead          = 0;         /* 定义新窗口在栈顶还是栈底 */
-static const unsigned int borderpx        = 5;         /* 窗口边框大小 */
-static const unsigned int systraypinning  = 0;         /* 托盘跟随的显示器 0代表不指定显示器 */
+static int showsystray                    = 1;         /* 是否显示托盘栏 */
+static const unsigned int systraypinning  = 1;         /* 托盘跟随的显示器 0代表不指定显示器 */
 static const unsigned int systrayspacing  = 1;         /* 托盘间距 */
 static const unsigned int systrayspadding = 5;         /* 托盘和状态栏的间隙 */
+static const unsigned int borderpx        = 5;         /* 窗口边框大小 */
 static int gappi                          = 15;        /* 窗口与窗口 缝隙大小 */
 static int gappo                          = 15;        /* 窗口与边缘 缝隙大小 */
 static const int _gappo                   = 15;        /* 窗口与窗口 缝隙大小 不可变 用于恢复时的默认值 */
