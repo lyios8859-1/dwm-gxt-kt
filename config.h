@@ -354,8 +354,6 @@ static Key keys[] = {
     // { MODKEY|ShiftMask,    XK_Left,     tagtoleft,        {0} },      // 将本窗口移动到左边tag
     // { MODKEY|ShiftMask,    XK_Right,    tagtoright,       {0} },      // 将本窗口移动到右边tag 
 //-----------------------------------------------------------------------------
-  //
-    // { MODKEY,              XK_F11,     fullscreen,        {0} },          // 开启/关闭 全屏
 
 
 

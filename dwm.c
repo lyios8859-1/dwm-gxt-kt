@@ -160,43 +160,6 @@ typedef struct {
 } Layout;
 
 
-#define RESTORE_TAG_MAXNUM 5
-// gxt_kt
-typedef struct {
-  int tag_restore[RESTORE_TAG_MAXNUM];
-  int p;
-  // int last_tag; // o
-  // int cur_tag; // i
-} tag_restore;
-
-typedef struct Pertag Pertag;
-struct Monitor {
-  tag_restore tag_res; // gxt_kt
-	char ltsymbol[16];
-	float mfact;
-	int nmaster;
-	int ltaxis[4];
-	int nstack;
-	int num;
-	int by;               /* bar geometry */
-	int bt;               /* number of tasks */
-	int mx, my, mw, mh;   /* screen size */
-	int wx, wy, ww, wh;   /* window area  */
-	unsigned int seltags;
-	unsigned int sellt;
-	unsigned int tagset[2];
-	int showbar;
-	int topbar;
-	Client *clients;
-	Client *sel;
-	Client *stack;
-	Monitor *next;
-	Window barwin;
-	const Layout *lt[2];
-	Pertag *pertag;
-    uint isoverview;
-};
-
 typedef struct {
 	const char *class;
 	const char *instance;
@@ -442,6 +405,40 @@ static Client *hiddenWinStack[100];
 /* configuration, allows nested code to access above variables */
 #include "config.h"
 
+struct tag_switch{
+  int tag_restore[RESTORE_TAG_MAXNUM];
+  int p;
+};
+
+typedef struct tag_switch tag_switch;
+typedef struct Pertag Pertag;
+struct Monitor {
+  tag_switch tag_res; // gxt_kt
+	char ltsymbol[16];
+	float mfact;
+	int nmaster;
+	int ltaxis[4];
+	int nstack;
+	int num;
+	int by;               /* bar geometry */
+	int bt;               /* number of tasks */
+	int mx, my, mw, mh;   /* screen size */
+	int wx, wy, ww, wh;   /* window area  */
+	unsigned int seltags;
+	unsigned int sellt;
+	unsigned int tagset[2];
+	int showbar;
+	int topbar;
+	Client *clients;
+	Client *sel;
+	Client *stack;
+	Monitor *next;
+	Window barwin;
+	const Layout *lt[2];
+	Pertag *pertag;
+    uint isoverview;
+};
+
 struct Pertag {
 	unsigned int curtag, prevtag; /* current and previous tag */
 	int nmasters[LENGTH(tags) + 1]; /* number of windows in master area */
@@ -453,7 +450,10 @@ struct Pertag {
 	const Layout *ltidxs[LENGTH(tags) + 1][3]; /* matrix of tags and layouts indexes  */
 	int showbars[LENGTH(tags) + 1]; /* display bar for the current tag */
 };
+
+
 #include "flextile-deluxe.c"
+
 
 /* function implementations */
 void
