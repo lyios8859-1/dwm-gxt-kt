@@ -76,11 +76,21 @@ static const unsigned int alphas[][3] = {
 
 //=============================================================================
 /* 防止误关闭，一些程序关闭快捷键不会响应 */
+// 配置 ToggleShowHideWindows 使用
 //=============================================================================
 static const char *disablekillclient[] = {
   "wemeetapp", // 腾讯会议顶栏,防止开会时关闭桌面共享了，没有这个需求可以注释
   "tmux", // tmux不要误关了，防止有子窗口还在运行
   "QQ", // QQ关闭后会直接退出,不会最小化,微信不需要这个操作
+};
+
+//=============================================================================
+/* 使用快捷键能够直接显示/隐藏 wechat,dingtalk,qq 等 */
+//=============================================================================
+static const char *showhidewindows[] = {
+  "WeChat",
+  "钉钉",
+  "QQ",
 };
 
 
@@ -135,7 +145,10 @@ static const Rule rules[] = {
     {NULL,          NULL,     "图片查看",  TAGMASK,     1,         0,        0,        -1},  // qq image preview title
     {NULL,          NULL, "Image Preview", TAGMASK,     1,         0,        0,        -1},  // wechat image preview title
     {NULL,          NULL,"Bluetooth Devices",TAGMASK,   1,         0,        0,        -1},  // bluetooth manager
-    {NULL,          NULL,"Clash for Windows",TAGMASK,   1,         0,        0,        -1},  // bluetooth manager
+    {NULL,          NULL,"Clash for Windows",TAGMASK,   1,         0,        0,        -1},  // 
+    {NULL,          NULL,       "QQ",      TAGMASK,     1,         0,        0,        -1},  // 
+    {NULL,          NULL,       "钉钉",    TAGMASK,     1,         0,        0,        -1},  // 
+    {NULL,          NULL,       "WeChat",  TAGMASK,     1,         0,        0,        -1},  // 
     // {"钉钉",      NULL,       NULL,      TAGMASK, 1, 1,          0,        -1 },
     // {"dingtalk",   NULL,    NULL,      TAGMASK, 1,          1,          0, -1 }, 
     // {"com.alibabainc.dingtalk",    NULL,  NULL, TAGMASK, 1,  1,  0,  -1 }, 
@@ -334,6 +347,10 @@ static Key keys[] = {
     { MODKEY,              XK_n,        spawn,   SHCMD("alacritty -t term-float --class floatingTerminal") }, // 新打开一个全局浮动终端
     { MODKEY,              XK_e,        spawn,   SHCMD("alacritty -e ranger") }, // 打开资源管理器
     { MODKEY,              XK_BackSpace,spawn,   SHCMD("playerctl play-pause") },// audio play/pause
+//-----------------------------------------------------------------------------
+    { MODKEY,              XK_q,  ToggleShowHideWindows,    {.v="QQ"} },          
+    { MODKEY,              XK_w,  ToggleShowHideWindows,    {.v="WeChat"} },     
+    { MODKEY,              XK_x,  ToggleShowHideWindows,    {.v="钉钉"} },      
 //-----------------------------------------------------------------------------
     // { MODKEY|ShiftMask,      XK_q,    spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") },//选中某个窗口并强制kill
     // { ShiftMask|ControlMask, XK_c,    spawn, SHCMD("xclip -o | xclip -selection c") }, // 进阶复制

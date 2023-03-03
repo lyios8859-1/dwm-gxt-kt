@@ -244,6 +244,8 @@ static void hide(Client *c);
 static void show(Client *c);
 static void showtag(Client *c);
 static void hidewin(const Arg *arg);
+static void hidewin_c(Client* c);
+
 static void hideotherwins(const Arg *arg);
 static void showonlyorall(const Arg *arg);
 static int issinglewin(const Arg *arg);
@@ -255,6 +257,9 @@ static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
 static void forcekillclient(const Arg *arg);
+
+static int ShowHideWindows(const Arg *arg);
+static void ToggleShowHideWindows(const Arg *arg);
 
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
@@ -1955,8 +1960,13 @@ killclient(const Arg *arg)
 
     // gxt_kt
     if (if_forcekill2kill == 0) { // from forcekill to kill
+    
+        // gxt_kt 
+        if(ShowHideWindows(arg)) return;
+
         c = selmon->clients;
-        int nums = sizeof(disablekillclient) / sizeof(int *);
+        int nums = LENGTH(disablekillclient);
+        // int nums = sizeof(disablekillclient) / sizeof(int *);
         for (int i = 0; i < nums; i++) {
             if (!strcmp(selmon->sel->name, disablekillclient[i])) {
                 // gDebug("!!! return sel->name=%s", selmon->sel->name);
@@ -2002,6 +2012,34 @@ forcekillclient(const Arg *arg)
     unmanage(selmon->sel, 1);
 }
 
+int ShowHideWindows(const Arg *arg) {
+    int nums = LENGTH(showhidewindows);
+    for (int i = 0; i < nums; i++) {
+        if (!strcmp(selmon->sel->name, showhidewindows[i])) {
+            hidewin(arg);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void ToggleShowHideWindows(const Arg *arg) {
+    if(arg==NULL || arg->v==NULL) return;
+    for (Client* c = selmon->clients; c; c = c->next) {
+      if (!strcmp(c->name,(const char*)arg->v)) {
+          // 如果已经被隐藏 或者 不在同一个tag下 , 则显示
+          if(HIDDEN(c) || c->tags != selmon->tagset[c->mon->seltags]) {
+              c->tags=selmon->tagset[selmon->seltags];
+              show(c);
+              focus(c);
+              restack(selmon);
+              arrange(c->mon); // 需要再次arrange以防止显示失败
+          } else {
+            hidewin_c(c);
+          }
+      }
+    }
+}
 
 void
 managefloating(Client *c)
@@ -3333,6 +3371,13 @@ hidewin(const Arg *arg) {
     if (!selmon->sel)
         return;
     Client *c = (Client *)selmon->sel;
+    hide(c);
+}
+
+void
+hidewin_c(Client* c) {
+    if (!c)
+        return;
     hide(c);
 }
 
