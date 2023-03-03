@@ -12,8 +12,17 @@ import common
 
 import psutil
 
-icon_color="^c#333333^^b#ee82ee0x88^"
-text_color="^c#333333^^b#ee82ee0x99^"
+black="#1e222a"
+green="#A3BE8C"
+white="#D8DEE9"
+grey="#373d49"
+blue="#81A1C1"
+red="#d47d85"
+darkblue="#7292b2"
+icon_color="^c"+red+"^^b"+black+"0xff^"
+text_color=icon_color
+# icon_color="^c#333333^^b#ee82ee0x88^"
+# text_color="^c#333333^^b#ee82ee0x99^"
 DELAY_TIME=1
 
 filename= os.path.basename(__file__)

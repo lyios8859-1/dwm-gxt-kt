@@ -23,8 +23,6 @@ static const float mfact                  = 0.5;       /* 主工作区 大小比
 static const int   nmaster                = 1;         /* 主工作区 窗口数量 */
 static const int nstack                   = 0;         /* number of clients in primary stack area */
 static const unsigned int snap            = 10;        /* 边缘依附宽度 */
-static const unsigned int baralpha        = 0xc0;      /* 状态栏透明度 */
-static const unsigned int borderalpha     = 0xdd;      /* 边框透明度 */
 
 
 //=============================================================================
@@ -54,11 +52,11 @@ static const char *fonts[]               = {
 static const char *colors[][3] = {        
     [SchemeNorm] = { "#ffffff", "#333333", "#444444" },
     [SchemeSel] = { "#ffffff", "#47575F", "#f09a7f" }, // #abd687
+    [SchemeSelGlobal] = { "#ffffff", "#47575F", "#fcf86f" },
     [SchemeTabSel] = { red2,    black,  black },
     [SchemeTabNorm]= { white,   black,  black },
-    [SchemeUnderline] = { red2, NULL, NULL }, 
+    [SchemeUnderline] = { red2, black, black }, 
     [SchemeMode]= { green,   black,  black },
-    [SchemeSelGlobal] = { "#ffffff", "#47575F", "#fcf86f" },
     [SchemeHid] = { "#dddddd", NULL, NULL },
     [SchemeSystray] = { NULL, "#7799AA", NULL },
     [SchemeNormTag] = { "#aaaaaa", "#333333", NULL },
@@ -66,17 +64,33 @@ static const char *colors[][3] = {
     [SchemeBarEmpty] = { NULL, "#111111", NULL },
 };
 //-----------------------------------------------------------------------------
-static int tag_line_h=7;
+static int tag_line_h=10;
+static int statusbar_h_bias=15;
 //-----------------------------------------------------------------------------
 /* 透明度设置 ColFg, ColBg, ColBorder */ 
+static const unsigned int baralpha        = 0xc0;      /* 状态栏透明度 */
+static const unsigned int borderalpha     = 0xdd;      /* 边框透明度 */
 static const unsigned int alphas[][3] = {         
-    [SchemeNorm] = { OPAQUE, baralpha, borderalpha }, 
-    [SchemeSel] = { OPAQUE, baralpha, borderalpha },
-    [SchemeSelGlobal] = { OPAQUE, baralpha, borderalpha },
-    [SchemeNormTag] = { OPAQUE, baralpha, borderalpha }, 
-    [SchemeSelTag] = { OPAQUE, baralpha, borderalpha },
-    [SchemeBarEmpty] = { NULL, 0xa0a, NULL },
-    [SchemeStatusText] = { OPAQUE, 0x88, NULL },
+    // [SchemeNorm] = { OPAQUE, baralpha, borderalpha }, 
+    // [SchemeSel] = { OPAQUE, baralpha, borderalpha },
+    // [SchemeSelGlobal] = { OPAQUE, baralpha, borderalpha },
+    // [SchemeNormTag] = { OPAQUE, baralpha, borderalpha }, 
+    // [SchemeSelTag] = { OPAQUE, baralpha, borderalpha },
+    // [SchemeBarEmpty] = { NULL, 0xa0a, NULL },
+    // [SchemeStatusText] = { OPAQUE, 0x88, NULL },
+    [SchemeNorm] = { NULL, 0xff, borderalpha }, 
+    [SchemeSel] = { NULL, 0xff, borderalpha },
+    [SchemeSelGlobal] = { NULL, 0xff, borderalpha },
+    [SchemeTabSel] = { NULL, 0xff, borderalpha },
+    [SchemeTabNorm]= { NULL, 0xff, borderalpha },
+    // [SchemeUnderline] = { NULL, 0xff, borderalpha }, 
+    [SchemeMode]= { NULL, 0xff, borderalpha },
+
+    [SchemeNormTag] = { NULL, 0xff, NULL }, 
+    [SchemeSelTag] = { NULL, 0xff, NULL },
+    [SchemeBarEmpty] = { NULL, 0xff, NULL },
+    [SchemeStatusText] = { NULL, 0xff, NULL },
+    // [SchemeSystray] = { NULL, 0xff, NULL },
 };
 
 
