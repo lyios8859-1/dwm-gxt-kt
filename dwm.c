@@ -92,7 +92,8 @@ enum {
     SchemeSelTag,     // 选中的标签
     SchemeUnderline,  // 下划线
     SchemeBarEmpty,   // 状态栏空白部分
-    SchemeStatusText  // 状态栏文本
+    SchemeStatusText, // 状态栏文本
+    SchemeOverView,
 }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetSystemTray, NetSystemTrayOP, NetSystemTrayOrientation, NetSystemTrayOrientationHorz,
@@ -1112,7 +1113,7 @@ drawbar(Monitor *m)
     // 代表为overview tag状态
     if (m->isoverview) {
         w = TEXTW(overviewtag);
-        drw_setscheme(drw, scheme[SchemeSelTag]);
+        drw_setscheme(drw, scheme[SchemeOverView]);
         drw_text(drw, x, 0, w, bh, lrpad / 2, overviewtag, 0);
         drw_setscheme(drw, scheme[SchemeUnderline]);
         drw_rect(drw, x, bh - boxw, w + lrpad, boxw, 1, 0);

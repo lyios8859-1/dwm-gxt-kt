@@ -62,10 +62,11 @@ static const char *colors[][3] = {
     [SchemeNormTag] = { "#aaaaaa", "#333333", NULL },
     [SchemeSelTag] = { "#eeeeee", "#333333", NULL },
     [SchemeBarEmpty] = { NULL, "#111111", NULL },
+    [SchemeOverView] = { red2, black, black },
 };
 //-----------------------------------------------------------------------------
-static int tag_line_h=10;
 static int statusbar_h_bias=15;
+static int tag_line_h=7;
 //-----------------------------------------------------------------------------
 /* 透明度设置 ColFg, ColBg, ColBorder */ 
 static const unsigned int baralpha        = 0xc0;      /* 状态栏透明度 */
@@ -83,7 +84,8 @@ static const unsigned int alphas[][3] = {
     [SchemeSelGlobal] = { NULL, 0xff, borderalpha },
     [SchemeTabSel] = { NULL, 0xff, borderalpha },
     [SchemeTabNorm]= { NULL, 0xff, borderalpha },
-    // [SchemeUnderline] = { NULL, 0xff, borderalpha }, 
+    [SchemeOverView] = { 0xff, 0xff, borderalpha },
+    [SchemeUnderline] = { 0xff, 0xff, borderalpha }, 
     [SchemeMode]= { NULL, 0xff, borderalpha },
 
     [SchemeNormTag] = { NULL, 0xff, NULL }, 
