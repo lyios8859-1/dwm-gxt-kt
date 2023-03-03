@@ -82,6 +82,9 @@ enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum {
     SchemeNorm,       // 普通
     SchemeSel,        // 选中的
+    SchemeTabSel,     // 选中tag
+    SchemeTabNorm,    // 普通tag
+    SchemeMode,       // 模式
     SchemeSelGlobal,  // 全局并选中的
     SchemeHid,        // 隐藏的
     SchemeSystray,    // 托盘
@@ -1076,7 +1079,7 @@ drawbar(Monitor *m)
     int system_w = 0, tasks_w = 0, status_w;
     unsigned int i, occ = 0, n = 0, urg = 0, scm;
     Client *c;
-	int boxw = 2;
+	int boxw = tag_line_h;
 
     if (!m->showbar)
         return;
@@ -1121,7 +1124,7 @@ drawbar(Monitor *m)
                 continue;
 
             w = TEXTW(tags[i]);
-            drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSelTag : SchemeNormTag]);
+            drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeTabSel : SchemeTabNorm]);
             drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
             if (m->tagset[m->seltags] & 1 << i) {
                 drw_setscheme(drw, scheme[SchemeUnderline]);
@@ -1133,7 +1136,7 @@ drawbar(Monitor *m)
 
     // 绘制模式图标
     w = TEXTW(overviewlayout.symbol);
-    drw_setscheme(drw, scheme[SchemeNorm]);
+    drw_setscheme(drw, scheme[SchemeMode]);
     x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
     // 绘制TASKS

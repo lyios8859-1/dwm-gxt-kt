@@ -50,17 +50,23 @@ static const char *fonts[]               = {
 //=============================================================================
 /* 颜色设置 ColFg, ColBg, ColBorder */ 
 //=============================================================================
+#include "themes/nord.h"
 static const char *colors[][3] = {        
     [SchemeNorm] = { "#ffffff", "#333333", "#444444" },
     [SchemeSel] = { "#ffffff", "#47575F", "#f09a7f" }, // #abd687
+    [SchemeTabSel] = { red2,    black,  black },
+    [SchemeTabNorm]= { white,   black,  black },
+    [SchemeUnderline] = { red2, NULL, NULL }, 
+    [SchemeMode]= { green,   black,  black },
     [SchemeSelGlobal] = { "#ffffff", "#47575F", "#fcf86f" },
     [SchemeHid] = { "#dddddd", NULL, NULL },
     [SchemeSystray] = { NULL, "#7799AA", NULL },
-    [SchemeUnderline] = { "#fcf86f", NULL, NULL }, 
     [SchemeNormTag] = { "#aaaaaa", "#333333", NULL },
     [SchemeSelTag] = { "#eeeeee", "#333333", NULL },
     [SchemeBarEmpty] = { NULL, "#111111", NULL },
 };
+//-----------------------------------------------------------------------------
+static int tag_line_h=7;
 //-----------------------------------------------------------------------------
 /* 透明度设置 ColFg, ColBg, ColBorder */ 
 static const unsigned int alphas[][3] = {         
