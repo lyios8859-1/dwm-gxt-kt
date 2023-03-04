@@ -9,8 +9,15 @@ import common
 import _thread
 
 
-text_color="^c#4169e1^^b#7fffd40x99^"
-icon_color="^c#4169e1^^b#7fffd40x99^"
+icon_fg=common.green
+icon_bg=common.black
+icon_tr="0xff"
+text_fg=common.green
+text_bg=common.black
+text_tr="0xff"
+
+icon_color="^c"+str(icon_fg)+"^^b"+str(icon_bg)+str(icon_tr)+"^"
+text_color="^c"+str(text_fg)+"^^b"+str(text_bg)+str(text_tr)+"^"
 DELAY_TIME=3
 
 filename= os.path.basename(__file__)
@@ -68,6 +75,7 @@ def update(loop=False,exec=True):
     text=""
     icon,text=get_battery_status()
     icon=" "+icon
+    text=""+text
     text+=" "
     txt="^s"+str(name)+"^"+str(icon_color)+str(icon)+str(text_color)+str(text)
     common.write_to_file(txt+"\n",str(name))

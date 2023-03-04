@@ -11,10 +11,10 @@ import screeninfo
 
 
 icon_fg=common.black
-icon_bg="#7b68ee"
+icon_bg=common.green
 icon_tr="0xff"
 text_fg=common.black
-text_bg="#7b68ee"
+text_bg=common.green
 text_tr="0xff"
 
 icon_color="^c"+str(icon_fg)+"^^b"+str(icon_bg)+str(icon_tr)+"^"

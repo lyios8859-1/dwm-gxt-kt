@@ -10,10 +10,10 @@ import common
 
 
 icon_fg=common.black
-icon_bg="#A3BE8C"
+icon_bg=common.green
 icon_tr="0xff"
-text_fg=common.blue
-text_bg=common.black
+text_fg=common.black
+text_bg=common.green
 text_tr="0xff"
 
 icon_color="^c"+str(icon_fg)+"^^b"+str(icon_bg)+str(icon_tr)+"^"

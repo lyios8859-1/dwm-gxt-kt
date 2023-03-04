@@ -9,8 +9,15 @@ import common
 import _thread
 
 
-icon_color="^c#222222^^b#ffff000x88^"
-text_color="^c#222222^^b#ffff000x99^"
+icon_fg=common.black
+icon_bg=common.green
+icon_tr="0xff"
+text_fg=common.black
+text_bg=common.green
+text_tr="0xff"
+
+icon_color="^c"+str(icon_fg)+"^^b"+str(icon_bg)+str(icon_tr)+"^"
+text_color="^c"+str(text_fg)+"^^b"+str(text_bg)+str(text_tr)+"^"
 DELAY_TIME=2
 
 filename= os.path.basename(__file__)
@@ -55,7 +62,7 @@ def get_wifi_icon():
 def update(loop=False,exec=True):
   while True :
     icon="󱛏"
-    icon=" "+get_wifi_icon()+" "
+    icon=""+get_wifi_icon()+" "
     text=""
     txt="^s"+str(name)+"^"+str(icon_color)+str(icon)+str(text_color)+str(text)
     common.write_to_file(txt+"\n",str(name))

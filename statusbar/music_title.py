@@ -29,6 +29,7 @@ def get_music_title():
     result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     title=result.stdout.decode('utf-8').replace('\n','')
     title=title.replace("'","") # 解决一些歌曲带'的问题
+    title=" "+title+" "
     return (title)
 
 def update(loop=False,exec=True):

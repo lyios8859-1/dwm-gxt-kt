@@ -9,8 +9,15 @@ import _thread
 import common
 
 
-icon_color="^c#ffffff^^b#7b68ee0x88^"
-text_color="^c#ffffff^^b#7b78ee0x99^"
+icon_fg=common.black
+icon_bg=common.blue
+icon_tr="0xff"
+text_fg=common.black
+text_bg=common.blue
+text_tr="0xff"
+
+icon_color="^c"+str(icon_fg)+"^^b"+str(icon_bg)+str(icon_tr)+"^"
+text_color="^c"+str(text_fg)+"^^b"+str(text_bg)+str(text_tr)+"^"
 DELAY_TIME=1
 
 filename= os.path.basename(__file__)

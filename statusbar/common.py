@@ -15,7 +15,7 @@ PACKAGES_LISTS={
                'music_next':10,
                'icon':100,
                'screen':3,
-               'pacman':36000,
+               # 'pacman':36000,
                'net':1,
                'cpu':2,
                'memory':2,
@@ -34,11 +34,17 @@ TEMP_FILE="/home/gxt_kt/python_tmp"
 MUSIC_PROGRAM="yesplaymusic"
 
 black="#1e222a"
-green="#A3BE8C"
 white="#D8DEE9"
 grey="#373d49"
 blue="#81A1C1"
+blue2="#5E81AC"
+blue3="#88C0D0"
+blue4="#8FBCBB"
 red="#d47d85"
+green="#A3BE8C"
+pink="#B48EAD"
+yellow="#EBCB8B"
+orange="#D08770"
 darkblue="#7292b2"
 
 threadLock = threading.Lock()
