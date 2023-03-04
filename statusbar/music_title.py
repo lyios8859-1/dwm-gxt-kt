@@ -10,8 +10,15 @@ import common
 
 music_program=common.MUSIC_PROGRAM
 
-icon_color="^c#3B001B^^b#ffb6c10x88^"
-text_color="^c#3B001B^^b#ffb6c10x99^"
+icon_fg=common.black
+icon_bg=common.blue
+icon_tr="0xff"
+text_fg=common.blue
+text_bg=common.black
+text_tr="0xff"
+
+icon_color="^c"+str(icon_fg)+"^^b"+str(icon_bg)+str(icon_tr)+"^"
+text_color="^c"+str(text_fg)+"^^b"+str(text_bg)+str(text_tr)+"^"
 DELAY_TIME=1
 
 filename= os.path.basename(__file__)
@@ -26,7 +33,7 @@ def get_music_title():
 
 def update(loop=False,exec=True):
   while True :
-    icon="🎵"
+    icon="🎵" # 󰎆
     text=get_music_title()
     txt="^s"+str(name)+"^"+str(icon_color)+str(icon)+str(text_color)+str(text)
     common.write_to_file(txt+"\n",str(name))

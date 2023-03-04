@@ -33,6 +33,14 @@ TEMP_FILE="/home/gxt_kt/python_tmp"
 
 MUSIC_PROGRAM="yesplaymusic"
 
+black="#1e222a"
+green="#A3BE8C"
+white="#D8DEE9"
+grey="#373d49"
+blue="#81A1C1"
+red="#d47d85"
+darkblue="#7292b2"
+
 threadLock = threading.Lock()
 def write_to_file(string,package_name):
   threadLock.acquire()

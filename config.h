@@ -18,7 +18,7 @@ static const int sidepad                  = 3;         /* horizontal padding of 
 static const int overviewgappi            = 20;        /* overview时 窗口与窗口 缝隙大小 */
 static const int overviewgappo            = 30;        /* overview时 窗口与边缘 缝隙大小 */
 static const int showbar                  = 1;         /* 是否显示状态栏 */
-static const int topbar                   = 0;         /* 指定状态栏位置 0底部 1顶部 */
+static const int topbar                   = 1;         /* 指定状态栏位置 0底部 1顶部 */
 static const float mfact                  = 0.5;       /* 主工作区 大小比例 */
 static const int   nmaster                = 1;         /* 主工作区 窗口数量 */
 static const int nstack                   = 0;         /* number of clients in primary stack area */
@@ -51,7 +51,7 @@ static const char *fonts[]               = {
 #include "themes/nord.h"
 static const char *colors[][3] = {        
     [SchemeNorm] = { "#ffffff", "#333333", "#444444" },
-    [SchemeSel] = { "#ffffff", "#47575F", "#f09a7f" }, // #abd687
+    [SchemeSel] = { red2, "#47575F", "#f09a7f" }, // #abd687
     [SchemeSelGlobal] = { "#ffffff", "#47575F", "#fcf86f" },
     [SchemeTabSel] = { red2,    black,  black },
     [SchemeTabNorm]= { white,   black,  black },
@@ -61,7 +61,7 @@ static const char *colors[][3] = {
     [SchemeSystray] = { NULL, "#7799AA", NULL },
     [SchemeNormTag] = { "#aaaaaa", "#333333", NULL },
     [SchemeSelTag] = { "#eeeeee", "#333333", NULL },
-    [SchemeBarEmpty] = { NULL, "#111111", NULL },
+    [SchemeBarEmpty] = { "#1e222a", "#1e222a", NULL },
     [SchemeOverView] = { red2, black, black },
 };
 //-----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ static const unsigned int alphas[][3] = {
 
     [SchemeNormTag] = { NULL, 0xff, NULL }, 
     [SchemeSelTag] = { NULL, 0xff, NULL },
-    [SchemeBarEmpty] = { NULL, 0xff, NULL },
+    [SchemeBarEmpty] = { 0xff, 0xff, NULL },
     [SchemeStatusText] = { NULL, 0xff, NULL },
     // [SchemeSystray] = { NULL, 0xff, NULL },
 };
@@ -98,7 +98,6 @@ static const unsigned int alphas[][3] = {
 
 //=============================================================================
 /* 防止误关闭，一些程序关闭快捷键不会响应 */
-// 配置 ToggleShowHideWindows 使用
 //=============================================================================
 static const char *disablekillclient[] = {
   "wemeetapp", // 腾讯会议顶栏,防止开会时关闭桌面共享了，没有这个需求可以注释
@@ -107,7 +106,8 @@ static const char *disablekillclient[] = {
 };
 
 //=============================================================================
-/* 使用快捷键能够直接显示/隐藏 wechat,dingtalk,qq 等 */
+/* 使用killclient关闭窗口默认执行隐藏操作 */
+// 配置 ToggleShowHideWindows 使用
 //=============================================================================
 static const char *showhidewindows[] = {
   "WeChat",

@@ -10,8 +10,15 @@ import common
 import screeninfo
 
 
-icon_color="^c#ffffff^^b#7b68ee0x88^"
-text_color="^c#ffffff^^b#7b78ee0x99^"
+icon_fg=common.black
+icon_bg="#7b68ee"
+icon_tr="0xff"
+text_fg=common.black
+text_bg="#7b68ee"
+text_tr="0xff"
+
+icon_color="^c"+str(icon_fg)+"^^b"+str(icon_bg)+str(icon_tr)+"^"
+text_color="^c"+str(text_fg)+"^^b"+str(text_bg)+str(text_tr)+"^"
 DELAY_TIME=3
 
 filename= os.path.basename(__file__)

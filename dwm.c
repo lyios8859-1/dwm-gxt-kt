@@ -2029,19 +2029,39 @@ int ShowHideWindows(const Arg *arg) {
 
 void ToggleShowHideWindows(const Arg *arg) {
     if(arg==NULL || arg->v==NULL) return;
-    for (Client* c = selmon->clients; c; c = c->next) {
-      if (!strcmp(c->name,(const char*)arg->v)) {
-          // 如果已经被隐藏 或者 不在同一个tag下 , 则显示
-          if(HIDDEN(c) || c->tags != selmon->tagset[c->mon->seltags]) {
-              c->tags=selmon->tagset[selmon->seltags];
-              show(c);
-              focus(c);
-              restack(selmon);
-              arrange(c->mon); // 需要再次arrange以防止显示失败
-          } else {
-            hidewin_c(c);
+    int found=0;
+    Monitor* m;
+    Client* c;
+    Client* find_c;
+    for (m = mons; m && !found; m = m->next)
+      for (c = m->clients; c&&!found; c = c->next)
+        if (!strcmp(c->name,(const char*)arg->v)) {
+          found=1;
+          find_c=c;
+        }
+
+    if(found) {
+        if (find_c->mon == selmon) {// 在同屏幕则toggle win状态
+          if(HIDDEN(find_c) || find_c->tags != selmon->tagset[find_c->mon->seltags]) {
+                find_c->tags=selmon->tagset[selmon->seltags];
+                sendmon(find_c, selmon);
+                show(find_c);
+                focus(find_c);
+                restack(selmon);
+                arrange(find_c->mon); // 需要再次arrange以防止显示失败
+          }else {
+            hidewin_c(find_c);
           }
-      }
+        } 
+        else {                // 不在同屏幕则将win移到当前屏幕 并显示
+            sendmon(find_c, selmon);
+            show(find_c);
+            focus(find_c);
+            if (find_c->isfloating) {
+                resize(find_c, selmon->mx + (selmon->mw - selmon->sel->w) / 2, selmon->my + (selmon->mh - selmon->sel->h) / 2, selmon->sel->w, selmon->sel->h, 0);
+            }
+            pointerfocuswin(find_c);
+        }
     }
 }
 
