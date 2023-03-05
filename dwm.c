@@ -1231,7 +1231,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
         isCode = 0;
     text = p;
 
-    // w += 2; /* 1px padding on both sides */
+   // w += 2; /* 1px padding on both sides */
     x = m->ww - w - system_w - 2 * sp - (system_w ? systrayspadding : 0); // 托盘存在时 额外多-一个systrayspadding
 
     drw_setscheme(drw, scheme[LENGTH(colors)]);
