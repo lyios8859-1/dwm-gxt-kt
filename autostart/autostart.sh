@@ -29,3 +29,4 @@ python3 ~/my_desktop/dwm/statusbar/statusbar.py cron &>/dev/null
 libinput-gestures-setup start # touchpad open gesture
 xinput --set-prop 15 'libinput Accel Speed' 0.5 # set touchpad sensitivity
 
+xhost + # add support for docker gui app
