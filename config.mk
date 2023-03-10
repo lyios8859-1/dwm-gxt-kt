@@ -31,12 +31,12 @@ LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} -lXrender
 CPPFLAGS =  -D_BSD_SOURCE -D_POSIX_C_SOURCE=2 -DVERSION=\"${VERSION}\"
 CPPFLAGS += -D_DEFAULT_SOURCE 
 
-CXXFLAGS =  -std=c++20
+CXXFLAGS =  -std=c++14
 CXXFLAGS += -pedantic
 CXXFLAGS += -Wall -Wextra
 CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-unused-parameter
-CXXFLAGS += -g -O0 -Os ${INCS} ${CPPFLAGS}
+CXXFLAGS += -g -O3 -Os ${INCS} ${CPPFLAGS}
 
 # LDFLAGS  = ${LIBS}
 LDFLAGS  = -s ${LIBS}
