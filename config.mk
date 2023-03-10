@@ -36,7 +36,7 @@ CXXFLAGS += -pedantic
 CXXFLAGS += -Wall -Wextra
 CXXFLAGS += -Wno-deprecated-declarations
 CXXFLAGS += -Wno-unused-parameter
-CXXFLAGS += -g -O3 -Os ${INCS} ${CPPFLAGS}
+CXXFLAGS += -g -O3 ${INCS} ${CPPFLAGS}
 
 # LDFLAGS  = ${LIBS}
 LDFLAGS  = -s ${LIBS}
