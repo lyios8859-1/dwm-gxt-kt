@@ -2046,7 +2046,14 @@ void ToggleShowHideWindows(const Arg *arg) {
 
     if(found) {
         if (find_c->mon == selmon) {// 在同屏幕则toggle win状态
-          if(HIDDEN(find_c) || find_c->tags != selmon->tagset[find_c->mon->seltags]) {
+      
+          if(HIDDEN(find_c) || (find_c->tags != selmon->tagset[find_c->mon->seltags])) {
+          // if(HIDDEN(find_c) ||
+          //    (find_c->tags != selmon->tagset[find_c->mon->seltags]&&
+          //       find_c->tags!=(2<<(LENGTH(tags)-1))-1) ) { // 这里有一个bug是，
+          // // 在第一次使用浮动界面时，tag会不等于当前tag,导致出现第一次无法隐藏
+          // // 已经在managefloating函数处修复，这里就不需要了
+          
                 find_c->tags=selmon->tagset[selmon->seltags];
                 sendmon(find_c, selmon);
                 show(find_c);
@@ -2054,7 +2061,7 @@ void ToggleShowHideWindows(const Arg *arg) {
                 restack(selmon);
                 arrange(find_c->mon); // 需要再次arrange以防止显示失败
           }else {
-            hidewin(find_c);
+            hidewin(find_c); //为了防止有时候隐藏不成功，再次隐藏
           }
         } 
         else {                // 不在同屏幕则将win移到当前屏幕 并显示
@@ -2094,6 +2101,8 @@ managefloating(Client *c)
             while (d2 == 0) d2 = rand()%7 - 3;
         }
     }
+  //gxt_kt 浮动窗口也要指定好tag
+  c->tags=selmon->tagset[c->mon->seltags];
 }
 
 void
