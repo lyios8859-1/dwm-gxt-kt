@@ -245,11 +245,11 @@ static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
 
-static void hide(Client *c);
-static void show(Client *c);
+static void hide(Client *c,int sel=0);
+static void show(Client *c,int sel=0);
 static void showtag(Client *c);
 static void hidewin(const Arg *arg);
-static void hidewin(Client* c);
+static void hidewin(Client* c,int sel);
 
 static void hideotherwins(const Arg *arg);
 static void showonlyorall(const Arg *arg);
@@ -1857,8 +1857,8 @@ grabkeys(void)
     }
 }
 
-void
-hide(Client *c) {
+void  // sel 为1 时意味着这个是从ToggleShowHideWindows来的
+hide(Client *c,int sel) {
     if (!c || HIDDEN(c))
         return;
 
@@ -1879,7 +1879,7 @@ hide(Client *c) {
     XUngrabServer(dpy);
 
     //gxt_kt resolve bug
-    if (strcmp(c->name, scratchpadname)!=0) { 
+    if (strcmp(c->name, scratchpadname)!=0 && sel==0) { 
       hiddenWinStack[++hiddenWinStackTop] = c;
     } 
 
@@ -2056,17 +2056,17 @@ void ToggleShowHideWindows(const Arg *arg) {
           
                 find_c->tags=selmon->tagset[selmon->seltags];
                 sendmon(find_c, selmon);
-                show(find_c);
+                show(find_c,1);
                 focus(find_c);
                 restack(selmon);
                 arrange(find_c->mon); // 需要再次arrange以防止显示失败
           }else {
-            hidewin(find_c); //为了防止有时候隐藏不成功，再次隐藏
+            hidewin(find_c,1); //为了防止有时候隐藏不成功，再次隐藏
           }
         } 
         else {                // 不在同屏幕则将win移到当前屏幕 并显示
             sendmon(find_c, selmon);
-            show(find_c);
+            show(find_c,1);
             focus(find_c);
             if (find_c->isfloating) {
                 resize(find_c, selmon->mx + (selmon->mw - selmon->sel->w) / 2, selmon->my + (selmon->mh - selmon->sel->h) / 2, selmon->sel->w, selmon->sel->h, 0);
@@ -3198,7 +3198,7 @@ seturgent(Client *c, int urg)
 }
 
 void
-show(Client *c)
+show(Client *c,int sel)
 {
     if (!c || !HIDDEN(c))
         return;
@@ -3207,7 +3207,7 @@ show(Client *c)
     setclientstate(c, NormalState);
 
     // gxt_kt resolve bug
-    if (strcmp(c->name, scratchpadname)!=0) {
+    if (strcmp(c->name, scratchpadname)!=0 && sel==0) {
       hiddenWinStackTop--;
     }
 
@@ -3454,10 +3454,10 @@ hidewin(const Arg *arg) {
 }
 
 void
-hidewin(Client* c) {
+hidewin(Client* c,int sel=0) {
     if (!c)
         return;
-    hide(c);
+    hide(c,sel);
 }
 
 int
