@@ -42,57 +42,53 @@ static const char *fonts[]               = {
 			"Symbols Nerd Font:style=2048-em:size=17",
 		  "Microsoft YaHei:size=11:style=Regular:antialias=true:autohint:true",
 			"JoyPixels:size=13:antialias=true:autohint=true"
-};  
+};
 
 
 //=============================================================================
 /* 颜色设置 ColFg, ColBg, ColBorder */ 
 //=============================================================================
 #include "themes/nord.h"
-static const char *colors[][3] = {        
-    [SchemeNorm] = { "#ffffff", "#333333", "#444444" },
-    [SchemeSel] = { red2, "#47575F", "#f09a7f" }, // #abd687
-    [SchemeSelGlobal] = { "#ffffff", "#47575F", "#fcf86f" },
-    [SchemeTabSel] = { red2,    black,  black },
-    [SchemeTabNorm]= { white,   black,  black },
-    [SchemeUnderline] = { red2, black, black }, 
-    [SchemeMode]= { green,   black,  black },
-    [SchemeHid] = { "#dddddd", NULL, NULL },
-    [SchemeSystray] = { NULL, blue, NULL },
-    [SchemeNormTag] = { "#aaaaaa", "#333333", NULL },
-    [SchemeSelTag] = { "#eeeeee", "#333333", NULL },
-    [SchemeBarEmpty] = { "#1e222a", "#1e222a", NULL },
-    [SchemeOverView] = { red2, black, black },
+// 千万不可以修改顺序，只可以在当前位置改颜色，修改顺序就乱了
+static const char *colors[][3]{
+/*SchemeNorm      普通      */   { "#ffffff", "#333333", "#444444" }, // 
+/*SchemeSel       选中      */   { red2, "#47575F", "#f09a7f" },      //SchemeSel,    选中的
+/*SchemeSelGlobal 全局选中  */   { "#ffffff", "#47575F", "#fcf86f" },
+/*SchemeTabSel    选中tag   */   { red2,    black,  black },
+/*SchemeTabNorm   普通tag   */   { white,   black,  black },
+/*SchemeUnderline 下划线    */   { red2, black, black }, 
+/*SchemeMode      模式      */   { green,   black,  black },
+/*SchemeHid       隐藏      */   { "#dddddd", NULL, NULL },
+/*SchemeSystray   托盘      */   { NULL, blue, NULL },
+/*SchemeNormTag   普通标签  */   { "#aaaaaa", "#333333", NULL },
+/*SchemeSelTag    选中标签  */   { "#eeeeee", "#333333", NULL },
+/*SchemeBarEmpty  空白状态栏*/   { "#1e222a", "#1e222a", NULL },
+/*SchemeOverView  overview  */   { red2, black, black },
 };
 //-----------------------------------------------------------------------------
 static int statusbar_h_bias=15;
 static int tag_line_h=7;
 //-----------------------------------------------------------------------------
-/* 透明度设置 ColFg, ColBg, ColBorder */ 
-static const unsigned int baralpha        = 0xc0;      /* 状态栏透明度 */
-static const unsigned int borderalpha     = 0xdd;      /* 边框透明度 */
+static const unsigned char borderalpha = 0xdd;      /* 边框透明度 */
+// 透明度设置
 static const unsigned int alphas[][3] = {         
-    // [SchemeNorm] = { OPAQUE, baralpha, borderalpha }, 
-    // [SchemeSel] = { OPAQUE, baralpha, borderalpha },
-    // [SchemeSelGlobal] = { OPAQUE, baralpha, borderalpha },
-    // [SchemeNormTag] = { OPAQUE, baralpha, borderalpha }, 
-    // [SchemeSelTag] = { OPAQUE, baralpha, borderalpha },
-    // [SchemeBarEmpty] = { NULL, 0xa0a, NULL },
-    // [SchemeStatusText] = { OPAQUE, 0x88, NULL },
-    [SchemeNorm] = { NULL, 0xff, borderalpha }, 
-    [SchemeSel] = { NULL, 0xff, borderalpha },
-    [SchemeSelGlobal] = { NULL, 0xff, borderalpha },
-    [SchemeTabSel] = { NULL, 0xff, borderalpha },
-    [SchemeTabNorm]= { NULL, 0xff, borderalpha },
-    [SchemeOverView] = { 0xff, 0xff, borderalpha },
-    [SchemeUnderline] = { 0xff, 0xff, borderalpha }, 
-    [SchemeMode]= { NULL, 0xff, borderalpha },
-
-    [SchemeNormTag] = { NULL, 0xff, NULL }, 
-    [SchemeSelTag] = { NULL, 0xff, NULL },
-    [SchemeBarEmpty] = { 0xff, 0xff, NULL },
-    [SchemeStatusText] = { NULL, 0xff, NULL },
-    // [SchemeSystray] = { NULL, 0xff, NULL },
+// 不同的可选项：NULL 0xab QPAQUE borderalpha
+// 千万不可以修改顺序，只可以在当前位置改颜色，修改顺序就乱了
+                              /*  ColFg, ColBg, ColBorder */ 
+/*SchemeNorm      普通      */   { NULL, 0xff, borderalpha }, 
+/*SchemeSel       选中      */   { NULL, 0xff, borderalpha },
+/*SchemeSelGlobal 全局选中  */   { NULL, 0xff, borderalpha },
+/*SchemeTabSel    选中tag   */   { NULL, 0xff, borderalpha },
+/*SchemeTabNorm   普通tag   */   { NULL, 0xff, borderalpha },
+/*SchemeUnderline 下划线    */   { 0xff, 0xff, borderalpha },
+/*SchemeMode      模式      */   { NULL, 0xff, borderalpha },
+/*SchemeHid       隐藏      */   { NULL, 0xff, borderalpha },
+/*SchemeSystray   托盘      */   { NULL, 0xff, borderalpha },
+/*SchemeNormTag   普通标签  */   { NULL, 0xff, NULL }, 
+/*SchemeSelTag    选中标签  */   { NULL, 0xff, NULL },
+/*SchemeBarEmpty  空白状态栏*/   { 0xff, 0xff, NULL },
+/*SchemeOverView  overview  */   { 0xff, 0xff, borderalpha },      
+/*SchemeStatusText状态栏文本*/   { NULL, 0xff, NULL },
 };
 
 
