@@ -134,6 +134,7 @@ struct Client {
     int taskw;
 	unsigned int tags;
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isglobal, isnoborder, isscratchpad;
+  bool is_showhidewindows=false;
 	Client *next;
 	Client *snext;
 	Monitor *mon;
@@ -245,11 +246,11 @@ static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
 
-static void hide(Client *c,int sel=0);
-static void show(Client *c,int sel=0);
+static void hide(Client *c);
+static void show(Client *c);
 static void showtag(Client *c);
 static void hidewin(const Arg *arg);
-static void hidewin(Client* c,int sel);
+static void hidewin(Client* c);
 
 static void hideotherwins(const Arg *arg);
 static void showonlyorall(const Arg *arg);
@@ -517,6 +518,7 @@ applyrules(Client *c)
     if (!strcmp(c->name, scratchpadname)) {
         c->isscratchpad = 1;
         c->isglobal = 1; // scratchpad is default global
+        c->is_showhidewindows=true;
     } 
     if (ch.res_class)
         XFree(ch.res_class);
@@ -1857,8 +1859,9 @@ grabkeys(void)
     }
 }
 
-void  // sel 为1 时意味着这个是从ToggleShowHideWindows来的
-hide(Client *c,int sel) {
+
+void 
+hide(Client *c) {
     if (!c || HIDDEN(c))
         return;
 
@@ -1879,7 +1882,7 @@ hide(Client *c,int sel) {
     XUngrabServer(dpy);
 
     //gxt_kt resolve bug
-    if (strcmp(c->name, scratchpadname)!=0 && sel==0) { 
+    if (c->is_showhidewindows==false ) { 
       hiddenWinStack[++hiddenWinStackTop] = c;
     } 
 
@@ -2024,7 +2027,8 @@ int ShowHideWindows(const Arg *arg) {
     int nums = LENGTH(showhidewindows);
     for (int i = 0; i < nums; i++) {
         if (!strcmp(selmon->sel->name, showhidewindows[i])) {
-            hidewin(arg);
+            // hidewin(arg);
+            hidewin(selmon->sel);
             return 1;
         }
     }
@@ -2056,17 +2060,17 @@ void ToggleShowHideWindows(const Arg *arg) {
           
                 find_c->tags=selmon->tagset[selmon->seltags];
                 sendmon(find_c, selmon);
-                show(find_c,1);
+                show(find_c);
                 focus(find_c);
                 restack(selmon);
                 arrange(find_c->mon); // 需要再次arrange以防止显示失败
           }else {
-            hidewin(find_c,1); //为了防止有时候隐藏不成功，再次隐藏
+            hidewin(find_c); //为了防止有时候隐藏不成功，再次隐藏
           }
         } 
         else {                // 不在同屏幕则将win移到当前屏幕 并显示
             sendmon(find_c, selmon);
-            show(find_c,1);
+            show(find_c);
             focus(find_c);
             if (find_c->isfloating) {
                 resize(find_c, selmon->mx + (selmon->mw - selmon->sel->w) / 2, selmon->my + (selmon->mh - selmon->sel->h) / 2, selmon->sel->w, selmon->sel->h, 0);
@@ -3198,7 +3202,7 @@ seturgent(Client *c, int urg)
 }
 
 void
-show(Client *c,int sel)
+show(Client *c)
 {
     if (!c || !HIDDEN(c))
         return;
@@ -3207,7 +3211,7 @@ show(Client *c,int sel)
     setclientstate(c, NormalState);
 
     // gxt_kt resolve bug
-    if (strcmp(c->name, scratchpadname)!=0 && sel==0) {
+    if (c->is_showhidewindows==false) {
       hiddenWinStackTop--;
     }
 
@@ -3454,10 +3458,10 @@ hidewin(const Arg *arg) {
 }
 
 void
-hidewin(Client* c,int sel=0) {
+hidewin(Client* c) {
     if (!c)
         return;
-    hide(c,sel);
+    hide(c);
 }
 
 int
@@ -3900,6 +3904,19 @@ updatetitle(Client *c)
         gettextprop(c->win, XA_WM_NAME, c->name, sizeof c->name);
     if (c->name[0] == '\0') /* hack to mark broken clients */
         strcpy(c->name, broken);
+
+  // gxt_kt  解决打断隐藏窗口bug
+  c->is_showhidewindows=false;
+  int nums = LENGTH(showhidewindows);
+  for (int i = 0; i < nums; i++) {
+    if (!strcmp(c->name, showhidewindows[i])) {
+      c->is_showhidewindows=true;
+      break;
+    }
+  }
+  if (!strcmp(c->name, scratchpadname)) {
+      c->is_showhidewindows=true;
+  } 
 }
 
 void
