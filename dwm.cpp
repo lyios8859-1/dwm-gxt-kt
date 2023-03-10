@@ -1499,7 +1499,7 @@ Client *DirectionSelect(const Arg *arg) {
         return NULL;
 
     for (c = selmon->clients; c; c = c->next) {
-        if (ISVISIBLE(c) && (issingle || !HIDDEN(c))) {
+        if (ISVISIBLE(c) && !HIDDEN(c) && c->tags==tc->tags) {
             last ++;
             tempClients[last] = c;
             if (c == tc) cur = last;
