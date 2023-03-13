@@ -19,6 +19,9 @@ options:
 .cpp.o:
 	${CXX} -c ${CXXFLAGS} $<
 
+.c.o:
+	${CXX} -c ${CXXFLAGS} $<
+
 ${OBJ}: config.h config.mk
 
 config.h:
