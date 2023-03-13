@@ -82,7 +82,7 @@ static const unsigned int alphas[][3] = {
 /*SchemeTabNorm   普通tag   */   { NULL, 0xff, borderalpha },
 /*SchemeUnderline 下划线    */   { 0xff, 0xff, borderalpha },
 /*SchemeMode      模式      */   { NULL, 0xff, borderalpha },
-/*SchemeHid       隐藏      */   { NULL, 0xff, borderalpha },
+/*SchemeHid       隐藏      */   { NULL, NULL, borderalpha },
 /*SchemeSystray   托盘      */   { NULL, 0xff, borderalpha },
 /*SchemeNormTag   普通标签  */   { NULL, 0xff, NULL }, 
 /*SchemeSelTag    选中标签  */   { NULL, 0xff, NULL },
