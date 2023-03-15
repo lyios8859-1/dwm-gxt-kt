@@ -1711,10 +1711,10 @@ focusstack(const Arg *arg)
 
     if (issingle) {
         if (c) {
-            // hideotherwins(&(Arg) { .v = c });
-          Arg arg_;
-          arg_.v=c;
-          hideotherwins(&arg_);
+          // hideotherwins(&(Arg) { .v = c });
+          // Arg arg_;
+          // arg_.v=c;
+          // hideotherwins(&arg_);
         }
     } else {
         if (c) {
