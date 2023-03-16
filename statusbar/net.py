@@ -49,7 +49,9 @@ def getnet()->Tuple[str,str]:
     cmd="cat "+TX_POSITON
     result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     rx_bytes_pre=result.stdout.decode('utf-8').replace("\n","")
-    rx_bytes=abs(int(rx_bytes_cur)-int(rx_bytes_pre))
+    rx_bytes=0
+    if rx_bytes_pre!="":
+        rx_bytes=abs(int(rx_bytes_cur)-int(rx_bytes_pre))
     # write new rx_bytes_cur
     cmd="echo "+str(rx_bytes_cur)+" > "+TX_POSITON
     os.system(cmd)
@@ -66,7 +68,9 @@ def getnet()->Tuple[str,str]:
     cmd="cat "+TX_POSITON
     result = subprocess.run(cmd, shell=True, timeout=3, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     tx_bytes_pre=result.stdout.decode('utf-8').replace("\n","")
-    tx_bytes=abs(int(tx_bytes_cur)-int(tx_bytes_pre))
+    tx_bytes=0
+    if tx_bytes_pre!="":
+        tx_bytes=abs(int(tx_bytes_cur)-int(tx_bytes_pre))
     # write new tx_bytes_cur
     cmd="echo "+str(tx_bytes_cur)+" > "+TX_POSITON
     os.system(cmd)
